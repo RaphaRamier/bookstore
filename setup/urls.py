@@ -6,5 +6,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('genres.urls')),
     path('', include('authors.urls')),
+    path('', include('assembly.urls')),
 
 ]
