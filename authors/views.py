@@ -1,15 +1,20 @@
 from django.http import JsonResponse
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
+
 from authors.models import Authors
 from authors.serializers import AuthorSerializer
+from setup.permissions import GlobalDefaultPermission
 
 
 class AuthorCreateListView(generics.ListCreateAPIView):
+    permission_classes = (IsAuthenticated, GlobalDefaultPermission)
     queryset = Authors.objects.all()
     serializer_class = AuthorSerializer
 
 
 class AuthorRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthenticated, GlobalDefaultPermission)
     queryset = Authors.objects.all()
     serializer_class = AuthorSerializer
 
