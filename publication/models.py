@@ -1,4 +1,5 @@
 from django.db import models
+from books.models import Book
 
 STATUS_CHOICES = (
     ('published', 'Published'),
@@ -28,3 +29,6 @@ class Publication(models.Model):
         choices=STATUS_CHOICES
     )
     quantity = models.IntegerField()
+
+    def __str__(self):
+        return f'{self.book.title} - {self.edition}'

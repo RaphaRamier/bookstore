@@ -4,7 +4,6 @@ from publication.models import Publication
 from publication.serializers import PublicationSerializer
 
 
-
 class PublicationCreateListView(generics.ListCreateAPIView):
     queryset = Publication.objects.all()
     serializer_class = PublicationSerializer
@@ -21,4 +20,3 @@ class PublicationRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
             return JsonResponse({'message': 'Publication deleted successfully.'}, status=204)
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
-

@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'genres',
     'authors',
-    'assembly'
+    'assembly',
+    'books',
+    'publication'
 
 ]
 

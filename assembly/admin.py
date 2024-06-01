@@ -9,7 +9,6 @@ class BookAssemblyAdmin(admin.ModelAdmin):
         'binding_type',
         'paper_type',
         'cover_type',
-        'page_count',
         'weight'
     )
 

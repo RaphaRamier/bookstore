@@ -7,5 +7,6 @@ urlpatterns = [
     path('', include('genres.urls')),
     path('', include('authors.urls')),
     path('', include('assembly.urls')),
+    path('', include('books.urls')),
 
 ]

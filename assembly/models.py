@@ -28,7 +28,6 @@ class BookAssembly(models.Model):
     binding_type = models.CharField(max_length=50, choices=BINDING_CHOICES)
     paper_type = models.CharField(max_length=50, choices=PAPER_CHOICES)
     cover_type = models.CharField(max_length=50, choices=COVER_CHOICES)
-    page_count = models.IntegerField()
     weight = models.DecimalField(max_digits=6, decimal_places=2)
 
     def __str__(self):
