@@ -45,8 +45,8 @@ INSTALLED_APPS = [
     'assembly',
     'books',
     'publication',
-    'suppliers'
-
+    'suppliers',
+    'components'
 
 ]
 
