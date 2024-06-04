@@ -1,4 +1,4 @@
-from django.db.models import Count, Sum
+from django.db.models import Count, Sum, Avg
 from django.http import JsonResponse
 from django.shortcuts import render
 from rest_framework import generics
@@ -35,13 +35,19 @@ class SupplierStatisticsView(APIView):
     queryset=Supplier.objects.all()
 
     def get(self, request):
-        top_supplier= Component.objects.values('supplier__name').annotate(count=Count('id'),
-                                                                          total_price=Sum('price_total')
-                                                                          ).order_by('count')
+        top_supplier= Component.objects.values('supplier__name').annotate(total_quantity=Sum('quantity')).order_by('-total_quantity')
+        total_spending=Component.objects.values('supplier__name').annotate(total_spending=Sum('price_total')).order_by(
+            '-total_spending'),
+        avg_spending=Component.objects.values('supplier__name').annotate(avg_spending=Avg('price_total')).order_by(
+            '-avg_spending')
 
+        total_cash_outflow = Component.objects.aggregate(total_outflow=Sum('price_total'))
 
         data={
             'top_supplier': top_supplier,
+            'total_spending': total_spending,
+            'avg_spending': avg_spending,
+            'total_cash_outflow':total_cash_outflow
 
         }
 
