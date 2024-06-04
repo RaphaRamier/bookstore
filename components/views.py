@@ -11,3 +11,5 @@ class ComponentCreateListView(generics.ListCreateAPIView):
 class ComponentRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset=Component.objects.all()
     serializer_class=ComponentSerializer
+
+

@@ -34,18 +34,20 @@ class BookRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
 
 class BookStatisticsView(APIView):
     queryset=Book.objects.all()
+
     def get(self, request):
-
         genre_counts=self.queryset.values('genres__name').annotate(count=Count('id'))
-        author_per_genre = self.queryset.values('genres__name').annotate(count=Count('author'))
-        books_per_author = self.queryset.values('author__name').annotate(count=Count('id'))
-
-
+        author_per_genre=self.queryset.values('genres__name').annotate(count=Count('author'))
+        books_per_author=self.queryset.values('author__name').annotate(count=Count('id'))
+        assembly_counts=self.queryset.values('assembly__binding_type').annotate(count=Count('id'))
+        author_per_country = self.queryset.values('author__nationality').annotate(count=Count('id'))
 
         data={
             'genre_counts': genre_counts,
             'author_per_genre': author_per_genre,
             'books_per_author': books_per_author,
+            'author_per_country': author_per_country,
+            'assembly_counts': assembly_counts
         }
 
         return Response(data)
