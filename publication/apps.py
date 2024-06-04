@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class GenreConfig(AppConfig):
+class PublicationConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'genres'
+    name = 'publication'
