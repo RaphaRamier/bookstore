@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'authors',
     'assembly',
     'books',
-    'publication'
+    'publication',
+    'suppliers',
+    'components'
 
 ]
 

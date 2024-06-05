@@ -8,5 +8,7 @@ urlpatterns = [
     path('', include('authors.urls')),
     path('', include('assembly.urls')),
     path('', include('books.urls')),
+    path('', include('suppliers.urls')),
+    path('', include('components.urls')),
 
 ]
