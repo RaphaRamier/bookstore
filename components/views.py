@@ -1,23 +1,28 @@
 from django.db.models import Sum
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.db.models.functions import TruncMonth, TruncYear
 from components.models import Component
 from components.serializers import ComponentSerializer
+from setup.permissions import GlobalDefaultPermission
 
 
 class ComponentCreateListView(generics.ListCreateAPIView):
+    permission_classes=(IsAuthenticated, GlobalDefaultPermission)
     queryset=Component.objects.all()
     serializer_class=ComponentSerializer
 
 
 class ComponentRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes=(IsAuthenticated, GlobalDefaultPermission)
     queryset=Component.objects.all()
     serializer_class=ComponentSerializer
 
 
 class SupplyMonthlyTrendView(APIView):
+    permission_classes=(IsAuthenticated, GlobalDefaultPermission)
     queryset=Component.objects.all()
 
     def get(self, request):
@@ -39,6 +44,7 @@ class SupplyMonthlyTrendView(APIView):
 
 
 class SupplyYearlyTrendView(APIView):
+    permission_classes=(IsAuthenticated, GlobalDefaultPermission)
     queryset=Component.objects.all()
 
     def get(self, request):

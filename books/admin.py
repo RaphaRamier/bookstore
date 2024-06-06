@@ -21,6 +21,8 @@ class BookAdmin(admin.ModelAdmin):
         'genres',
 
     )
+
+    list_display_links = ('id', 'title')
     readonly_fields = ('publication_details',)
 
     def genres_list(self, obj):

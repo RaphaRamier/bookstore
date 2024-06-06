@@ -1,7 +1,5 @@
 from django.db import models
 import secrets
-from rest_framework.exceptions import ValidationError
-from validate_docbr import CPF, CNPJ
 
 
 class Supplier(models.Model):

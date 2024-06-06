@@ -4,3 +4,5 @@ djangorestframework==3.15.1
 python-dotenv==1.0.1
 sqlparse==0.5.0
 validate-docbr==1.10.0
+
+Faker~=25.5.0
