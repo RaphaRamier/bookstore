@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Sale
+from publication.models import Publication
 
 
 @admin.register(Sale)
@@ -11,13 +12,19 @@ class SaleAdmin(admin.ModelAdmin):
         'get_release_date',
         'sale_date',
         'quantity',
-        'total_value'
+        'total_value',
+        'get_quantity_in_stock'
     )
 
     list_filter=(
         'book__book__title',
         'book__release_date',
         'book__edition'
+    )
+
+    search_fields=(
+        'book',
+        'sale_date'
     )
 
     def get_book_edition(self, obj):
@@ -28,6 +35,19 @@ class SaleAdmin(admin.ModelAdmin):
 
     def get_release_date(self, obj):
         return obj.book.release_date
+
+    def get_quantity_in_stock(self, obj):
+        try:
+            # Assuming you have a related_name 'publications' for the ForeignKey
+            publication = obj.book
+            if publication:
+                return publication.quantity
+        except AttributeError:
+            pass
+        return 0
+
+    get_quantity_in_stock.admin_order_field='book__publications__quantity'
+    get_quantity_in_stock.short_description='In Stock'
 
     get_release_date.admin_order_field='book__release_date'
     get_release_date.short_description='Release Date'

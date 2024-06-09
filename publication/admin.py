@@ -14,7 +14,12 @@ class PublicationAdmin(admin.ModelAdmin):
     )
 
     list_filter = (
-        'book',
-        'release_date',
-        'edition'
+        'status',
+        'language'
+    )
+
+    search_fields = (
+        'book__title',
+        'edition',
+
     )
