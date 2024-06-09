@@ -29,7 +29,7 @@ class Publication(models.Model):
         max_length=20,
         choices=STATUS_CHOICES
     )
-    quantity=models.IntegerField()
+    quantity=models.IntegerField(default=0)
     page_count=models.IntegerField(default=0)
     language=models.CharField(max_length=50)
     assembly=models.ForeignKey(
@@ -39,6 +39,13 @@ class Publication(models.Model):
         null=True,
         blank=True
     )
+    price_unit=models.DecimalField(max_digits=10, decimal_places=2)
+    price_total=models.DecimalField(max_digits=10, decimal_places=2, editable=False)
 
     def __str__(self):
         return f'{self.book.title} - {self.edition}'
+
+    def save(self, *args, **kwargs):
+        self.price_total=self.price_unit * self.quantity
+        super(Publication, self).save(*args, **kwargs)
+

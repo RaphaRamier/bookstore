@@ -8,11 +8,18 @@ class PublicationAdmin(admin.ModelAdmin):
         'id',
         'book',
         'edition',
-        'release_date'
+        'release_date',
+        'price_unit',
+        'price_total'
     )
 
     list_filter = (
-        'book',
-        'release_date',
-        'edition'
+        'status',
+        'language'
+    )
+
+    search_fields = (
+        'book__title',
+        'edition',
+
     )

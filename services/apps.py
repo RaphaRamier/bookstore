@@ -1,9 +1,9 @@
 from django.apps import AppConfig
 
 
-class ComponentsConfig(AppConfig):
+class ServicesConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'components'
+    name = 'services'
 
     def ready(self):
-        import components.signals
+        import services.signals
