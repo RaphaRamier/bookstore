@@ -3,7 +3,6 @@ from django.shortcuts import render
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
 from setup.permissions import GlobalDefaultPermission
 from .models import CashInFlow, CashOutFlow
 from rest_framework import generics
@@ -35,6 +34,9 @@ class CashOutFlowRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView
 
 
 class CashFlowView(APIView):
+    permission_classes=(IsAuthenticated, GlobalDefaultPermission)
+    queryset=CashInFlow.objects.all()
+
     def get(self, request):
         total_inflow=CashInFlow.objects.aggregate(total=Sum('amount'))['total']
         total_outflow=CashOutFlow.objects.aggregate(total=Sum('amount'))['total']
@@ -47,4 +49,3 @@ class CashFlowView(APIView):
 
         }
         return Response(data)
-

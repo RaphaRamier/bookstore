@@ -9,7 +9,7 @@ from components.models import Component
 class CashInFlow(models.Model):
     source=models.ForeignKey(
         Sale,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         related_name='inflow',
         editable=False
     )

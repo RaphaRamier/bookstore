@@ -7,8 +7,8 @@ from cashflow.models import CashInFlow
 
 @receiver(post_save, sender=Sale)
 def update_publication_quantity(sender, instance, **kwargs):
-    publication = instance.book
-    publication.quantity -= instance.quantity
+    publication=instance.book
+    publication.quantity-=instance.quantity
     publication.save()
 
 
@@ -25,3 +25,17 @@ def create_cash_inflow(sender, instance, created, **kwargs):
                         f'\nSale Code: {instance.sale_number}'
         )
     print('CashOutFlow created successfully')
+
+
+@receiver(post_delete, sender=Sale)
+def update_publication_quantity_delete(sender, instance, **kwargs):
+    publication=instance.book
+    publication.quantity+=instance.quantity
+    publication.save()
+
+
+@receiver(post_delete, sender=Sale)
+def handle_sale_deletion(sender, instance, **kwargs):
+    cash_inflow_entry=CashInFlow.objects.filter(source=instance).first()
+    if cash_inflow_entry:
+        cash_inflow_entry.delete()

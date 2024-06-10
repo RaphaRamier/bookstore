@@ -26,6 +26,7 @@ class SupplyMonthlyTrendView(APIView):
     queryset=Component.objects.all()
 
     def get(self, request):
+
         monthly_trends=self.queryset.annotate(month=TruncMonth('date')).values('month').annotate(
             total_quantity=Sum('quantity'),
             total_value=Sum('price_total')
