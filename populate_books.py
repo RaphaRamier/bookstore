@@ -6,9 +6,9 @@ from faker import Faker
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'setup.settings')
 django.setup()
 
-from books.models import Book
-from authors.models import Authors
-from genres.models import Genre
+from API.books import Book
+from API.authors import Authors
+from API.genres.models import Genre
 
 fake=Faker()
 

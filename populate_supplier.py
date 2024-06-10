@@ -7,7 +7,7 @@ django.setup()
 from faker import Faker
 from validate_docbr import CPF, CNPJ
 import random
-from suppliers.models import Supplier
+from API.suppliers.models import Supplier
 
 
 def criando_fornecedores(quantidade_de_fornecedores):

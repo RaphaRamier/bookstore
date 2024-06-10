@@ -6,7 +6,7 @@ from decimal import Decimal
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'setup.settings')
 django.setup()
 
-from assembly.models import BookAssembly
+from API.assembly.models import BookAssembly
 
 
 def criando_book_assemblies(quantidade_de_assemblies):
