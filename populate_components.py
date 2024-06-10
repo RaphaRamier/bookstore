@@ -6,8 +6,8 @@ django.setup()
 
 from faker import Faker
 import random
-from suppliers.models import Supplier
-from components.models import Component
+from API.suppliers.models import Supplier
+from API.components.models import Component
 
 
 def criando_componentes(quantidade_de_componentes):

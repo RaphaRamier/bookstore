@@ -1,15 +1,14 @@
 import os
 import django
 from random import choice, randint
-from datetime import datetime, timedelta
 from faker import Faker
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'setup.settings')
 django.setup()
 
-from books.models import Book
-from assembly.models import BookAssembly
-from publication.models import Publication
+from API.books import Book
+from API.assembly.models import BookAssembly
+from API.publication import Publication
 
 fake=Faker()
 
