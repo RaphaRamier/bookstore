@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.core.exceptions import ValidationError
+
 from .models import Sale
 from publication.models import Publication
 
@@ -38,8 +40,7 @@ class SaleAdmin(admin.ModelAdmin):
 
     def get_quantity_in_stock(self, obj):
         try:
-            # Assuming you have a related_name 'publications' for the ForeignKey
-            publication = obj.book
+            publication=obj.book
             if publication:
                 return publication.quantity
         except AttributeError:

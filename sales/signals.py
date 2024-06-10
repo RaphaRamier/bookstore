@@ -19,10 +19,10 @@ def create_cash_inflow(sender, instance, created, **kwargs):
             source=instance,
             amount=instance.total_value,
             description=f'Cash inflow from sale: '
-                        f'\nID: {instance.id} '
-                        f'\nBook: {instance.book} '
-                        f'\nQuantity: {instance.quantity} '
-                        f'\nSale Code: {instance.sale_number}'
+                        f'ID: {instance.id} '
+                        f'Book: {instance.book} '
+                        f'Quantity: {instance.quantity} '
+                        f'Sale Code: {instance.sale_number}'
         )
     print('CashOutFlow created successfully')
 
