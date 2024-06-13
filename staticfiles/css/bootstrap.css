@@ -12054,4 +12054,13 @@ textarea.form-control-lg {
   }
 }
 
+.custom-purple-hover {
+    color: #8a63d2;
+    transition: color 0.3s ease;
+}
+
+.custom-purple-hover:hover {
+    color: #6f42c1;
+    text-decoration: none;
+}
 /*# sourceMappingURL=bootstrap.css.map */
