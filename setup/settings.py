@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'API.suppliers',
     'API.components',
     'API.sales',
+    'API.buyers',
     'API.services',
     'API.cashflow',
     'Client.client',
