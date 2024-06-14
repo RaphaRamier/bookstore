@@ -1,10 +1,16 @@
 import secrets
 
 from django.db import models
+from API.buyers.models import Buyer
 from API.publication.models import Publication
 
 
 class Sale(models.Model):
+    buyer = models.ForeignKey(
+        Buyer,
+        on_delete=models.PROTECT,
+        related_name='buyers'
+    )
     book=models.ForeignKey(
         Publication,
         on_delete=models.PROTECT,

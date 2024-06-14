@@ -1,11 +1,12 @@
 from rest_framework import serializers
-from API.suppliers.models import Supplier
 from .validators import *
+from rest_framework import serializers
+from API.buyers.models import Buyer
 
 
-class SupplierSerializer(serializers.ModelSerializer):
+class BuyerSerializer(serializers.ModelSerializer):
     class Meta:
-        model=Supplier
+        model=Buyer
         fields='__all__'
         read_only_fields=('account_number',)
 
