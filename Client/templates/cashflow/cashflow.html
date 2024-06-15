@@ -118,26 +118,39 @@
                             <!-- Fim Dashboard de ganhos mensais -->
 
                             <!-- Lista de transações -->
-                           <div class="card">
-                              <div class="card-body pb-0">
-                                 <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                       <h5>Transaction History</h5>
-                                    </div>
-                                    <div class="hstack align-items-center"><a href="#" class="text-muted"><i class="bi bi-arrow-repeat"></i></a></div>
-                                 </div>
-                                 <div class="list-group list-group-flush">
-                                    <div class="list-group-item d-flex align-items-center justify-content-between gap-6">
-                                       <div class="d-flex align-items-center gap-3">
-                                          <div class="icon icon-shape rounded-circle icon-sm flex-none w-rem-10 h-rem-10 text-sm bg-primary bg-opacity-25 text-primary"><i class="bi bi-send-fill"></i></div>
-                                          <div class=""><span class="d-block text-heading text-sm fw-semibold">Supplier 1 </span><span class="d-none d-sm-block text-muted text-xs">Tempo que foi pago ou falta</span></div>
-                                       </div>
-                                       <div class="d-none d-md-block text-sm">Payment_ID</div>
-                                       <div class="d-none d-md-block"><span class="badge bg-body-secondary text-warning">Status</span></div>
-                                       <div class="text-end">
-                                           <span class="d-block text-heading text-sm fw-bold">Valor </span>
-                                           <span class="d-block text-muted text-xs">Valor</span></div>
-                                    </div>
+<div class="card">
+   <div class="card-body pb-0">
+      <div class="d-flex justify-content-between align-items-center">
+         <div>
+            <h5>Transaction History</h5>
+            <span class="d-block text-muted text-xs">Last 20</span>
+         </div>
+         <div class="hstack align-items-center">
+            <a href="#" class="text-muted"><i class="bi bi-arrow-repeat"></i></a>
+         </div>
+      </div>
+      <div class="list-group list-group-flush">
+         {% for sale in page_obj %}
+         <div class="list-group-item d-flex align-items-center justify-content-between gap-6">
+            <div class="d-flex align-items-center gap-3">
+               <div class="icon icon-shape rounded-circle icon-sm flex-none w-rem-10 h-rem-10 text-sm bg-primary bg-opacity-25 text-primary">
+                  <i class="bi bi-cash-coin"></i>
+               </div>
+               <div class="d-flex flex-column">
+                  <span class="d-block text-heading text-sm fw-semibold">{{ sale.buyer }}</span>
+                  <span class="d-none d-sm-block text-muted text-xs">{{ sale.sale_date }}</span>
+               </div>
+            </div>
+            <div class="d-none d-md-block text-sm text-center flex-shrink-0" style="width: 150px;">{{ sale.sale_number }}</div>
+            <div class="d-none d-md-block flex-shrink-0" style="width: 100px;">
+               <span class="badge bg-body-secondary text-warning">{{ sale.status }}</span>
+            </div>
+            <div class="text-end flex-grow-1">
+               <span class="d-block text-heading text-sm fw-bold">{{ sale.total_value }}</span>
+               <span class="d-block text-muted text-xs text-truncate" style="max-width: 150px;">{{ sale.book }}</span>
+            </div>
+         </div>
+         {% endfor %}
 
                                      <!-- Fim da Lista de transações -->
 
