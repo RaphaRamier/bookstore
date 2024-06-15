@@ -6,20 +6,21 @@ document.addEventListener('DOMContentLoaded', function() {
             const months = monthlyTrends.map(entry => entry.month.substring(0, 7));
             const totalQuantities = monthlyTrends.map(entry => entry.total_quantity);
 
-
+            const reversedMonths = months.reverse();
+            const reversedTotalQuantities = totalQuantities.reverse();
 
             const ctx = document.getElementById('EarningsChartBar').getContext('2d');
             new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: months,
+                    labels: reversedMonths,
                     datasets: [{
                         label: 'Total Quantity',
                         backgroundColor: 'rgba(54, 162, 235, 0.5)',
                         borderColor: 'rgba(54, 162, 235, 1)',
                         borderWidth: 1,
-                        data: totalQuantities
-                    }, ]
+                        data: reversedTotalQuantities
+                    }]
                 },
                 options: {
                     scales: {

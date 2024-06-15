@@ -7,3 +7,5 @@ python-dotenv==1.0.1
 six==1.16.0
 sqlparse==0.5.0
 validate-docbr==1.10.0
+
+requests~=2.32.3
