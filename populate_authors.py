@@ -5,7 +5,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'setup.settings')
 django.setup()
 
 from faker import Faker
-from API.authors import Authors, NATIONALITY_CHOICES
+from API.authors.models import Authors, NATIONALITY_CHOICES
 import random
 
 
