@@ -1,27 +1,37 @@
-// Defina os dados para janeiro a dezembro
-var dados = [65, 59, 80, 81, 56, 55, 40, 60, 55, 30, 25, 40];
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('/API/sales/monthly-trend/')
+        .then(response => response.json())
+        .then(data => {
+            const monthlyTrends = data.monthly_trends;
+            const months = monthlyTrends.map(entry => entry.month.substring(0, 7));
+            const totalQuantities = monthlyTrends.map(entry => entry.total_quantity);
 
-// Obtenha o elemento canvas e seu contexto
-var ctx = document.getElementById('myBarChart').getContext('2d');
+            const reversedMonths = months.reverse();
+            const reversedTotalQuantities = totalQuantities.reverse();
 
-// Crie o gráfico de barras
-var myBarChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-        datasets: [{
-            label: 'Vendas por Mês',
-            data: dados,
-            backgroundColor: 'rgba(54, 162, 235, 0.5)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
+            const ctx = document.getElementById('EarningsChartBar').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: reversedMonths,
+                    datasets: [{
+                        label: 'Total Quantity',
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1,
+                        data: reversedTotalQuantities
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching monthly trend:', error);
+        });
 });

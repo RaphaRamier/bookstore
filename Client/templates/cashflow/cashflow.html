@@ -13,16 +13,16 @@
                                <button type="button" class="btn btn-sm btn-square btn-neutral rounded-circle d-xxl-none" data-bs-toggle="offcanvas" data-bs-target="#responsiveOffcanvas" aria-controls="responsiveOffcanvas">
                                    <i class="bi bi-three-dots"></i>
                                </button>
-                               <button type="button" class="btn btn-sm btn-neutral d-none d-sm-inline-flex">
-                                   <span class="pe-2"><i class="bi bi-plus-circle"></i>
-                                   </span><a href="#"><span>Sales</span></a></button>
-
+                                    <button type="button" class="btn btn-sm btn-neutral d-none d-sm-inline-flex" data-bs-target="#depositLiquidityModal" data-bs-toggle="modal">
+                                        <span class="pe-2"><i class="bi bi-plus-circle"></i> </span>
+                                        <span>Sales</span>
+                                    </button>
                         </div>
                      </div>
                   </div>
-                  <div class="modal fade" id="cryptoModal" tabindex="-1" aria-labelledby="cryptoModalLabel" aria-hidden="true">
-                     <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content overflow-hidden">
+                <div class="modal fade" id="depositLiquidityModal" tabindex="-1" aria-labelledby="depositLiquidityModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
                            <div class="modal-header pb-0 border-0">
                               <h1 class="modal-title h4" id="cryptoModalLabel">Select Book</h1>
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -58,34 +58,20 @@
 
                             <!-- Lista de Fornecedores ou Livros ou etc -->
 
+
                            <div class="row g-3">
+                               {% for book in top_sales %}
                               <div class="col-md col-sm-6">
                                  <div class="card border-primary-hover">
                                     <div class="card-body p-4">
-                                       <div class="d-flex align-items-center gap-2"><img src="#" class="w-rem-5 flex-none" alt="..."> <a href="#" class="h6 stretched-link">Supplier 1</a></div>
-                                       <div class="text-sm fw-semibold mt-3">Gasto</div>
-                                       <div class="d-flex align-items-center gap-2 mt-1 text-xs"><span class="badge badge-xs bg-success"><i class="bi bi-arrow-up-right"></i> </span><span> % do valor total </span></div>
+                                       <div class="d-flex align-items-center gap-2"><i class="bi bi-book"></i> <a href="#" class="h6 stretched-link">{{ book.book }}</a></div>
+                                       <div class="text-sm fw-semibold mt-3">{{ book.quantity }}</div>
+                                       <div class="d-flex align-items-center gap-2 mt-1 text-xs"><span class="badge badge-xs bg-success"><i class="bi bi-arrow-up-right"></i> </span><span> {{ book.total_value }} </span></div>
                                     </div>
                                  </div>
                               </div>
-                              <div class="col-md col-sm-6">
-                                 <div class="card border-primary-hover">
-                                    <div class="card-body p-4">
-                                       <div class="d-flex align-items-center gap-2"><img src="#" class="w-rem-5 flex-none" alt="..."> <a href="#" class="h6 stretched-link">Supplier 2</a></div>
-                                       <div class="text-sm fw-semibold mt-3">Gasto</div>
-                                       <div class="d-flex align-items-center gap-2 mt-1 text-xs"><span class="badge badge-xs bg-danger"><i class="bi bi-arrow-up-right"></i> </span><span> % do valor total </span></div>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="col-md col-sm-6">
-                                 <div class="card border-primary-hover">
-                                    <div class="card-body p-4">
-                                       <div class="d-flex align-items-center gap-2"><img src="#" class="w-rem-5 flex-none" alt="..."> <a href="#" class="h6 stretched-link">Supplier 3</a></div>
-                                       <div class="text-sm fw-semibold mt-3">Gasto</div>
-                                       <div class="d-flex align-items-center gap-2 mt-1 text-xs"><span class="badge badge-xs bg-danger"><i class="bi bi-arrow-up-right"></i> </span><span> % do valor total </span></div>
-                                    </div>
-                                 </div>
-                              </div>
+                               {% endfor %}
+
 
                                <!-- Termina Lista de Fornecedores ou Livros ou etc -->
 
@@ -110,7 +96,7 @@
                                     <div class="hstack align-items-center"><a href="#" class="text-muted"><i class="bi bi-arrow-repeat"></i></a></div>
                                  </div>
                                  <div class="mx-n4">
-                                    <canvas id="myBarChart"></canvas>
+                                    <canvas id="EarningsChartBar"></canvas>
                                  </div>
                               </div>
                            </div>
@@ -118,26 +104,50 @@
                             <!-- Fim Dashboard de ganhos mensais -->
 
                             <!-- Lista de transações -->
-                           <div class="card">
-                              <div class="card-body pb-0">
-                                 <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                       <h5>Transaction History</h5>
-                                    </div>
-                                    <div class="hstack align-items-center"><a href="#" class="text-muted"><i class="bi bi-arrow-repeat"></i></a></div>
-                                 </div>
-                                 <div class="list-group list-group-flush">
-                                    <div class="list-group-item d-flex align-items-center justify-content-between gap-6">
-                                       <div class="d-flex align-items-center gap-3">
-                                          <div class="icon icon-shape rounded-circle icon-sm flex-none w-rem-10 h-rem-10 text-sm bg-primary bg-opacity-25 text-primary"><i class="bi bi-send-fill"></i></div>
-                                          <div class=""><span class="d-block text-heading text-sm fw-semibold">Supplier 1 </span><span class="d-none d-sm-block text-muted text-xs">Tempo que foi pago ou falta</span></div>
-                                       </div>
-                                       <div class="d-none d-md-block text-sm">Payment_ID</div>
-                                       <div class="d-none d-md-block"><span class="badge bg-body-secondary text-warning">Status</span></div>
-                                       <div class="text-end">
-                                           <span class="d-block text-heading text-sm fw-bold">Valor </span>
-                                           <span class="d-block text-muted text-xs">Valor</span></div>
-                                    </div>
+                            <div class="card">
+                               <div class="card-body pb-0">
+                                  <div class="d-flex justify-content-between align-items-center">
+                                     <div>
+                                        <h5>Transaction History</h5>
+                                        <span class="d-block text-muted text-xs">Last 20</span>
+                                     </div>
+                                     <div class="hstack align-items-center">
+                                        <a href="#" class="text-muted"><i class="bi bi-arrow-repeat"></i></a>
+                                     </div>
+                                  </div>
+                                  <div class="list-group list-group-flush">
+                                     {% for sale in sales_list %}
+                                     <div class="list-group-item d-flex align-items-center justify-content-between gap-6">
+                                        <div class="d-flex align-items-center gap-3">
+                                           <div class="icon icon-shape rounded-circle icon-sm flex-none w-rem-10 h-rem-10 text-sm bg-primary bg-opacity-25 text-primary">
+                                              <i class="bi bi-cash-coin"></i>
+                                           </div>
+                                           <div class="d-flex flex-column">
+                                              <span class="d-block text-heading text-sm fw-semibold">{{ sale.buyer }}</span>
+                                              <span class="d-none d-sm-block text-muted text-xs">{{ sale.sale_date }}</span>
+                                           </div>
+                                        </div>
+                                        <div class="d-none d-md-block text-sm text-center flex-shrink-0" style="width: 150px;">{{ sale.sale_number }}</div>
+                                        <div class="d-none d-md-block flex-shrink-0" style="width: 100px;">
+                                           <span class="badge bg-body-secondary
+                                                {% if sale.status == 'PENDING' %}
+                                                    text-warning
+                                                {% elif sale.status == 'CANCELED' %}
+                                                    text-danger
+                                                {% elif sale.status == 'SUCCESSFUL' %}
+                                                    text-success
+                                                {% else %}
+                                                    text-secondary
+                                                {% endif %}">
+                                                   {{ sale.status }}
+                                           </span>
+                                        </div>
+                                        <div class="text-end flex-grow-1">
+                                           <span class="d-block text-heading text-sm fw-bold">{{ sale.total_value }}</span>
+                                           <span class="d-block text-muted text-xs text-truncate" style="max-width: 150px;">{{ sale.book }}</span>
+                                        </div>
+                                     </div>
+                                     {% endfor %}
 
                                      <!-- Fim da Lista de transações -->
 
@@ -149,28 +159,25 @@
                      </div>
                      <div class="col-xxl-4">
                         <div class="offcanvas-xxl m-xxl-0 rounded-sm-4 rounded-xxl-0 offcanvas-end overflow-hidden m-sm-4" tabindex="-1" id="responsiveOffcanvas" aria-labelledby="responsiveOffcanvasLabel">
-                           <div class="offcanvas-header rounded-top-4 bg-light">
-                              <h5 class="offcanvas-title" id="responsiveOffcanvasLabel">Quick Stats</h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#responsiveOffcanvas" aria-label="Close"></button>
-                           </div>
                            <div class="offcanvas-body d-flex flex-column p-3 p-sm-6 p-xxl-0 gap-3 gap-xxl-6">
                               <div class="vstack gap-6 gap-xxl-6">
                                  <div class="card border-0 border-xxl">
                                     <div class="card-body d-flex flex-column p-0 p-xxl-6">
                                        <div class="d-flex justify-content-between align-items-center mb-3">
                                           <div>
+
                                              <h5>Balance</h5>
                                           </div>
-                                          <div><span class="text-heading fw-bold"><i class="bi bi-arrow-up me-2"></i>Diferença entre Income e Outcome</span></div>
+                                          <div><span class="text-heading fw-bold"><i class="bi bi-arrow-down me-2"></i> 0 </span></div>
                                        </div>
-                                       <div class="text-2xl fw-bolder text-heading ls-tight">Total CashFlow</div>
+                                       <div class="text-2xl fw-bolder text-heading ls-tight">{{ cashflow.cash_flow }}</div>
                                        <div class="d-flex align-items-center justify-content-between mt-8">
                                           <div class="">
                                              <div class="d-flex gap-3 align-items-center">
                                                 <div class="icon icon-sm icon-shape text-sm rounded-circle bg-dark text-success"><i class="bi bi-arrow-down"></i></div>
                                                 <span class="h6 fw-semibold text-muted">Income</span>
                                              </div>
-                                             <div class="fw-bold text-heading mt-3">Inflow Value</div>
+                                             <div class="fw-bold text-heading mt-3">{{ cashflow.total_inflow }}</div>
                                           </div>
                                           <span class="vr bg-dark bg-opacity-10"></span>
                                           <div class="">
@@ -178,9 +185,10 @@
                                                 <div class="icon icon-sm icon-shape text-sm rounded-circle bg-dark text-danger"><i class="bi bi-arrow-up"></i></div>
                                                 <span class="h6 fw-semibold text-muted">Expenses</span>
                                              </div>
-                                             <div class="fw-bold text-heading mt-3">Outflow Value</div>
+                                             <div class="fw-bold text-heading mt-3">{{ cashflow.total_outflow}}</div>
                                           </div>
                                        </div>
+
                                     </div>
                                  </div>
                                  <hr class="my-0 d-xxl-none">
@@ -189,6 +197,7 @@
                                        <div class="d-flex justify-content-between align-items-center mb-5">
                                           <div>
                                              <h5>Sales Done</h5>
+                                              <div><span class="text-success fw-bold"><i class="bi bi-arrow-up me-2"></i>7.8%</span></div>
                                           </div>
                                           <div class="hstack align-items-center"><a href="#" class="text-muted"><i class="bi bi-arrow-repeat"></i></a></div>
                                        </div>
@@ -198,18 +207,26 @@
                                         <!-- Livros vendidos -->
 
 
+                                                {% for book in sales_done %}
+
+
                                           <div class="d-flex bg-body-secondary gap-3 rounded-3 p-4">
-                                             <div class="w-rem-8 h-rem-8 flex-none"><img src="#" alt="..."></div>
+
+                                             <div class="w-rem-8 h-rem-8 flex-none"><i class="bi bi-book"></i></div>
                                              <div class="vstack gap-2">
                                                 <div class="d-flex mb-1">
-                                                   <div class=""><span class="d-block text-heading text-sm fw-semibold">Titulo</span> <span class="d-block text-muted text-xs">Preço</span></div>
-                                                   <div class="ms-auto d-block text-heading text-sm fw-semibold">Qtd</div>
+                                                   <div class=""><span class="d-block text-heading text-sm fw-semibold">{{ book.book }}</span> <span class="d-block text-muted text-xs">{{ book.book.price_unit }}</span></div>
+                                                   <div class="ms-auto d-block text-heading text-sm fw-semibold">
+                                                       {{ book.quantity }}</div>
                                                 </div>
                                                 <div class="progress bg-body-tertiary">
-                                                   <div class="progress-bar bg-primary" role="progressbar" aria-label="Basic example" style="width:70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                                   <div class="progress-bar bg-primary" role="progressbar" aria-label="Basic example" style="width:100%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                              </div>
                                           </div>
+
+                                           {% endfor %}
+
                                            <!-- Fim Livros vendidos -->
 
                                        </div>
@@ -225,18 +242,20 @@
                                           </div>
                                           <div><span class="text-success fw-bold"><i class="bi bi-arrow-up me-2"></i>7.8%</span></div>
                                        </div>
-                                       <div class="d-flex flex-nowrap gap-2 scrollable-x">
+                                       <div class="d-flex flex-nowrap gap-3 scrollable-x">
+                                           {% for service in services_list %}
                                           <div class="flex-none">
                                              <div class="rounded-3 p-3 p-sm-4 bg-body-secondary">
                                                 <div class="d-flex align-items-center gap-2">
-                                                   <img src="#" class="w-rem-5" alt="...">
-                                                   <h6 class="text-sm fw-semibold">Service_Supplier</h6>
+                                                   <i class="bi bi-cash-stack"></i>
+                                                   <h6 class="text-sm fw-semibold">{{ service.name }}</h6>
                                                 </div>
-                                                <div class="mt-4 fw-bold text-heading">Média mensal</div>
+                                                <div class="mt-4 fw-bold text-heading">{{ service.price_total }}</div>
                                              </div>
                                           </div>
-
+                                            {% endfor %}
                                        </div>
+
                                        <div class="text-center mt-4"><a href="#" class="link-primary fw-semibold text-sm">Manage Services</a></div>
                                     </div>
                                  </div>
@@ -248,6 +267,6 @@
                </main>
 
 
-    <script src="{% static 'js/chart-bar.js' %}"></script>
+
 
 {% endblock %}

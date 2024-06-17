@@ -1,19 +1,33 @@
 import secrets
 
 from django.db import models
+from API.buyers.models import Buyer
 from API.publication.models import Publication
 
 
 class Sale(models.Model):
+    STATUS_CHOICE = [
+        ('SUCCESSFUL', 'Successful'),
+        ('PENDING', 'Pending'),
+        ('CANCELED', 'Canceled')
+
+    ]
+
+    buyer = models.ForeignKey(
+        Buyer,
+        on_delete=models.PROTECT,
+        related_name='buyers'
+    )
     book=models.ForeignKey(
         Publication,
         on_delete=models.PROTECT,
         related_name='sales',
     )
     quantity=models.PositiveIntegerField()
-    sale_date=models.DateTimeField(auto_now_add=True)
+    sale_date=models.DateTimeField()
     total_value=models.DecimalField(max_digits=10, decimal_places=2, editable=False, default=0)
     sale_number=models.CharField(max_length=15, unique=True, blank=True, editable=False)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICE, default='PENDING')
     description=models.TextField(editable=False)
 
     class Meta:

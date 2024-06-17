@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'API.suppliers',
     'API.components',
     'API.sales',
+    'API.buyers',
     'API.services',
     'API.cashflow',
     'Client.client',
@@ -158,3 +159,4 @@ else:
 # LOGIN
 
 LOGIN_URL = '/login'
+LOGIN_REDIRECT_URL = 'home'

@@ -35,7 +35,6 @@ class CashOutFlowRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView
 
 class CashFlowView(APIView):
     permission_classes=(IsAuthenticated, GlobalDefaultPermission)
-    queryset=CashInFlow.objects.all()
 
     def get(self, request):
         total_inflow=CashInFlow.objects.aggregate(total=Sum('amount'))['total']
