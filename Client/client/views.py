@@ -17,24 +17,35 @@ def home(request):
     sales_done=sales[:10]
     total_inflow=CashInFlow.objects.aggregate(total=Sum('amount'))['total']
     total_outflow=CashOutFlow.objects.aggregate(total=Sum('amount'))['total']
-    cash_flow=total_inflow - total_outflow
-    services = Service.objects.all()
-    services_list = services[:10]
-    top_sales = sales.order_by('-quantity')[:3]
+
+    try:
+        cash_flow=total_inflow - total_outflow
+    except:
+        cash_flow= 0
 
 
+    services=Service.objects.all()
+    services_list=services[:10]
+    top_sales=sales.order_by('-quantity')[:3]
 
-    cashflow={
-        'total_inflow': total_inflow,
-        'total_outflow': total_outflow,
-        'cash_flow': cash_flow
+    try:
+        cashflow={
+            'total_inflow': total_inflow,
+            'total_outflow': total_outflow,
+            'cash_flow': cash_flow
 
-    }
+        }
+    except:
+        cashflow={
+            'total_inflow': 0,
+            'total_outflow': 0,
+            'cash_flow': 0
+        }
 
     return render(request, 'cashflow/cashflow.html',
                   {'sales_list': sales_list,
                    'sales_done': sales_done,
-                   'top_sales':top_sales,
+                   'top_sales': top_sales,
                    'cashflow': cashflow,
-                   'services_list':services_list
+                   'services_list': services_list
                    })
