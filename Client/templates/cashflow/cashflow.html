@@ -58,34 +58,20 @@
 
                             <!-- Lista de Fornecedores ou Livros ou etc -->
 
+
                            <div class="row g-3">
+                               {% for book in top_sales %}
                               <div class="col-md col-sm-6">
                                  <div class="card border-primary-hover">
                                     <div class="card-body p-4">
-                                       <div class="d-flex align-items-center gap-2"><img src="#" class="w-rem-5 flex-none" alt="..."> <a href="#" class="h6 stretched-link">Supplier 1</a></div>
-                                       <div class="text-sm fw-semibold mt-3">Gasto</div>
-                                       <div class="d-flex align-items-center gap-2 mt-1 text-xs"><span class="badge badge-xs bg-success"><i class="bi bi-arrow-up-right"></i> </span><span> % do valor total </span></div>
+                                       <div class="d-flex align-items-center gap-2"><img src="#" class="w-rem-5 flex-none" alt="..."> <a href="#" class="h6 stretched-link">{{ book.book }}</a></div>
+                                       <div class="text-sm fw-semibold mt-3">{{ book.quantity }}</div>
+                                       <div class="d-flex align-items-center gap-2 mt-1 text-xs"><span class="badge badge-xs bg-success"><i class="bi bi-arrow-up-right"></i> </span><span> {{ book.total_value }} </span></div>
                                     </div>
                                  </div>
                               </div>
-                              <div class="col-md col-sm-6">
-                                 <div class="card border-primary-hover">
-                                    <div class="card-body p-4">
-                                       <div class="d-flex align-items-center gap-2"><img src="#" class="w-rem-5 flex-none" alt="..."> <a href="#" class="h6 stretched-link">Supplier 2</a></div>
-                                       <div class="text-sm fw-semibold mt-3">Gasto</div>
-                                       <div class="d-flex align-items-center gap-2 mt-1 text-xs"><span class="badge badge-xs bg-danger"><i class="bi bi-arrow-up-right"></i> </span><span> % do valor total </span></div>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="col-md col-sm-6">
-                                 <div class="card border-primary-hover">
-                                    <div class="card-body p-4">
-                                       <div class="d-flex align-items-center gap-2"><img src="#" class="w-rem-5 flex-none" alt="..."> <a href="#" class="h6 stretched-link">Supplier 3</a></div>
-                                       <div class="text-sm fw-semibold mt-3">Gasto</div>
-                                       <div class="d-flex align-items-center gap-2 mt-1 text-xs"><span class="badge badge-xs bg-danger"><i class="bi bi-arrow-up-right"></i> </span><span> % do valor total </span></div>
-                                    </div>
-                                 </div>
-                              </div>
+                               {% endfor %}
+
 
                                <!-- Termina Lista de Fornecedores ou Livros ou etc -->
 
@@ -130,7 +116,7 @@
                                      </div>
                                   </div>
                                   <div class="list-group list-group-flush">
-                                     {% for sale in page_obj %}
+                                     {% for sale in sales_list %}
                                      <div class="list-group-item d-flex align-items-center justify-content-between gap-6">
                                         <div class="d-flex align-items-center gap-3">
                                            <div class="icon icon-shape rounded-circle icon-sm flex-none w-rem-10 h-rem-10 text-sm bg-primary bg-opacity-25 text-primary">
@@ -211,6 +197,7 @@
                                        <div class="d-flex justify-content-between align-items-center mb-5">
                                           <div>
                                              <h5>Sales Done</h5>
+                                              <div><span class="text-success fw-bold"><i class="bi bi-arrow-up me-2"></i>7.8%</span></div>
                                           </div>
                                           <div class="hstack align-items-center"><a href="#" class="text-muted"><i class="bi bi-arrow-repeat"></i></a></div>
                                        </div>
@@ -220,18 +207,26 @@
                                         <!-- Livros vendidos -->
 
 
+                                                {% for book in sales_done %}
+
+
                                           <div class="d-flex bg-body-secondary gap-3 rounded-3 p-4">
-                                             <div class="w-rem-8 h-rem-8 flex-none"><img src="#" alt="..."></div>
+
+                                             <div class="w-rem-8 h-rem-8 flex-none"><i class="bi bi-book"></i></div>
                                              <div class="vstack gap-2">
                                                 <div class="d-flex mb-1">
-                                                   <div class=""><span class="d-block text-heading text-sm fw-semibold">Titulo</span> <span class="d-block text-muted text-xs">Preço</span></div>
-                                                   <div class="ms-auto d-block text-heading text-sm fw-semibold">Qtd</div>
+                                                   <div class=""><span class="d-block text-heading text-sm fw-semibold">{{ book.book }}</span> <span class="d-block text-muted text-xs">{{ book.book.price_unit }}</span></div>
+                                                   <div class="ms-auto d-block text-heading text-sm fw-semibold">
+                                                       {{ book.quantity }}</div>
                                                 </div>
                                                 <div class="progress bg-body-tertiary">
-                                                   <div class="progress-bar bg-primary" role="progressbar" aria-label="Basic example" style="width:70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                                   <div class="progress-bar bg-primary" role="progressbar" aria-label="Basic example" style="width:100%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                              </div>
                                           </div>
+
+                                           {% endfor %}
+
                                            <!-- Fim Livros vendidos -->
 
                                        </div>
@@ -247,18 +242,20 @@
                                           </div>
                                           <div><span class="text-success fw-bold"><i class="bi bi-arrow-up me-2"></i>7.8%</span></div>
                                        </div>
-                                       <div class="d-flex flex-nowrap gap-2 scrollable-x">
+                                       <div class="d-flex flex-nowrap gap-3 scrollable-x">
+                                           {% for service in services_list %}
                                           <div class="flex-none">
                                              <div class="rounded-3 p-3 p-sm-4 bg-body-secondary">
                                                 <div class="d-flex align-items-center gap-2">
-                                                   <img src="#" class="w-rem-5" alt="...">
-                                                   <h6 class="text-sm fw-semibold">Service_Supplier</h6>
+                                                   <i class="bi bi-cash-stack"></i>
+                                                   <h6 class="text-sm fw-semibold">{{ service.name }}</h6>
                                                 </div>
-                                                <div class="mt-4 fw-bold text-heading">Média mensal</div>
+                                                <div class="mt-4 fw-bold text-heading">{{ service.price_total }}</div>
                                              </div>
                                           </div>
-
+                                            {% endfor %}
                                        </div>
+
                                        <div class="text-center mt-4"><a href="#" class="link-primary fw-semibold text-sm">Manage Services</a></div>
                                     </div>
                                  </div>
