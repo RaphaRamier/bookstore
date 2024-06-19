@@ -28,7 +28,7 @@
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                            </div>
                            <div class="modal-body p-0">
-                              <div class="px-6 py-5 border-bottom"><input type="text" class="form-control" placeholder="Search token or paste address" aria-label="Search"></div>
+                              <div class="px-6 py-5 border-bottom"><input type="text" class="form-control" placeholder="Search Book" aria-label="Search"></div>
                               <div class="p-2">
                                  <div class="vstack">
                                      <!-- bloco para token adicional -->
@@ -115,7 +115,7 @@
                                         <a href="#" class="text-muted"><i class="bi bi-arrow-repeat"></i></a>
                                      </div>
                                   </div>
-                                  <div class="list-group list-group-flush">
+                                  <div class="list-group list-group-flush custom-scrollbar">
                                      {% for sale in sales_list %}
                                      <div class="list-group-item d-flex align-items-center justify-content-between gap-6">
                                         <div class="d-flex align-items-center gap-3">
@@ -148,11 +148,12 @@
                                         </div>
                                      </div>
                                      {% endfor %}
+                                  </div>
 
                                      <!-- Fim da Lista de transações -->
 
 
-                                 </div>
+
                               </div>
                            </div>
                         </div>
@@ -202,7 +203,7 @@
                                           <div class="hstack align-items-center"><a href="#" class="text-muted"><i class="bi bi-arrow-repeat"></i></a></div>
                                        </div>
 
-                                       <div class="vstack gap-1">
+                                       <div class="vstack gap-1 custom-scrollbar">
 
                                         <!-- Livros vendidos -->
 

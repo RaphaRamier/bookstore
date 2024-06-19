@@ -2500,6 +2500,12 @@ progress {
 	display: flex
 }
 
+.list-group::-webkit-scrollbar{
+	width: 10px;
+	background-color: var(--x-body-bg);
+
+}
+
 .list-group-item {
 	padding: var(--x-list-group-item-padding-y)var(--x-list-group-item-padding-x);
 	color: var(--x-list-group-color);
@@ -5804,4 +5810,28 @@ span.flatpickr-weekday {
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 	margin-top: 0
+}
+
+.custom-scrollbar {
+    max-height: 400px; /* Defina a altura máxima desejada para a lista com scrollbar */
+    overflow-y: auto; /* Adicione o overflow vertical */
+}
+
+/* Estilização da scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 12px; /* Largura da scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: var(--x-secondary-bg); /* Cor de fundo da track */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: var(--x-border-color); /* Cor do thumb */
+    border-radius: 10px; /* Arredondamento do thumb */
+    border: 3px solid var(--x-secondary-bg); /* Espaçamento interno */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--x-link-hover-color); /* Cor do thumb ao passar o mouse */
 }
