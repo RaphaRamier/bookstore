@@ -38,6 +38,7 @@ def criar_publicacoes():
         quantidade=randint(100, 5000)
         contagem_de_paginas=randint(50, 1000)
         idioma=choice(LANGUAGE_CHOICES)
+        price_unit=round(random.uniform(1.0, 1000.0), 2)
 
         publicacao=Publication(
             book=livro,
@@ -47,7 +48,8 @@ def criar_publicacoes():
             quantity=quantidade,
             page_count=contagem_de_paginas,
             language=idioma,
-            assembly=assembly
+            assembly=assembly,
+            price_unit=price_unit
         )
         publicacao.save()
         print(f'Publicação criada: {publicacao.book.title} - {publicacao.edition}')
