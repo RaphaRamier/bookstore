@@ -15,14 +15,14 @@ def home(request):
     sales=Sale.objects.all()
     sales_list=sales[:20]
     sales_done=sales[:10]
-    total_inflow=CashInFlow.objects.aggregate(total=Sum('amount'))['total']
-    total_outflow=CashOutFlow.objects.aggregate(total=Sum('amount'))['total']
+    total_inflow=round(CashInFlow.objects.filter(source__status='SUCCESSFUL').aggregate(total=Sum('amount'))['total'],
+                       2) or 0
+    total_outflow=round(CashOutFlow.objects.aggregate(total=Sum('amount'))['total'], 2)
 
     try:
         cash_flow=total_inflow - total_outflow
     except:
-        cash_flow= 0
-
+        cash_flow=0
 
     services=Service.objects.all()
     services_list=services[:10]
