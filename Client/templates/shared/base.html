@@ -18,13 +18,22 @@
 
 
 
+
+
       <div class="d-flex flex-column flex-lg-row h-lg-100 gap-1">
          <nav class="flex-none navbar navbar-vertical navbar-expand-lg navbar-light bg-transparent show vh-lg-100 px-0 py-2" id="sidebar">
             <div class="container-fluid px-3 px-md-4 px-lg-6">
-               <button class="navbar-toggler ms-n2" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                   <span class="navbar-toggler-icon"></span>
-               </button> <a class="navbar-brand d-inline-block py-lg-1 mb-lg-5" href="#">
-                <img src="#" class="logo-dark h-rem-8 h-rem-md-10" alt="..."> <img src="#" class="logo-light h-rem-8 h-rem-md-10" alt="..."></a>
+               <div class="dropdown">
+                <button class="btn btn-link dropdown-toggle" type="button" id="dropdownThemeButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-sun-fill"></i>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownThemeButton">
+                        <li><button class="dropdown-item" type="button" data-bs-theme-value="light">Light</button></li>
+                        <li><button class="dropdown-item" type="button" data-bs-theme-value="dark">Dark</button></li>
+                        <li><button class="dropdown-item" type="button" data-bs-theme-value="auto">System</button></li>
+                    </ul>
+               </div>
+
                <div class="navbar-user d-lg-none">
                   <div class="dropdown">
                      <a class="d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
