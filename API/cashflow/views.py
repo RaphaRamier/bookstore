@@ -34,17 +34,18 @@ class CashOutFlowRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView
 
 
 class CashFlowView(APIView):
-    permission_classes=(IsAuthenticated, GlobalDefaultPermission)
+    permission_classes = (IsAuthenticated, GlobalDefaultPermission)
 
     def get(self, request):
-        total_inflow=CashInFlow.objects.aggregate(total=Sum('amount'))['total']
-        total_outflow=CashOutFlow.objects.aggregate(total=Sum('amount'))['total']
+        total_inflow=CashInFlow.objects.filter(source__status='SUCCESSFUL').aggregate(total=Sum('amount'))['total'] or 0
+        total_pending=CashInFlow.objects.filter(source__status='PENDING').aggregate(total=Sum('amount'))['total'] or 0
+        total_outflow=CashOutFlow.objects.aggregate(total=Sum('amount'))['total'] or 0
         cash_flow=total_inflow - total_outflow
 
         data={
             'total_inflow': total_inflow,
+            'total_pending':total_pending,
             'total_outflow': total_outflow,
             'cash_flow': cash_flow
-
         }
         return Response(data)
