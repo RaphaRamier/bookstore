@@ -43,12 +43,12 @@ class SaleMonthlyTrendView(APIView):
     queryset=Sale.objects.all()
 
     def get(self, request):
-        monthly_trends=self.queryset.annotate(month=TruncMonth('sale_date')).values('month').annotate(
+        monthly_trends=self.queryset.filter(status='SUCCESSFUL').annotate(month=TruncMonth('sale_date')).values('month').annotate(
             total_quantity=Sum('quantity'),
             total_value=Sum('total_value')
         ).order_by('-month')
 
-        genres_trend=self.queryset.annotate(month=TruncMonth('sale_date')).values('month',
+        genres_trend=self.queryset.filter(status='SUCCESSFUL').annotate(month=TruncMonth('sale_date')).values('month',
                                                                                   'book__book__genres').annotate(
             total_quantity=Sum('quantity'),
             total_value=Sum('total_value')
@@ -85,12 +85,12 @@ class SaleYearlyTrendView(APIView):
     queryset=Sale.objects.all()
 
     def get(self, request):
-        yearly_trends=self.queryset.annotate(year=TruncYear('sale_date')).values('year').annotate(
+        yearly_trends=self.queryset.filter(status='SUCCESSFUL').annotate(year=TruncYear('sale_date')).values('year').annotate(
             total_quantity=Sum('quantity'),
             total_value=Sum('price_total')
         ).order_by('year')
 
-        genres_trend=self.queryset.annotate(month=TruncYear('sale_date')).values('year',
+        genres_trend=self.queryset.filter(status='SUCCESSFUL').annotate(month=TruncYear('sale_date')).values('year',
                                                                                  'book__book__genres').annotate(
             total_quantity=Sum('quantity'),
             total_value=Sum('total_value')
