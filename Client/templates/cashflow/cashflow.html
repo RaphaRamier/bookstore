@@ -71,40 +71,25 @@
                                  </div>
                               </div>
                                {% endfor %}
-
-
-                               <!-- Termina Lista de Fornecedores ou Livros ou etc -->
-
-                               <!-- Botão para adicionar outro a lista em exibição -->
-
-                              <div class="col-md-1 d-none d-md-block">
-                                 <div class="card h-md-100 d-flex flex-column align-items-center justify-content-center py-4 bg-body-secondary bg-opacity-75 bg-opacity-100-hover">
-                                    <a href="#" class="stretched-link text-body-secondary" data-bs-toggle="dropdown">
-                                        <i class="bi bi-funnel"></i>
-                                    </a>
-                                    <div class="dropdown-menu">
-                                        <button type="button" class="dropdown-item d-flex align-items-center" data-filter="filter1">Filter 1</button>
-                                        <button type="button" class="dropdown-item d-flex align-items-center" data-filter="filter2">Filter 2</button>
-                                        <button type="button" class="dropdown-item d-flex align-items-center" data-filter="filter3">Filter 3</button>
-                                    </div>
-                                </div>
-                              </div>
                            </div>
-
-                            <!-- Fim do Botão para adicionar outro a lista em exibição -->
-
 
                             <!-- Dashboard de ganhos mensais -->
 
-                           <div class="card">
-                              <div class="card-body pb-0">
-                                 <div class="d-flex justify-content-between align-items-center">
+                            <div class="card">
+                            <div class="card-body pb-0">
+                                <div class="d-flex justify-content-between align-items-center">
                                     <div>
-                                       <h5>Earnings</h5>
+                                        <h5>Earnings</h5>
                                     </div>
-                                    <div class="hstack align-items-center"><a href="#" class="text-muted"><i class="bi bi-arrow-repeat"></i></a></div>
-                                 </div>
-                                 <div class="mx-n4">
+                                    <div class="hstack align-items-center">
+                                        <a href="#" class="text-muted" data-bs-toggle="dropdown"><i class="bi bi-funnel"></i></a>
+                                        <div class="dropdown-menu">
+                                            <button type="button" class="dropdown-item d-flex align-items-center" data-filter="quantity">Mostrar Quantidade</button>
+                                            <button type="button" class="dropdown-item d-flex align-items-center" data-filter="value">Mostrar Valor</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mx-n4">
                                     <canvas id="EarningsChartBar"></canvas>
                                  </div>
                               </div>
