@@ -84,8 +84,8 @@
                                     <div class="hstack align-items-center">
                                         <a href="#" class="text-muted" data-bs-toggle="dropdown"><i class="bi bi-funnel"></i></a>
                                         <div class="dropdown-menu">
-                                            <button type="button" class="dropdown-item d-flex align-items-center" data-filter="quantity">Mostrar Quantidade</button>
-                                            <button type="button" class="dropdown-item d-flex align-items-center" data-filter="value">Mostrar Valor</button>
+                                            <button type="button" class="dropdown-item d-flex align-items-center" data-filter="quantity">Filter by Quantity</button>
+                                            <button type="button" class="dropdown-item d-flex align-items-center" data-filter="value">Filter by Total Value </button>
                                         </div>
                                     </div>
                                 </div>
@@ -192,7 +192,37 @@
                                        <div class="d-flex justify-content-between align-items-center mb-5">
                                           <div>
                                              <h5>Sales Done</h5>
-                                              <div><span class="text-success fw-bold"><i class="bi bi-arrow-up me-2"></i>7.8%</span></div>
+<div>
+    {% if percentage_difference %}
+        <div>
+            {% if percentage_difference is not None %}
+                {% if percentage_difference > 0 %}
+                    <span class="text-success fw-bold">
+                        <i class="bi bi-arrow-up me-2"></i>{{ percentage_difference }}%
+                    </span>
+                {% elif percentage_difference < 0 %}
+                    <span class="text-danger fw-bold">
+                        <i class="bi bi-arrow-down me-2"></i>{{ percentage_difference }}%
+                    </span>
+                {% else %}
+                    <span class="text-muted fw-bold">
+                        <i class="bi bi-arrow-right me-2"></i>{{ percentage_difference }}%
+                    </span>
+                {% endif %}
+            {% else %}
+                <span class="text-muted fw-bold">
+                    <i class="bi bi-arrow-right me-2"></i>No percentage difference available
+                </span>
+            {% endif %}
+        </div>
+{% else %}
+        <div>
+            <span class="text-muted fw-bold">
+                <i class="bi bi-arrow-right me-2"></i>No data available
+            </span>
+        </div>
+    {% endif %}
+</div>
                                           </div>
                                           <div class="hstack align-items-center"><a href="#" class="text-muted"><i class="bi bi-arrow-repeat"></i></a></div>
                                        </div>
