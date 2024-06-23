@@ -23,20 +23,20 @@ def home(request):
                        2) or 0
     total_outflow=round(CashOutFlow.objects.aggregate(total=Sum('amount'))['total'], 2)
 
-    percentage_difference = None
+    percentage_difference=None
     if 'monthly_trends' in response.data:
-        monthly_trends = response.data['monthly_trends']
+        monthly_trends=response.data['monthly_trends']
         if monthly_trends:
-            last_month_data = monthly_trends[0]
-            percentage_difference = round(last_month_data.get('percentage_difference'), 2)
+            last_month_data=monthly_trends[0]
+            percentage_difference=round(last_month_data.get('percentage_difference'), 2)
 
     try:
         cash_flow=total_inflow - total_outflow
     except:
         cash_flow=0
 
-    services=Service.objects.all()
-    services_list=services[:10]
+    services=CashOutFlow.objects.all()
+    services_list=services
     top_sales=sales.order_by('-quantity')[:3]
 
     try:
@@ -63,3 +63,27 @@ def home(request):
                    'services_list': services_list,
                    'percentage_difference': percentage_difference,
                    })
+
+
+def analytics(request):
+    sale_trend_view=SaleMonthlyTrendView()
+    response=sale_trend_view.get(request)
+
+    data = []
+
+    if 'monthly_trends' in response.data:
+        monthly_trends = response.data['monthly_trends']
+
+        for month_data in monthly_trends:
+            month = month_data.get('month')
+            percentage_difference = month_data.get('percentage_difference')
+
+            if month and percentage_difference is not None:
+                data.append({
+                    'month': month,
+                    'percentage_difference': round(percentage_difference, 2)
+                })
+
+    print(data)
+
+    return render(request, 'books/analytics.html', {'data': data, })
