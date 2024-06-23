@@ -1,29 +1,27 @@
 document.addEventListener('DOMContentLoaded', function() {
     let chart; // To store the Chart.js instance
 
-    function fetchDataAndRenderChart(type) {
+    function fetchDataAndRenderChart() {
         fetch('/API/sales/monthly-trend/')
             .then(response => response.json())
             .then(data => {
                 const monthlyTrends = data.monthly_trends;
                 const months = monthlyTrends.map(entry => entry.month.substring(0, 7));
-                const totalQuantities = monthlyTrends.map(entry => entry.total_quantity);
-                const totalValues = monthlyTrends.map(entry => entry.total_value);
+                const percentageDifference = monthlyTrends.map(entry => entry.percentage_difference);
 
                 const reversedMonths = months.reverse();
-                const reversedTotalQuantities = totalQuantities.reverse();
-                const reversedTotalValues = totalValues.reverse();
+                const reversedPercentageDifference = percentageDifference.reverse();
 
-                const ctx = document.getElementById('EarningsChartBar').getContext('2d');
+                const ctx = document.getElementById('lineChart').getContext('2d');
 
                 const chartData = {
                     labels: reversedMonths,
                     datasets: [{
-                        label: type === 'quantity' ? 'Total Quantity' : 'Total Value',
-                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
+                        label: 'Percentage Difference',
+                        backgroundColor: 'rgba(54, 200, 0, 0.5)',
+                        borderColor: 'rgba(54, 200, 0, 1)',
                         borderWidth: 1,
-                        data: type === 'quantity' ? reversedTotalQuantities : reversedTotalValues
+                        data: reversedPercentageDifference
                     }]
                 };
 
@@ -32,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
                 chart = new Chart(ctx, {
-                    type: 'bar',
+                    type: 'line',
                     data: chartData,
                     options: {
                         scales: {
@@ -49,13 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Initial render with default data
-    fetchDataAndRenderChart('quantity');
+    fetchDataAndRenderChart();
 
-    // Add event listeners for dropdown buttons
-    document.querySelectorAll('.dropdown-item').forEach(button => {
-        button.addEventListener('click', function() {
-            const filterType = this.getAttribute('data-filter');
-            fetchDataAndRenderChart(filterType);
-        });
-    });
+    // Optional: Add event listeners for dropdown buttons if needed
 });

@@ -71,31 +71,25 @@
                                  </div>
                               </div>
                                {% endfor %}
-
-
-                               <!-- Termina Lista de Fornecedores ou Livros ou etc -->
-
-                               <!-- Botão para adicionar outro a lista em exibição -->
-
-                              <div class="col-md-1 d-none d-md-block">
-                                 <div class="card h-md-100 d-flex flex-column align-items-center justify-content-center py-4 bg-body-secondary bg-opacity-75 bg-opacity-100-hover"><a href="#cryptoModal" class="stretched-link text-body-secondary" data-bs-toggle="modal"><i class="bi bi-plus-lg"></i></a></div>
-                              </div>
                            </div>
-
-                            <!-- Fim do Botão para adicionar outro a lista em exibição -->
-
 
                             <!-- Dashboard de ganhos mensais -->
 
-                           <div class="card">
-                              <div class="card-body pb-0">
-                                 <div class="d-flex justify-content-between align-items-center">
+                            <div class="card">
+                            <div class="card-body pb-0">
+                                <div class="d-flex justify-content-between align-items-center">
                                     <div>
-                                       <h5>Earnings</h5>
+                                        <h5>Earnings</h5>
                                     </div>
-                                    <div class="hstack align-items-center"><a href="#" class="text-muted"><i class="bi bi-arrow-repeat"></i></a></div>
-                                 </div>
-                                 <div class="mx-n4">
+                                    <div class="hstack align-items-center">
+                                        <a href="#" class="text-muted" data-bs-toggle="dropdown"><i class="bi bi-funnel"></i></a>
+                                        <div class="dropdown-menu">
+                                            <button type="button" class="dropdown-item d-flex align-items-center" data-filter="quantity">Filter by Quantity</button>
+                                            <button type="button" class="dropdown-item d-flex align-items-center" data-filter="value">Filter by Total Value </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mx-n4">
                                     <canvas id="EarningsChartBar"></canvas>
                                  </div>
                               </div>
@@ -198,7 +192,37 @@
                                        <div class="d-flex justify-content-between align-items-center mb-5">
                                           <div>
                                              <h5>Sales Done</h5>
-                                              <div><span class="text-success fw-bold"><i class="bi bi-arrow-up me-2"></i>7.8%</span></div>
+<div>
+    {% if percentage_difference %}
+        <div>
+            {% if percentage_difference is not None %}
+                {% if percentage_difference > 0 %}
+                    <span class="text-success fw-bold">
+                        <i class="bi bi-arrow-up me-2"></i>{{ percentage_difference }}%
+                    </span>
+                {% elif percentage_difference < 0 %}
+                    <span class="text-danger fw-bold">
+                        <i class="bi bi-arrow-down me-2"></i>{{ percentage_difference }}%
+                    </span>
+                {% else %}
+                    <span class="text-muted fw-bold">
+                        <i class="bi bi-arrow-right me-2"></i>{{ percentage_difference }}%
+                    </span>
+                {% endif %}
+            {% else %}
+                <span class="text-muted fw-bold">
+                    <i class="bi bi-arrow-right me-2"></i>No percentage difference available
+                </span>
+            {% endif %}
+        </div>
+{% else %}
+        <div>
+            <span class="text-muted fw-bold">
+                <i class="bi bi-arrow-right me-2"></i>No data available
+            </span>
+        </div>
+    {% endif %}
+</div>
                                           </div>
                                           <div class="hstack align-items-center"><a href="#" class="text-muted"><i class="bi bi-arrow-repeat"></i></a></div>
                                        </div>
@@ -239,7 +263,7 @@
                                     <div class="card-body p-0 p-xxl-6">
                                        <div class="d-flex justify-content-between align-items-center mb-4">
                                           <div>
-                                             <h5>Services</h5>
+                                             <h5>Expenses</h5>
                                           </div>
                                           <div><span class="text-success fw-bold"><i class="bi bi-arrow-up me-2"></i>7.8%</span></div>
                                        </div>
@@ -249,9 +273,9 @@
                                              <div class="rounded-3 p-3 p-sm-4 bg-body-secondary">
                                                 <div class="d-flex align-items-center gap-2">
                                                    <i class="bi bi-cash-stack"></i>
-                                                   <h6 class="text-sm fw-semibold">{{ service.name }}</h6>
+                                                   <h6 class="text-sm fw-semibold">{{ service.content_object }}</h6>
                                                 </div>
-                                                <div class="mt-4 fw-bold text-heading">{{ service.price_total }}</div>
+                                                <div class="mt-4 fw-bold text-heading">{{ service.amount }}</div>
                                              </div>
                                           </div>
                                             {% endfor %}

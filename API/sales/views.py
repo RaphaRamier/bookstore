@@ -10,6 +10,7 @@ from rest_framework.views import APIView
 from API.sales.models import Sale
 from API.sales.serializers import SaleSerializer
 from setup.permissions import GlobalDefaultPermission
+import pandas as pd
 
 
 class CustomPagination(PageNumberPagination):
@@ -40,28 +41,36 @@ class SaleRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
 
 class SaleMonthlyTrendView(APIView):
     permission_classes=(IsAuthenticated, GlobalDefaultPermission)
-    queryset=Sale.objects.all()
+    queryset=Sale.objects.filter(status='SUCCESSFUL')
 
     def get(self, request):
-        monthly_trends=self.queryset.annotate(month=TruncMonth('sale_date')).values('month').annotate(
+        monthly_trends=self.queryset.annotate(
+            month=TruncMonth('sale_date')
+        ).values('month').annotate(
             total_quantity=Sum('quantity'),
             total_value=Sum('total_value')
-        ).order_by('-month')
+        ).order_by('month')
 
-        genres_trend=self.queryset.annotate(month=TruncMonth('sale_date')).values('month',
-                                                                                  'book__book__genres').annotate(
-            total_quantity=Sum('quantity'),
-            total_value=Sum('total_value')
-        ).order_by('-month', 'book__book__genres')
+        df=pd.DataFrame(list(monthly_trends))
+
+        df['percentage_difference']=df['total_value'].pct_change() * 100
 
         monthly_data=[
             {
                 'month': entry['month'].strftime('%Y-%m'),
                 'total_quantity': entry['total_quantity'],
                 'total_value': entry['total_value'],
+                'percentage_difference': row['percentage_difference'] if i > 0 else None,
             }
-            for entry in monthly_trends
+            for i, (entry, row) in enumerate(zip(monthly_trends, df.to_dict('records')))
         ]
+
+        genres_trend=self.queryset.filter(status='SUCCESSFUL').annotate(
+            month=TruncMonth('sale_date')
+        ).values('month', 'book__book__genres').annotate(
+            total_quantity=Sum('quantity'),
+            total_value=Sum('total_value')
+        ).order_by('-month', 'book__book__genres')
 
         genres_data=[
             {
@@ -73,11 +82,12 @@ class SaleMonthlyTrendView(APIView):
         ]
 
         data={
-            'monthly_trends': monthly_trends,
-            'genres_trend': genres_trend
+            'monthly_trends': monthly_data[::-1],
+            'genres_trend': genres_data[::-1],
         }
 
         return Response(data)
+
 
 
 class SaleYearlyTrendView(APIView):
@@ -85,13 +95,14 @@ class SaleYearlyTrendView(APIView):
     queryset=Sale.objects.all()
 
     def get(self, request):
-        yearly_trends=self.queryset.annotate(year=TruncYear('sale_date')).values('year').annotate(
+        yearly_trends=self.queryset.filter(status='SUCCESSFUL').annotate(year=TruncYear('sale_date')).values(
+            'year').annotate(
             total_quantity=Sum('quantity'),
             total_value=Sum('price_total')
         ).order_by('year')
 
-        genres_trend=self.queryset.annotate(month=TruncYear('sale_date')).values('year',
-                                                                                 'book__book__genres').annotate(
+        genres_trend=self.queryset.filter(status='SUCCESSFUL').annotate(month=TruncYear('sale_date')).values('year',
+                                                                                                             'book__book__genres').annotate(
             total_quantity=Sum('quantity'),
             total_value=Sum('total_value')
         ).order_by('year', 'book__book__genres')
