@@ -65,25 +65,27 @@ def home(request):
                    })
 
 
+from django.shortcuts import render
+from API.sales.views import SaleMonthlyTrendView
+
 def analytics(request):
-    sale_trend_view=SaleMonthlyTrendView()
-    response=sale_trend_view.get(request)
+    sale_trend_view = SaleMonthlyTrendView()
+    response = sale_trend_view.get(request)
 
     data = []
 
-    if 'monthly_trends' in response.data:
-        monthly_trends = response.data['monthly_trends']
+    if 'genres_trend' in response.data:
+        genres_trend = response.data['genres_trend']
 
-        for month_data in monthly_trends:
-            month = month_data.get('month')
-            percentage_difference = month_data.get('percentage_difference')
+        for genre_data in genres_trend:
+            genre = genre_data.get('genre')
+            total_values = genre_data.get('total_value')
 
-            if month and percentage_difference is not None:
+            if genre and total_values is not None:
                 data.append({
-                    'month': month,
-                    'percentage_difference': round(percentage_difference, 2)
+                    'genre': genre,
+                    'total_value': total_values
                 })
 
-    print(data)
+    return render(request, 'books/analytics.html', {'data': data})
 
-    return render(request, 'books/analytics.html', {'data': data, })

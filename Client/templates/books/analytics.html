@@ -91,19 +91,21 @@
                 <h5>Crescimentos das Vendas (%)</h5>
               </div>
               <div class="col-12 col-sm-auto">
-                <div class="d-flex scrollable-x justify-content-between gap-1 p-1 align-items-center bg-body-secondary rounded text-xs fw-semibold">
-                  <a href="#" class="px-3 py-1 text-muted bg-white-hover bg-opacity-70-hover rounded">1H </a>
-                  <a href="#" class="px-3 py-1 text-muted bg-white rounded shadow-1">1D </a>
-                  <a href="#" class="px-3 py-1 text-muted bg-white-hover bg-opacity-50-hover rounded">1W </a>
-                  <a href="#" class="px-3 py-1 text-muted bg-white-hover bg-opacity-50-hover rounded">1M </a>
-                  <a href="#" class="d-none d-sm-inline-block px-3 py-1 text-muted bg-white-hover bg-opacity-50-hover rounded">1Y</a>
+            <div class="hstack align-items-center">
+                <a href="#" class="text-muted" data-bs-toggle="dropdown"><i class="bi bi-funnel"></i></a>
+
+                <div class="dropdown-menu">
+                    <button type="button" class="dropdown-item d-flex align-items-center genre-filter" data-filter="All">All</button>
+                    {% for genre in data %}
+                        <button type="button" class="dropdown-item d-flex align-items-center genre-filter" data-filter="{{ genre.genre }}">{{ genre.genre }}</button>
+                    {% endfor %}
                 </div>
-              </div>
-                </div>
-                  <div class="mx-n4">
-                    <canvas id="lineChart"></canvas>
-                 </div>
-                </div>
+            </div>
+        </div>
+        <div class="mx-n4">
+            <canvas id="barChart"></canvas>
+        </div>
+    </div>
         </div>
       </div>
     </div>

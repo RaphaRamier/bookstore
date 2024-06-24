@@ -67,14 +67,15 @@ class SaleMonthlyTrendView(APIView):
 
         genres_trend=self.queryset.filter(status='SUCCESSFUL').annotate(
             month=TruncMonth('sale_date')
-        ).values('month', 'book__book__genres').annotate(
+        ).values('month', 'book__book__genres__name').annotate(
             total_quantity=Sum('quantity'),
             total_value=Sum('total_value')
-        ).order_by('-month', 'book__book__genres')
+        ).order_by('-month', 'book__book__genres__name')
 
         genres_data=[
             {
                 'month': entry['month'].strftime('%Y-%m'),
+                'genre': entry['book__book__genres__name'],
                 'total_quantity': entry['total_quantity'],
                 'total_value': entry['total_value'],
             }
