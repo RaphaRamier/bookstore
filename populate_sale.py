@@ -1,12 +1,14 @@
 import os
 import django
+import random
+from faker import Faker
+from datetime import timedelta, datetime
 
+# Configurar as configurações do Django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'setup.settings')
 django.setup()
 
-import random
-from faker import Faker
-from datetime import timedelta
+# Importar modelos do Django após a configuração
 from API.buyers.models import Buyer
 from API.publication.models import Publication
 from API.sales.models import Sale
@@ -15,31 +17,47 @@ fake=Faker('pt_BR')
 Faker.seed(42)
 
 
-def criar_vendas(quantidade_de_vendas):
+def criar_vendas():
     buyers=Buyer.objects.all()
-    books=Publication.objects.all()
+    publications=Publication.objects.all()
 
-    if not buyers.exists() or not books.exists():
+    if not buyers.exists() or not publications.exists():
         print("Por favor, crie compradores e publicações antes de adicionar vendas.")
         return
 
-    for _ in range(quantidade_de_vendas):
-        buyer=random.choice(buyers)
-        book=random.choice(books)
-        quantity=random.randint(1, 30)
-        sale_date=fake.date_between(start_date='-3y', end_date='today')
-        status=random.choice(['SUCCESSFUL', 'PENDING', 'CANCELED'])
+    # Definir datas de início e fim para as vendas
+    start_date=datetime.now() - timedelta(days=809)  # 3 anos atrás
+    end_date=datetime.now()
 
-        sale=Sale(
-            buyer=buyer,
-            book=book,
-            quantity=quantity,
-            sale_date=sale_date,
-            status=status
-        )
-        sale.save()
+    current_date=start_date
 
-        print(f"Criada venda: {sale}")
+    while current_date <= end_date:
+        genres=list(publications.values_list('book__genres__name', flat=True).distinct())
+
+        for genre in genres:
+            status=random.choice(['SUCCESSFUL', 'PENDING', 'CANCELED'])
+            quantity=random.randint(1, 10)  # Quantidade mais linear
+
+            # Escolher aleatoriamente um livro dentro do gênero especificado
+            publication=random.choice(publications.filter(book__genres__name=genre))
+
+            sale_date=current_date.replace(hour=0, minute=0, second=0, microsecond=0)
+
+            sale=Sale(
+                buyer=random.choice(buyers),
+                book=publication,
+                quantity=quantity,
+                sale_date=sale_date,
+                status=status
+            )
+            sale.save()
+
+            print(f"Venda criada para o dia {current_date}: {sale}")
+
+        current_date+=timedelta(days=1)
+
+    print("Vendas criadas com sucesso.")
 
 
-criar_vendas(500)
+if __name__ == "__main__":
+    criar_vendas()
