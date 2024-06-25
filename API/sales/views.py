@@ -1,5 +1,5 @@
 from django.db.models import Count, Sum
-from django.db.models.functions import TruncMonth, TruncYear
+from django.db.models.functions import TruncMonth, TruncYear, TruncDay
 from django.http import JsonResponse
 from rest_framework import generics
 from rest_framework.pagination import PageNumberPagination
@@ -37,6 +37,79 @@ class SaleRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
             return JsonResponse({'message': 'Sale deleted successfully.'}, status=204)
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
+
+
+class SaleDailyTrendView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        queryset = Sale.objects.filter(status='SUCCESSFUL')
+
+        # Agrupar dados diários
+        daily_trends = queryset.annotate(
+            day=TruncDay('sale_date')
+        ).values('day').annotate(
+            total_quantity=Sum('quantity'),
+            total_value=Sum('total_value')
+        ).order_by('day')
+
+        daily_df = pd.DataFrame(list(daily_trends))
+
+        # Calcular a diferença percentual e a porcentagem cumulativa
+        # Converter valores para float antes de executar as operações
+        daily_df['percentage_difference'] = daily_df['total_value'].astype(float).pct_change() * 100
+        daily_df['cumulative_percentage'] = ((1 + daily_df['percentage_difference'] / 100).cumprod()) - 1
+
+        # Substituir valores NaN e infinitos
+        daily_df = daily_df.replace([float('inf'), -float('inf'), float('nan')], 0)
+
+        daily_data = [
+            {
+                'day': entry['day'].strftime('%Y-%m-%d'),
+                'total_quantity': entry['total_quantity'],
+                'total_value': entry['total_value'],
+                'percentage_difference': round(row['percentage_difference'], 2) if i > 0 else None,
+                'cumulative_percentage': round(row['cumulative_percentage'], 2) if row['cumulative_percentage'] is not None else 0
+            }
+            for i, (entry, row) in enumerate(zip(daily_trends, daily_df.to_dict('records')))
+        ]
+
+        # Agrupar dados por gênero
+        genres_trend = queryset.annotate(
+            day=TruncDay('sale_date')
+        ).values('day', 'book__book__genres__name').annotate(
+            total_quantity=Sum('quantity'),
+            total_value=Sum('total_value')
+        ).order_by('-day', 'book__book__genres__name')
+
+        genre_df = pd.DataFrame(list(genres_trend))
+
+        # Calcular a diferença percentual e a porcentagem cumulativa
+        # Converter valores para float antes de executar as operações
+        genre_df['percentage_difference'] = genre_df['total_value'].astype(float).pct_change() * 100
+        genre_df['cumulative_percentage'] = ((1 + genre_df['percentage_difference'] / 100).cumprod()) - 1
+
+        # Substituir valores NaN e infinitos
+        genre_df = genre_df.replace([float('inf'), -float('inf'), float('nan')], 0)
+
+        genres_data = [
+            {
+                'day': entry['day'].strftime('%Y-%m-%d'),
+                'genre': entry['book__book__genres__name'],
+                'total_quantity': entry['total_quantity'],
+                'total_value': entry['total_value'],
+                'percentage_difference': round(row['percentage_difference'], 2) if i > 0 else None,
+                'cumulative_percentage': round(row['cumulative_percentage'], 2) if row['cumulative_percentage'] is not None else 0
+            }
+            for i, (entry, row) in enumerate(zip(genres_trend, genre_df.to_dict('records')))
+        ]
+
+        data = {
+            'daily_trends': daily_data[::-1],
+            'genres_trend': genres_data[::-1],
+        }
+
+        return Response(data)
 
 
 class SaleMonthlyTrendView(APIView):
@@ -88,7 +161,6 @@ class SaleMonthlyTrendView(APIView):
         }
 
         return Response(data)
-
 
 
 class SaleYearlyTrendView(APIView):

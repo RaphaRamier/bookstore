@@ -12,27 +12,38 @@ document.addEventListener('DOMContentLoaded', function() {
                     filteredData = data.genres_trend.filter(entry => entry.genre === genreFilter);
                 }
 
-                // Agrupar os dados por mês para o gráfico de barras
+                // Agrupar os dados por dia e gênero
                 const groupedData = {};
                 filteredData.forEach(entry => {
-                    if (!groupedData[entry.month]) {
-                        groupedData[entry.month] = 0;
+                    const month = entry.month;
+                    const genre = entry.genre;
+
+                    if (!groupedData[genre]) {
+                        groupedData[genre] = {};
                     }
-                    groupedData[entry.month] += entry.total_value;
+                    if (!groupedData[genre][month]) {
+                        groupedData[genre][month] = 0;
+                    }
+                    groupedData[genre][month] += entry.total_quantity;
                 });
 
-                // Ordenar as chaves de mês para garantir a ordenação correta no gráfico
-                const months = Object.keys(groupedData).sort();
+                // Ordenar os dias para garantir a ordenação correta no gráfico
+                const months = Array.from(new Set(filteredData.map(entry => entry.month))).sort();
+
+                const datasets = Object.keys(groupedData).map(genre => {
+                    return {
+                        label: genre,
+                        backgroundColor: getRandomColor(), // Cor aleatória para o conjunto de dados
+                        borderColor: getRandomColor(),
+                        borderWidth: 1,
+                        data: months.map(month => groupedData[genre][month] || 0),
+                        fill: false // Para evitar preenchimento abaixo da linha
+                    };
+                });
 
                 const chartData = {
                     labels: months,
-                    datasets: [{
-                        label: genreFilter === 'All' ? 'Total Value by Genre' : `Total Value for ${genreFilter}`,
-                        backgroundColor: getRandomColor(), // Cor aleatória para o conjunto de dados
-                        borderColor: '#333',
-                        borderWidth: 1,
-                        data: months.map(month => groupedData[month])
-                    }]
+                    datasets: datasets
                 };
 
                 const ctx = document.getElementById('barChart').getContext('2d');
@@ -42,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
                 chart = new Chart(ctx, {
-                    type: 'bar',
+                    type: 'line',
                     data: chartData,
                     options: {
                         scales: {
@@ -53,12 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     text: 'Total Value'
                                 }
                             },
-                            x: {
-                                title: {
-                                    display: true,
-                                    text: 'Month'
-                                }
-                            }
+
                         },
                         plugins: {
                             legend: {
