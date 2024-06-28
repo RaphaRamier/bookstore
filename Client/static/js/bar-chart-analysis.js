@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 beginAtZero: true,
                                 title: {
                                     display: true,
-                                    text: 'Total Value'
+                                    text: 'Total Quantity'
                                 }
                             },
 
