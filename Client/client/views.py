@@ -5,10 +5,9 @@ import requests
 from django.core.paginator import Paginator
 from django.db.models import Sum, Avg
 from django.db.models.functions import TruncMonth
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from requests.auth import HTTPBasicAuth
-
 from API.books.models import Book
 from API.cashflow.models import CashInFlow, CashOutFlow
 from API.genres.views import GenreStashView
@@ -17,6 +16,7 @@ from API.sales.models import Sale
 from API.sales.views import SaleMonthlyTrendView
 from API.services.models import Service
 from Client import user
+from .forms import BookForm, AuthorForm, GenreForm, BookAssemblyForm, PublicationForm
 
 
 @login_required
@@ -165,3 +165,65 @@ def balance(request):
         'dates': json.dumps(dates),
     }
     return render(request, 'balance/balance.html', context)
+
+
+def add_book(request):
+    book_form=BookForm()
+    author_form=AuthorForm()
+    genre_form=GenreForm()
+    assembly_form=BookAssemblyForm()
+    publication_form=PublicationForm()
+
+    if request.method == 'POST':
+        item_type=request.POST.get('item-type')
+        if item_type == 'book':
+            form=BookForm(request.POST)
+        elif item_type == 'author':
+            form=AuthorForm(request.POST)
+        elif item_type == 'genre':
+            form=GenreForm(request.POST)
+        elif item_type == 'assembly':
+            form=BookAssemblyForm(request.POST)
+        elif item_type == 'publication':
+            form=PublicationForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('success_url')
+
+    context={
+        'book_form': book_form,
+        'author_form': author_form,
+        'genre_form': genre_form,
+        'assembly_form': assembly_form,
+        'publication_form': publication_form
+    }
+    return render(request, 'forms/book_forms.html', context)
+
+@login_required
+def book_shelf(request):
+
+    books=Publication.objects.all()
+    paginator=Paginator(books, 12)
+    page_number=request.GET.get('page')
+    page_obj=paginator.get_page(page_number)
+
+    return render(request, 'book_shelf/shelf.html', {'books':books, 'total_books':page_obj})
+
+@login_required
+def book_detail(request, id):
+    book = get_object_or_404(Book, id=id)
+    return render(request, 'book_shelf/book_detail.html', {'book': book})
+
+
+@login_required
+def edit_book(request, book_id):
+    book = get_object_or_404(Book, id=book_id)
+    if request.method == 'POST':
+        form = BookForm(request.POST, instance=book)
+        if form.is_valid():
+            form.save()
+            return redirect('book_detail', id=book.id)
+    else:
+        form = BookForm(instance=book)
+    return render(request, 'forms/edit_book.html', {'form': form, 'book': book})
