@@ -1,0 +1,262 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+<main class="container-fluid px-3 py-5 p-lg-6 p-xxl-8">
+    <div class="mb-6 mb-xl-10">
+        <div class="row g-3 align-items-center">
+            <div class="col">
+                <h1 class="ls-tight">Balance</h1>
+            </div>
+            <div class="col">
+                <div class="hstack gap-2 justify-content-end">
+                    <button type="button" class="btn btn-sm btn-square btn-neutral rounded-circle d-xxl-none" data-bs-toggle="offcanvas" data-bs-target="#responsiveOffcanvas" aria-controls="responsiveOffcanvas">
+                        <i class="bi bi-three-dots"></i>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-neutral d-none d-sm-inline-flex" data-bs-target="#depositLiquidityModal" data-bs-toggle="modal">
+                        <span class="pe-2">
+                            <i class="bi bi-plus-circle"></i>
+                        </span>
+                        <span>#</span>
+                    </button>
+                    <a href="/pages/page-overview.html" class="btn d-inline-flex btn-sm btn-dark">
+                        <span>#</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 g-xl-6">
+        <div class="col-xxl-8">
+            <div class="vstack gap-3 gap-xl-6">
+                <div class="d-flex">
+                    <div class="">
+                        <div class="hstack gap-3 mb-1">
+                            <h4 class="fw-semibold">Total Balance</h4>
+                            <a href="#"><i class="bi bi-eye"></i> </a>
+                            <a href="#"><i class="bi bi-info-circle"></i></a>
+                        </div>
+                        <div class="text-2xl text-heading fw-bolder ls-tight">${{ cashflow.cash_flow }}</div>
+                    </div>
+
+                </div>
+
+
+                <!-- Gráfico de Receitas e Despesas -->
+                <div class="card">
+                    <div class="card-body pb-0">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div><h5>Performance</h5></div>
+                            <div class="hstack align-items-center">
+                                <a href="#" class="text-muted"><i class="bi bi-arrow-repeat"></i></a>
+                            </div>
+                        </div>
+                        <div class="mx-n4">
+                            <div id="chart-container" data-height="245" style="min-height: 260px;">
+                                <canvas id="performanceChart" height="245"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+             <!-- Today's Spendings and Withdrawals -->
+                <div class="row g-3 g-xl-6">
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start gap-4">
+                                    <div class="flex-none progress-circle progress-circle-xl progress-circle-primary text-light" aria-valuenow="{{ sales_percentage }}" aria-valuemin="0" aria-valuemax="100" role="progressbar" style="--value:{{ sales_percentage }}">
+                                        <span class="text-primary fw-bold">{{ sales_percentage|floatformat:2 }}%</span>
+                                    </div>
+                                    <div>
+                                        <div class="mb-2">
+                                            <span class="d-block text-xs text-muted text-opacity-75">This Month's Sales</span>
+                                            <span class="d-block fw-bold text-heading text-sm">${{ cashflow.total_inflow }}</span>
+                                        </div>
+                                        <div>
+                                            <span class="d-block text-xs text-muted text-opacity-75">Annual Sales Goal</span>
+                                            <span class="d-block fw-bold text-heading text-sm">${{ sales_goal|floatformat:2 }} EUR</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start gap-4">
+                                    <div class="flex-none progress-circle progress-circle-xl progress-circle-primary text-light" aria-valuenow="{{ expense_percentage }}" aria-valuemin="0" aria-valuemax="100" role="progressbar" style="--value:{{ expense_percentage }}">
+                                        <span class="text-primary fw-bold">{{ expense_percentage|floatformat:2 }}%</span>
+                                    </div>
+                                    <div>
+                                        <div class="mb-2">
+                                            <span class="d-block text-xs text-muted text-opacity-75">This Month's Expenses</span>
+                                            <span class="d-block fw-bold text-heading text-sm">${{ cashflow.total_outflow }}</span>
+                                        </div>
+                                        <div>
+                                            <span class="d-block text-xs text-muted text-opacity-75">Annual Expense Limit</span>
+                                            <span class="d-block fw-bold text-heading text-sm">${{ expense_limit|floatformat:2 }} EUR</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <!-- Recent Transactions -->
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="mb-4">Recent Transactions</h5>
+                        <div class="table-responsive">
+                            <table class="table align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Book Title</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Total Value</th>
+                                        <th scope="col">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for sale in sales_done %}
+                                    <tr>
+                                        <td>
+                                            <div>{{ sale.book }}</div>
+                                            <div class="text-muted text-xs">Quantity: {{ sale.quantity }}</div>
+                                        </td>
+                                        <td>{{ sale.sale_date|date:"F j, Y, g:i a" }}</td>
+                                        <td>{{ sale.quantity }}</td>
+                                        <td>${{ sale.total_value }}</td>
+                                        <td>
+                                            <span class="badge
+                                                {% if sale.status == 'PENDING' %}
+                                                    bg-warning
+                                                {% elif sale.status == 'CANCELED' %}
+                                                    bg-danger
+                                                {% elif sale.status == 'SUCCESSFUL' %}
+                                                    bg-success
+                                                {% else %}
+                                                    bg-secondary
+                                                {% endif %}">
+                                                {{ sale.status }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Payments (Pending Purchases) -->
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="mb-4">Upcoming Payments</h5>
+                        <div class="table-responsive">
+                            <table class="table align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Book Title</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Total Value</th>
+                                        <th scope="col">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for purchase in pending_purchases %}
+                                    <tr>
+                                        <td>
+                                            <div>{{ purchase.book }}</div>
+                                            <div class="text-muted text-xs">Quantity: {{ purchase.quantity }}</div>
+                                        </td>
+                                        <td>{{ purchase.sale_date|date:"F j, Y, g:i a" }}</td>
+                                        <td>{{ purchase.quantity }}</td>
+                                        <td>${{ purchase.total_value }}</td>
+                                        <td>
+                                            <span class="badge
+                                                {% if purchase.status == 'PENDING' %}
+                                                    bg-warning
+                                                {% elif purchase.status == 'CANCELED' %}
+                                                    bg-danger
+                                                {% elif purchase.status == 'SUCCESSFUL' %}
+                                                    bg-success
+                                                {% else %}
+                                                    bg-secondary
+                                                {% endif %}">
+                                                {{ purchase.status }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Books in Stock -->
+        <div class="col-xxl-4">
+            <div class="card">
+                <div class="card-body pb-0">
+                    <div class="mb-2 d-flex align-items-center">
+                        <h5>Books in Stock</h5>
+                        <div class="ms-auto text-end">
+                            <a href="#" class="text-sm fw-semibold">Edit</a>
+                        </div>
+                    </div>
+                    <div class="hstack gap-2 mt-4 mb-6">
+                        <button class="btn btn-sm btn-neutral"><i class="bi bi-plus me-2 d-none d-sm-inline-block"></i>New book</button>
+                        <button class="btn btn-sm btn-neutral"><i class="bi bi-gear me-2 d-none d-sm-inline-block"></i>Manage</button>
+                    </div>
+                    <div class="surtitle mb-2">My Books</div>
+                    <div class="vstack gap-2 mx-n3">
+                        {% for book in books_in_stock %}
+                        <div class="position-relative d-flex align-items-center p-3 rounded-3 bg-body-secondary-hover">
+                            <div class="flex-none">
+                                <i class="bi bi-book"></i>
+                            </div>
+                            <div class="ms-3 ms-md-4 flex-fill">
+                                <div class="stretched-link text-limit text-sm text-heading fw-semibold" role="button">{{ book.book }}</div>
+                                <div class="d-block text-xs gap-2 mt-1"><span>{{ book.quantity }} in stock</span></div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <!-- Paginator -->
+                    <div class="d-flex justify-content-between mt-4">
+                        <span class="text-muted">
+                            Page {{ books_in_stock.number }} of {{ books_in_stock.paginator.num_pages }}
+                        </span>
+                        <div>
+                            {% if books_in_stock.has_previous %}
+                                <a class="btn btn-sm btn-outline-primary" href="?page=1">&laquo; first</a>
+                                <a class="btn btn-sm btn-outline-primary" href="?page={{ books_in_stock.previous_page_number }}">previous</a>
+                            {% endif %}
+                            {% if books_in_stock.has_next %}
+                                <a class="btn btn-sm btn-outline-primary" href="?page={{ books_in_stock.next_page_number }}">next</a>
+                                <a class="btn btn-sm btn-outline-primary" href="?page={{ books_in_stock.paginator.num_pages }}">last &raquo;</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+</main>
+
+{% endblock %}
