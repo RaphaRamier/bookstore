@@ -36,6 +36,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     data: chartData,
                     options: {
                         scales: {
+                            x: {
+                                type: 'time',
+                                time: {
+                                    unit: 'month'
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Month'
+                                }
+                            },
                             y: {
                                 beginAtZero: true
                             }

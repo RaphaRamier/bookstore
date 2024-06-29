@@ -62,24 +62,20 @@
                            <ul class="nav nav-sm flex-column mt-1">
                               <li class="nav-item"><a href="{% url 'home' %}" class="nav-link fw-bold">Default</a></li>
                               <li class="nav-item"><a href="{% url 'analytics' %}" class="nav-link">Analytics</a></li>
-                              <li class="nav-item"><a href="#" class="nav-link">Balance</a></li>
+                              <li class="nav-item"><a href="{% url 'balance' %}" class="nav-link">Balance</a></li>
                            </ul>
                         </div>
                      </li>
                      <li class="nav-item my-1">
                         <a class="nav-link d-flex align-items-center rounded-pill" href="#sidebar-pages" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebar-pages">
                             <i class="bi bi-bar-chart-fill"></i>
-                            <span>Reports</span>
+                            <span>Pages</span>
                             <span class="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto"></span></a>
                         <div class="collapse" id="sidebar-pages">
                            <ul class="nav nav-sm flex-column mt-1">
                               <li class="nav-item"><a href="#" class="nav-link">Overview</a></li>
-                              <li class="nav-item"><a href="#" class="nav-link">Table Listing</a></li>
                               <li class="nav-item"><a href="#" class="nav-link">Details</a></li>
-                              <li class="nav-item"><a href="#" class="nav-link">Create Form</a></li>
-                              <li class="nav-item"><a href="#" class="nav-link">Large List</a></li>
-                              <li class="nav-item"><a href="#" class="nav-link">Checklist</a></li>
-                              <li class="nav-item"><a href="#" class="nav-link">Shelf</a></li>
+                              <li class="nav-item"><a href="{% url 'book_shelf' %}" class="nav-link">Shelf</a></li>
                            </ul>
                         </div>
                      </li>
@@ -98,10 +94,10 @@
                         </div>
                      </li>
                      <li class="nav-item my-1">
-                        <a class="nav-link d-flex align-items-center rounded-pill" href="#sidebar-other" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebar-other"><i class="bi bi-file-break-fill"></i> <span>Other</span> <span class="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto"></span></a>
+                        <a class="nav-link d-flex align-items-center rounded-pill" href="#sidebar-other" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebar-other"><i class="bi bi-book-half"></i> <span>Books</span> <span class="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto"></span></a>
                         <div class="collapse" id="sidebar-other">
                            <ul class="nav nav-sm flex-column mt-1">
-                              <li class="nav-item"><a href="#" class="nav-link">...</a></li>
+                              <li class="nav-item"><a href="{% url 'add_book' %}" class="nav-link">Forms</a></li>
 
                            </ul>
                         </div>
@@ -215,10 +211,14 @@
 
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@1.0.0"></script>
       <script src="{% static 'js/main.bundle.js' %}"></script>
       <script src="{% static 'js/switcher.bundle.js' %}"></script>
       <script src="{% static 'js/chart-bar.js' %}"></script>
-      <script src="{% static 'js/line-chart.js' %}"></script>
+      <script src="{% static 'js/bar-chart-analysis.js' %}"></script>
+      <script src="{% static 'js/performance-chart.js' %}"></script>
+
 
 
 
