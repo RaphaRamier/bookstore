@@ -62,7 +62,7 @@
                            <ul class="nav nav-sm flex-column mt-1">
                               <li class="nav-item"><a href="{% url 'home' %}" class="nav-link fw-bold">Default</a></li>
                               <li class="nav-item"><a href="{% url 'analytics' %}" class="nav-link">Analytics</a></li>
-                              <li class="nav-item"><a href="#" class="nav-link">Balance</a></li>
+                              <li class="nav-item"><a href="{% url 'balance' %}" class="nav-link">Balance</a></li>
                            </ul>
                         </div>
                      </li>
@@ -215,10 +215,14 @@
 
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@1.0.0"></script>
       <script src="{% static 'js/main.bundle.js' %}"></script>
       <script src="{% static 'js/switcher.bundle.js' %}"></script>
       <script src="{% static 'js/chart-bar.js' %}"></script>
       <script src="{% static 'js/bar-chart-analysis.js' %}"></script>
+      <script src="{% static 'js/performance-chart.js' %}"></script>
+
 
 
 
