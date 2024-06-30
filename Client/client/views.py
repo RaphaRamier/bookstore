@@ -8,6 +8,8 @@ from django.db.models.functions import TruncMonth
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from requests.auth import HTTPBasicAuth
+
+from API.authors.models import Authors
 from API.books.models import Book
 from API.cashflow.models import CashInFlow, CashOutFlow
 from API.genres.views import GenreStashView
@@ -227,3 +229,17 @@ def edit_book(request, book_id):
     else:
         form = BookForm(instance=book)
     return render(request, 'forms/edit_book.html', {'form': form, 'book': book})
+
+@login_required()
+def authors_list(request):
+    authors=Authors.objects.all()
+    paginator=Paginator(authors, 12)
+    page_number=request.GET.get('page')
+    page_obj=paginator.get_page(page_number)
+
+    return render(request, 'authors/authors_list.html', {'authors': authors, 'authors_list': page_obj})
+
+
+def author_detail(request, id):
+    author = get_object_or_404(Authors, id=id)
+    return render(request, 'authors/author_detail.html', {'author': author})

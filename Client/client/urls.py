@@ -1,5 +1,5 @@
 from django.urls import path
-from Client.client.views import home, analytics, balance, add_book, book_shelf, book_detail, edit_book
+from Client.client.views import home, analytics, balance, add_book, book_shelf, book_detail, edit_book, authors_list
 
 urlpatterns=[
     path('home/', home, name='home'),
@@ -9,5 +9,6 @@ urlpatterns=[
     path('shelf/', book_shelf, name='book_shelf'),
     path('book/<int:id>/', book_detail, name='book_detail'),
     path('books/<int:book_id>/edit/', edit_book, name='edit_book'),
+    path('authors/', authors_list, name='authors-list')
 
 ]
