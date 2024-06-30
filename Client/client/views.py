@@ -8,8 +8,11 @@ from django.db.models.functions import TruncMonth
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from requests.auth import HTTPBasicAuth
+
+from API.authors.models import Authors
 from API.books.models import Book
 from API.cashflow.models import CashInFlow, CashOutFlow
+from API.genres.models import Genre
 from API.genres.views import GenreStashView
 from API.publication.models import Publication
 from API.sales.models import Sale
@@ -200,30 +203,74 @@ def add_book(request):
     }
     return render(request, 'forms/book_forms.html', context)
 
+
 @login_required
 def book_shelf(request):
-
     books=Publication.objects.all()
     paginator=Paginator(books, 12)
     page_number=request.GET.get('page')
     page_obj=paginator.get_page(page_number)
 
-    return render(request, 'book_shelf/shelf.html', {'books':books, 'total_books':page_obj})
+    return render(request, 'book_shelf/shelf.html', {'books': books, 'total_books': page_obj})
+
 
 @login_required
 def book_detail(request, id):
-    book = get_object_or_404(Book, id=id)
+    book=get_object_or_404(Book, id=id)
     return render(request, 'book_shelf/book_detail.html', {'book': book})
 
 
 @login_required
 def edit_book(request, book_id):
-    book = get_object_or_404(Book, id=book_id)
+    book=get_object_or_404(Book, id=book_id)
     if request.method == 'POST':
-        form = BookForm(request.POST, instance=book)
+        form=BookForm(request.POST, instance=book)
         if form.is_valid():
             form.save()
             return redirect('book_detail', id=book.id)
     else:
-        form = BookForm(instance=book)
+        form=BookForm(instance=book)
     return render(request, 'forms/edit_book.html', {'form': form, 'book': book})
+
+
+@login_required()
+def authors_list(request):
+    authors=Authors.objects.all()
+    paginator=Paginator(authors, 12)
+    page_number=request.GET.get('page')
+    page_obj=paginator.get_page(page_number)
+
+    return render(request, 'authors/authors_list.html', {'authors': authors, 'authors_list': page_obj})
+
+@login_required
+def author_detail(request, author_id):
+    author = get_object_or_404(Authors, id=author_id)
+    books = Book.objects.filter(author=author)
+    context = {
+        'author': author,
+        'books': books,
+    }
+    return render(request, 'authors/author_detail.html', context)
+
+
+@login_required
+def books_by_genre(request):
+    genres=Genre.objects.all()
+    selected_genre=request.GET.get('genre')
+
+    if selected_genre and selected_genre != 'all':
+        books=Publication.objects.filter(book__genres__id=selected_genre)
+    else:
+        books=Publication.objects.all()
+
+    paginator=Paginator(books, 12)  # Mostra 12 livros por página
+    page_number=request.GET.get('page')
+    page_obj=paginator.get_page(page_number)
+
+    context={
+        'genres': genres,
+        'books': page_obj,
+        'total_books': books.count(),
+        'selected_genre': selected_genre
+    }
+    return render(request, 'genre/books_by_genre.html', context)
