@@ -6,7 +6,7 @@
   <div class="mb-6 mb-xl-10">
     <div class="row g-3 align-items-center">
       <div class="col">
-        <h1 class="ls-tight">Book Shelf</h1>
+        <h1 class="ls-tight">Authors</h1>
       </div>
       <div class="col">
         <div class="hstack gap-2 justify-content-end">
@@ -33,8 +33,8 @@
                   <i class="bi bi-heart"></i>
                 </button>
               </div>
-              <div class="text-center mt-auto">
-                  <a href="{% url 'book_detail' author.id %}" class="btn btn-sm btn-white">
+              <div class="d-flex justify-content-end">
+                  <a href="{% url 'authors-detail' author.id %}" class="btn btn-sm btn-white">
                   <span><i class="bi bi-eye"></i></span>
                 </a>
               </div>
