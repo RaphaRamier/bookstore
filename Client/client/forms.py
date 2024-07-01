@@ -4,13 +4,14 @@ from API.genres.models import Genre
 from API.authors.models import Authors
 from API.publication.models import Publication
 from API.assembly.models import BookAssembly
+from API.suppliers.models import Supplier
 
 
 class BookForm(forms.ModelForm):
     class Meta:
-        model = Book
-        fields = '__all__'
-        widgets = {
+        model=Book
+        fields='__all__'
+        widgets={
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Book Title'}),
             'author': forms.SelectMultiple(attrs={'class': 'form-control'}),
             'isbn': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'ISBN'}),
@@ -21,9 +22,9 @@ class BookForm(forms.ModelForm):
 
 class AuthorForm(forms.ModelForm):
     class Meta:
-        model = Authors
-        fields = '__all__'
-        widgets = {
+        model=Authors
+        fields='__all__'
+        widgets={
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Author Name'}),
             'biography': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Biography', 'rows': 3}),
             'birthday': forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'YYYY-MM-DD', 'type': 'date'}),
@@ -33,18 +34,18 @@ class AuthorForm(forms.ModelForm):
 
 class GenreForm(forms.ModelForm):
     class Meta:
-        model = Genre
-        fields = '__all__'
-        widgets = {
+        model=Genre
+        fields='__all__'
+        widgets={
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Genre Name'}),
         }
 
 
 class BookAssemblyForm(forms.ModelForm):
     class Meta:
-        model = BookAssembly
-        fields = '__all__'
-        widgets = {
+        model=BookAssembly
+        fields='__all__'
+        widgets={
             'binding_type': forms.Select(attrs={'class': 'form-control'}),
             'paper_type': forms.Select(attrs={'class': 'form-control'}),
             'cover_type': forms.Select(attrs={'class': 'form-control'}),
@@ -54,11 +55,12 @@ class BookAssemblyForm(forms.ModelForm):
 
 class PublicationForm(forms.ModelForm):
     class Meta:
-        model = Publication
-        fields = '__all__'
-        widgets = {
+        model=Publication
+        fields='__all__'
+        widgets={
             'book': forms.Select(attrs={'class': 'form-control'}),
-            'release_date': forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'YYYY-MM-DD', 'type': 'date'}),
+            'release_date': forms.DateInput(
+                attrs={'class': 'form-control', 'placeholder': 'YYYY-MM-DD', 'type': 'date'}),
             'edition': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Edition'}),
             'status': forms.Select(attrs={'class': 'form-control'}),
             'quantity': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Quantity'}),
@@ -66,4 +68,19 @@ class PublicationForm(forms.ModelForm):
             'language': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Language'}),
             'assembly': forms.Select(attrs={'class': 'form-control'}),
             'price_unit': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Unit Price'}),
+        }
+
+
+class SupplierForm(forms.ModelForm):
+    class Meta:
+        model=Supplier
+        fields='__all__'
+        widgets={
+            'person_type': forms.Select(attrs={'class': 'form-select'}),
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'contact_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'contact_email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'contact_phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'address': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'document': forms.TextInput(attrs={'class': 'form-control'}),
         }
