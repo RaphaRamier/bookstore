@@ -4,7 +4,7 @@ from .views import (
     CashInFlowCreateListView,
     CashInFlowRetrieveUpdateDestroyView,
     CashOutFlowCreateListView,
-    CashOutFlowRetrieveUpdateDestroyView, PerformanceDataView
+    CashOutFlowRetrieveUpdateDestroyView, PerformanceDataView, SupplierMonthlyTrendView
 )
 
 urlpatterns=[
@@ -14,5 +14,6 @@ urlpatterns=[
     path('cashflow/outflow/', CashOutFlowCreateListView.as_view(), name='outflow-create-list'),
     path('cashflow/outflow/<int:pk>', CashOutFlowRetrieveUpdateDestroyView.as_view(), name='outflow-detail-view'),
     path('cashflow/performance-data/', PerformanceDataView.as_view(), name='performance-data'),
+    path('cashflow/suppliers/monthly-trend/', SupplierMonthlyTrendView.as_view(), name='supplier_monthly_trend'),
 
 ]
