@@ -1,0 +1,95 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+<main class="container py-5">
+        <div class="hstack gap-2 justify-content-end">
+          <a href="{% url 'add_supplier' %}" class="btn btn-sm btn-neutral d-none d-sm-inline-flex">
+            <span class="pe-2">
+              <i class="bi bi-plus-circle"></i>
+            </span>
+            <span>Add Supplier</span>
+          </a>
+        </div>
+  <h1>Suppliers</h1>
+  <input type="text" id="searchInput" placeholder="Search suppliers..." class="form-control mb-3">
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Contact Name</th>
+          <th>Contact Email</th>
+          <th>Contact Phone</th>
+          <th>Address</th>
+          <th>Account Number</th>
+          <th>Person Type</th>
+          <th>Supplier Type</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="supplierList">
+        {% for supplier in suppliers %}
+        <tr>
+          <td>
+            <a href="{% url 'supplier_detail' supplier.id %}">{{ supplier.name }}</a>
+          </td>
+          <td>{{ supplier.contact_name }}</td>
+          <td>{{ supplier.contact_email }}</td>
+          <td>{{ supplier.contact_phone }}</td>
+          <td>{{ supplier.address }}</td>
+          <td>{{ supplier.account_number }}</td>
+          <td>{{ supplier.get_person_type_display }}</td>
+          <td>
+            {% if supplier.components.exists %}
+              Material
+            {% elif supplier.services.exists %}
+              Service
+            {% else %}
+              Unknown
+            {% endif %}
+          </td>
+          <td>
+            <a href="{% url 'supplier_detail' supplier.id %}" class="btn btn-primary btn-sm">Details</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</main>
+<script>
+  const searchInput = document.getElementById('searchInput');
+  const supplierList = document.getElementById('supplierList');
+
+  searchInput.addEventListener('input', function () {
+    const searchTerm = searchInput.value.toLowerCase();
+    const suppliers = supplierList.getElementsByTagName('tr');
+
+    Array.from(suppliers).forEach(function (supplier) {
+      const supplierName = supplier.cells[0].textContent.toLowerCase();
+      const contactName = supplier.cells[1].textContent.toLowerCase();
+      const contactEmail = supplier.cells[2].textContent.toLowerCase();
+      const contactPhone = supplier.cells[3].textContent.toLowerCase();
+      const address = supplier.cells[4].textContent.toLowerCase();
+      const accountNumber = supplier.cells[5].textContent.toLowerCase();
+      const personType = supplier.cells[6].textContent.toLowerCase();
+      const supplierType = supplier.cells[7].textContent.toLowerCase();
+
+      if (
+        supplierName.includes(searchTerm) ||
+        contactName.includes(searchTerm) ||
+        contactEmail.includes(searchTerm) ||
+        contactPhone.includes(searchTerm) ||
+        address.includes(searchTerm) ||
+        accountNumber.includes(searchTerm) ||
+        personType.includes(searchTerm) ||
+        supplierType.includes(searchTerm)
+      ) {
+        supplier.style.display = '';
+      } else {
+        supplier.style.display = 'none';
+      }
+    });
+  });
+</script>
+{% endblock %}
