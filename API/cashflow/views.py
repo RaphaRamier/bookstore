@@ -1,4 +1,4 @@
-from django.db.models import Sum
+from django.db.models import Sum, Count, Avg
 from django.db.models.functions import TruncMonth
 from django.shortcuts import render
 from rest_framework.permissions import IsAuthenticated
@@ -8,7 +8,10 @@ from setup.permissions import GlobalDefaultPermission
 from .models import CashInFlow, CashOutFlow
 from rest_framework import generics
 from .serializers import CashInFlowSerializer, CashOutFlowSerializer
+from ..components.models import Component
 from ..sales.models import Sale
+from ..services.models import Service
+from ..suppliers.models import Supplier
 
 
 class CashInFlowCreateListView(generics.ListCreateAPIView):
@@ -90,3 +93,32 @@ class PerformanceDataView(APIView):
         }
 
         return Response(performance_data)
+
+
+class SupplierMonthlyTrendView(APIView):
+    permission_classes = (IsAuthenticated, GlobalDefaultPermission)
+    queryset = Supplier.objects.all()
+
+    def get(self, request):
+        components = Component.objects.annotate(
+            month=TruncMonth('date')
+        ).values('month', 'supplier__name').annotate(
+            total_spending=Sum('price_total'),
+            avg_spending=Avg('price_total')
+        ).order_by('-month', '-total_spending')
+
+        services = Service.objects.annotate(
+            month=TruncMonth('date')
+        ).values('month', 'supplier__name', 'service_type').annotate(
+            total_spending=Sum('price_total'),
+            avg_spending=Avg('price_total')
+        ).order_by('-month', '-total_spending')
+
+        combined_data = list(components) + list(services)
+
+        data = {
+            'monthly_trends': combined_data,
+        }
+
+        return Response(data)
+

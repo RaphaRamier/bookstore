@@ -1,6 +1,6 @@
 from django.urls import path
 from Client.client.views import home, analytics, balance, add_book, book_shelf, book_detail, edit_book, authors_list, \
-    books_by_genre, author_detail
+    books_by_genre, author_detail, supplier_analytics
 
 urlpatterns=[
     path('home/', home, name='home'),
@@ -13,6 +13,7 @@ urlpatterns=[
     path('authors/', authors_list, name='authors-list'),
     path('authors/<int:author_id>', author_detail, name='authors-detail'),
     path('books/by-genre/', books_by_genre, name='books_by_genre'),
+    path('supplier/analytics/', supplier_analytics, name='supplier-analytics')
 
 
 

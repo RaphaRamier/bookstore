@@ -12,12 +12,14 @@ from requests.auth import HTTPBasicAuth
 from API.authors.models import Authors
 from API.books.models import Book
 from API.cashflow.models import CashInFlow, CashOutFlow
+from API.cashflow.views import PerformanceDataView, SupplierMonthlyTrendView
 from API.genres.models import Genre
 from API.genres.views import GenreStashView
 from API.publication.models import Publication
 from API.sales.models import Sale
 from API.sales.views import SaleMonthlyTrendView
 from API.services.models import Service
+from API.suppliers.views import SupplierStatisticsView
 from Client import user
 from .forms import BookForm, AuthorForm, GenreForm, BookAssemblyForm, PublicationForm
 
@@ -75,7 +77,7 @@ def home(request):
                    'percentage_difference': percentage_difference,
                    })
 
-
+@login_required
 def analytics(request):
     genre_stash_view=GenreStashView()
     sale_trend_view=SaleMonthlyTrendView()
@@ -169,7 +171,7 @@ def balance(request):
     }
     return render(request, 'balance/balance.html', context)
 
-
+@login_required
 def add_book(request):
     book_form=BookForm()
     author_form=AuthorForm()
@@ -206,12 +208,13 @@ def add_book(request):
 
 @login_required
 def book_shelf(request):
-    books=Publication.objects.all()
-    paginator=Paginator(books, 12)
-    page_number=request.GET.get('page')
-    page_obj=paginator.get_page(page_number)
+    books = Publication.objects.all()
+    paginator = Paginator(books, 12)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
-    return render(request, 'book_shelf/shelf.html', {'books': books, 'total_books': page_obj})
+    return render(request, 'book_shelf/shelf.html', {'books': page_obj, 'total_books': books.count()})
+
 
 
 @login_required
@@ -233,7 +236,7 @@ def edit_book(request, book_id):
     return render(request, 'forms/edit_book.html', {'form': form, 'book': book})
 
 
-@login_required()
+@login_required
 def authors_list(request):
     authors=Authors.objects.all()
     paginator=Paginator(authors, 12)
@@ -263,7 +266,7 @@ def books_by_genre(request):
     else:
         books=Publication.objects.all()
 
-    paginator=Paginator(books, 12)  # Mostra 12 livros por página
+    paginator=Paginator(books, 12)
     page_number=request.GET.get('page')
     page_obj=paginator.get_page(page_number)
 
@@ -274,3 +277,50 @@ def books_by_genre(request):
         'selected_genre': selected_genre
     }
     return render(request, 'genre/books_by_genre.html', context)
+
+
+@login_required
+def supplier_analytics(request):
+
+    supplier_monthly_trend_view = SupplierMonthlyTrendView()
+    supplier_monthly_trend_response = supplier_monthly_trend_view.get(request)
+    supplier_monthly_trend_data = supplier_monthly_trend_response.data if supplier_monthly_trend_response.status_code == 200 else {}
+
+
+    monthly_trends = supplier_monthly_trend_data.get('monthly_trends', [])
+    supplier_spending = {}
+
+    for entry in monthly_trends:
+        supplier_name = entry['supplier__name']
+        total_spending = entry['total_spending']
+        avg_spending = entry['avg_spending']
+
+        if supplier_name not in supplier_spending:
+            supplier_spending[supplier_name] = {
+                'total_spending': total_spending,
+                'avg_spending': avg_spending,
+            }
+        else:
+            supplier_spending[supplier_name]['total_spending'] += total_spending
+            supplier_spending[supplier_name]['avg_spending'] = (supplier_spending[supplier_name]['avg_spending'] + avg_spending) / 2
+
+    sorted_suppliers = sorted(supplier_spending.items(), key=lambda x: x[1]['total_spending'], reverse=True)
+    top_suppliers = [{
+        'supplier__name': supplier_name,
+        'total_spending': round(details['total_spending'], 2),
+        'avg_spending': round(details['avg_spending'],2),
+        'participation': 0
+    } for supplier_name, details in sorted_suppliers]
+
+    total_cash_outflow = sum([supplier['total_spending'] for supplier in top_suppliers]) or 1
+    for supplier in top_suppliers:
+        supplier['participation'] = (supplier['total_spending'] / total_cash_outflow) * 100
+
+    context = {
+        'top_suppliers': top_suppliers[:4],
+        'total_spending': supplier_spending,
+        'avg_spending': {supplier['supplier__name']: supplier['avg_spending'] for supplier in top_suppliers},
+        'total_cash_outflow': total_cash_outflow,
+    }
+    return render(request, 'suppliers/dashboard.html', context)
+
