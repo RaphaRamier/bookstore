@@ -27,5 +27,17 @@ class Supplier(models.Model):
             if not Supplier.objects.filter(account_number=account_number).exists():
                 return account_number
 
+    @property
+    def supplier_type(self):
+        if self.components.exists():
+            return "Material"
+        elif self.services.exists():
+            return "Service"
+        else:
+            return "Unknown"
+
+    def __str__(self):
+        return self.name
+
     def __str__(self):
         return self.name
