@@ -63,7 +63,7 @@ def home(request):
 
     print(percentage_difference)
 
-    return render(request, 'cashflow/index.html',
+    return render(request, 'cashflow/cashflow.html',
                   {'sales_list': sales_list,
                    'sales_done': sales_done,
                    'top_sales': top_sales,
