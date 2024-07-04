@@ -36,13 +36,13 @@ class BuyerStatisticsView(APIView):
     queryset=Buyer.objects.all()
 
     def get(self, request):
-        top_buyer=Sale.objects.values('buyer__name').annotate(supply=Count('id')).order_by('-supply')
-        total_spending=Sale.objects.values('buyer__name').annotate(total_spending=Sum('price_total')).order_by(
+        top_buyer=Sale.objects.values('buyer__name').annotate(buy=Count('id')).order_by('-buy')
+        total_spending=Sale.objects.values('buyer__name').annotate(total_spending=Sum('total_value')).order_by(
             '-total_spending'),
-        avg_spending=Sale.objects.values('buyer__name').annotate(avg_spending=Avg('price_total')).order_by(
+        avg_spending=Sale.objects.values('buyer__name').annotate(avg_spending=Avg('total_value')).order_by(
             '-avg_spending')
 
-        total_cash_outflow=Sale.objects.aggregate(total_outflow=Sum('price_total'))
+        total_cash_outflow=Sale.objects.aggregate(total_outflow=Sum('total_value'))
 
         data={
             'top_buyer': top_buyer,

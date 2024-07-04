@@ -45,7 +45,6 @@ class SaleDailyTrendView(APIView):
     def get(self, request):
         queryset=Sale.objects.filter(status='SUCCESSFUL')
 
-        # Agrupar dados diários
         daily_trends=queryset.annotate(
             day=TruncDay('sale_date')
         ).values('day').annotate(
@@ -55,12 +54,9 @@ class SaleDailyTrendView(APIView):
 
         daily_df=pd.DataFrame(list(daily_trends))
 
-        # Calcular a diferença percentual e a porcentagem cumulativa
-        # Converter valores para float antes de executar as operações
         daily_df['percentage_difference']=daily_df['total_value'].astype(float).pct_change() * 100
         daily_df['cumulative_percentage']=((1 + daily_df['percentage_difference'] / 100).cumprod()) - 1
 
-        # Substituir valores NaN e infinitos
         daily_df=daily_df.replace([float('inf'), -float('inf'), float('nan')], 0)
 
         daily_data=[
@@ -75,7 +71,6 @@ class SaleDailyTrendView(APIView):
             for i, (entry, row) in enumerate(zip(daily_trends, daily_df.to_dict('records')))
         ]
 
-        # Agrupar dados por gênero
         genres_trend=queryset.annotate(
             day=TruncDay('sale_date')
         ).values('day', 'book__book__genres__name').annotate(
@@ -85,12 +80,9 @@ class SaleDailyTrendView(APIView):
 
         genre_df=pd.DataFrame(list(genres_trend))
 
-        # Calcular a diferença percentual e a porcentagem cumulativa
-        # Converter valores para float antes de executar as operações
         genre_df['percentage_difference']=genre_df['total_value'].astype(float).pct_change() * 100
         genre_df['cumulative_percentage']=((1 + genre_df['percentage_difference'] / 100).cumprod()) - 1
 
-        # Substituir valores NaN e infinitos
         genre_df=genre_df.replace([float('inf'), -float('inf'), float('nan')], 0)
 
         genres_data=[
@@ -98,7 +90,7 @@ class SaleDailyTrendView(APIView):
                 'day': entry['day'].strftime('%Y-%m-%d'),
                 'genre': entry['book__book__genres__name'],
                 'total_quantity': entry['total_quantity'],
-                'total_value': entry['total_value'],
+                'total_value': round(entry['total_value'], 2),
                 'percentage_difference': round(row['percentage_difference'], 2) if i > 0 else None,
                 'cumulative_percentage': round(row['cumulative_percentage'], 2) if row[
                                                                                        'cumulative_percentage'] is not None else 0

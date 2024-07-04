@@ -8,6 +8,7 @@ from setup.permissions import GlobalDefaultPermission
 from .models import CashInFlow, CashOutFlow
 from rest_framework import generics
 from .serializers import CashInFlowSerializer, CashOutFlowSerializer
+from ..buyers.models import Buyer
 from ..components.models import Component
 from ..sales.models import Sale
 from ..services.models import Service
@@ -96,29 +97,47 @@ class PerformanceDataView(APIView):
 
 
 class SupplierMonthlyTrendView(APIView):
-    permission_classes = (IsAuthenticated, GlobalDefaultPermission)
-    queryset = Supplier.objects.all()
+    permission_classes=(IsAuthenticated, GlobalDefaultPermission)
+    queryset=Supplier.objects.all()
 
     def get(self, request):
-        components = Component.objects.annotate(
+        components=Component.objects.annotate(
             month=TruncMonth('date')
         ).values('month', 'supplier__name').annotate(
             total_spending=Sum('price_total'),
             avg_spending=Avg('price_total')
         ).order_by('-month', '-total_spending')
 
-        services = Service.objects.annotate(
+        services=Service.objects.annotate(
             month=TruncMonth('date')
         ).values('month', 'supplier__name', 'service_type').annotate(
             total_spending=Sum('price_total'),
             avg_spending=Avg('price_total')
         ).order_by('-month', '-total_spending')
 
-        combined_data = list(components) + list(services)
+        combined_data=list(components) + list(services)
 
-        data = {
+        data={
             'monthly_trends': combined_data,
         }
 
         return Response(data)
 
+
+class BuyerMonthlyTrendView(APIView):
+    permission_classes=(IsAuthenticated, GlobalDefaultPermission)
+    queryset=Buyer.objects.all()
+
+    def get(self, request):
+        sales=Sale.objects.annotate(
+            month=TruncMonth('sale_date')
+        ).values('month', 'buyer__name').annotate(
+            total_spending=Sum('total_value'),
+            avg_spending=Avg('total_value')
+        ).order_by('-month', '-total_spending')
+
+        data={
+            'monthly_trends': sales,
+        }
+
+        return Response(data)
