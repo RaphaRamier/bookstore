@@ -1,0 +1,31 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+<main class="container py-5">
+  <h1>{{ buyer.name }}</h1>
+  <p>Contact Name: {{ buyer.contact_name }}</p>
+  <p>Contact Email: {{ buyer.contact_email }}</p>
+  <p>Contact Phone: {{ buyer.contact_phone }}</p>
+  <p>Address: {{ buyer.address }}</p>
+  <p>Document: {{ buyer.document }}</p>
+  <p>Account Number: {{ buyer.account_number }}</p>
+  <p>Person Type: {{ buyer.get_person_type_display }}</p>
+
+  <h2>Purchases</h2>
+  {% if sales %}
+  <ul>
+    {% for sale in sales %}
+    <li>
+      <h3>{{ sale.book }}</h3>
+      <p>Sale Code: {{ sale.sale_number }}</p>
+      <p>Quantity: {{ sale.quantity }}</p>
+      <p>Price Total: {{ sale.total_value }}</p>
+      <p>Date: {{ sale.sale_date }}</p>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>No sales found.</p>
+  {% endif %}
+</main>
+{% endblock %}

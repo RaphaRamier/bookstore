@@ -1,5 +1,6 @@
 from django import forms
 from API.books.models import Book
+from API.buyers.models import Buyer
 from API.genres.models import Genre
 from API.authors.models import Authors
 from API.publication.models import Publication
@@ -74,6 +75,21 @@ class PublicationForm(forms.ModelForm):
 class SupplierForm(forms.ModelForm):
     class Meta:
         model=Supplier
+        fields='__all__'
+        widgets={
+            'person_type': forms.Select(attrs={'class': 'form-select'}),
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'contact_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'contact_email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'contact_phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'address': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'document': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
+
+class BuyerForm(forms.ModelForm):
+    class Meta:
+        model=Buyer
         fields='__all__'
         widgets={
             'person_type': forms.Select(attrs={'class': 'form-select'}),
