@@ -7,6 +7,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from API.authors.models import Authors
 from API.books.models import Book
+from API.buyers.models import Buyer
 from API.cashflow.models import CashInFlow, CashOutFlow
 from API.cashflow.views import SupplierMonthlyTrendView, BuyerMonthlyTrendView
 from API.genres.models import Genre
@@ -408,7 +409,7 @@ def buyer_analytics(request):
 
 @login_required
 def buyers_list(request):
-    buyers=Supplier.objects.all()
+    buyers=Buyer.objects.all()
     return render(request, 'buyers/buyers_list.html', {'buyers': buyers})
 
 
