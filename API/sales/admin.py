@@ -10,21 +10,25 @@ class SaleAdmin(admin.ModelAdmin):
         'book',
         'get_book_edition',
         'get_release_date',
+        'buyer',
         'sale_date',
         'quantity',
         'total_value',
         'get_quantity_in_stock'
+
     )
 
     list_filter=(
         'book__book__title',
         'book__release_date',
-        'book__edition'
+        'book__edition',
+        'buyer'
     )
 
     search_fields=(
         'book',
-        'sale_date'
+        'sale_date',
+        'buyer'
     )
 
     def get_book_edition(self, obj):
