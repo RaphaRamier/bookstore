@@ -55,3 +55,4 @@ class SupplierStatisticsView(APIView):
         }
 
         return Response(data)
+

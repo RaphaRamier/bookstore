@@ -1,0 +1,49 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+<main class="container py-5">
+  <h1>{{ supplier.name }}</h1>
+  <p>Contact Name: {{ supplier.contact_name }}</p>
+  <p>Contact Email: {{ supplier.contact_email }}</p>
+  <p>Contact Phone: {{ supplier.contact_phone }}</p>
+  <p>Address: {{ supplier.address }}</p>
+  <p>Document: {{ supplier.document }}</p>
+  <p>Account Number: {{ supplier.account_number }}</p>
+  <p>Person Type: {{ supplier.get_person_type_display }}</p>
+
+  <h2>Services</h2>
+  {% if services %}
+  <ul>
+    {% for service in services %}
+    <li>
+      <h3>{{ service.name }}</h3>
+      <p>Description: {{ service.description }}</p>
+      <p>Service Type: {{ service.get_service_type_display }}</p>
+      <p>Price Total: {{ service.price_total }}</p>
+      <p>Date: {{ service.date }}</p>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>No services found.</p>
+  {% endif %}
+
+  <h2>Components</h2>
+  {% if components %}
+  <ul>
+    {% for component in components %}
+    <li>
+      <h3>{{ component.name }}</h3>
+      <p>Description: {{ component.description }}</p>
+      <p>Quantity: {{ component.quantity }}</p>
+      <p>Price Unit: {{ component.price_unit }}</p>
+      <p>Price Total: {{ component.price_total }}</p>
+      <p>Date: {{ component.date }}</p>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>No components found.</p>
+  {% endif %}
+</main>
+{% endblock %}

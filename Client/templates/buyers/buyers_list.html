@@ -1,0 +1,94 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+<main class="container py-5">
+        <div class="hstack gap-2 justify-content-end">
+          <a href="{% url 'add_buyer' %}" class="btn btn-sm btn-neutral d-none d-sm-inline-flex">
+            <span class="pe-2">
+              <i class="bi bi-plus-circle"></i>
+            </span>
+            <span>Add Buyer</span>
+          </a>
+        </div>
+  <h1>Buyers</h1>
+  <input type="text" id="searchInput" placeholder="Search buyers..." class="form-control mb-3">
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Contact Name</th>
+          <th>Contact Email</th>
+          <th>Contact Phone</th>
+          <th>Address</th>
+          <th>Person Type</th>
+          <th>Supplier Type</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="buyerList">
+        {% for buyer in buyers %}
+        <tr>
+          <td>
+            <a href="{% url 'buyer_detail' buyer.id %}">{{ buyer.name }}</a>
+          </td>
+          <td>{{ buyer.contact_name }}</td>
+          <td>{{ buyer.contact_email }}</td>
+          <td>{{ buyer.contact_phone }}</td>
+          <td>{{ buyer.address }}</td>
+          <td>{{ buyer.account_number }}</td>
+          <td>{{ buyer.get_person_type_display }}</td>
+          <td>
+            {% if buyer.components.exists %}
+              Material
+            {% elif buyer.services.exists %}
+              Service
+            {% else %}
+              Unknown
+            {% endif %}
+          </td>
+          <td>
+            <a href="{% url 'buyer_detail' buyer.id %}" class="btn btn-primary btn-sm">Details</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</main>
+<script>
+  const searchInput = document.getElementById('searchInput');
+  const buyerList = document.getElementById('buyerList');
+
+  searchInput.addEventListener('input', function () {
+    const searchTerm = searchInput.value.toLowerCase();
+    const buyers = buyerList.getElementsByTagName('tr');
+
+    Array.from(buyers).forEach(function (buyer) {
+      const buyerName = buyer.cells[0].textContent.toLowerCase();
+      const contactName = buyer.cells[1].textContent.toLowerCase();
+      const contactEmail = buyer.cells[2].textContent.toLowerCase();
+      const contactPhone = buyer.cells[3].textContent.toLowerCase();
+      const address = buyer.cells[4].textContent.toLowerCase();
+      const accountNumber = buyer.cells[5].textContent.toLowerCase();
+      const personType = buyer.cells[6].textContent.toLowerCase();
+      const buyerType = buyer.cells[7].textContent.toLowerCase();
+
+      if (
+        buyerName.includes(searchTerm) ||
+        contactName.includes(searchTerm) ||
+        contactEmail.includes(searchTerm) ||
+        contactPhone.includes(searchTerm) ||
+        address.includes(searchTerm) ||
+        accountNumber.includes(searchTerm) ||
+        personType.includes(searchTerm) ||
+        buyerType.includes(searchTerm)
+      ) {
+        buyer.style.display = '';
+      } else {
+        buyer.style.display = 'none';
+      }
+    });
+  });
+</script>
+{% endblock %}

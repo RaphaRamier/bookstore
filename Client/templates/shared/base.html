@@ -4,8 +4,7 @@
    <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-      <meta name="color-scheme" content="dark-theme
-">
+      <meta name="color-scheme" content="dark-theme">
       <title>DEV BOOKStore</title>
       <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
       <link rel="stylesheet" type="text/css" href={% static 'css/utility.css' %}>
@@ -19,16 +18,25 @@
 
 
 
+
+
       <div class="d-flex flex-column flex-lg-row h-lg-100 gap-1">
          <nav class="flex-none navbar navbar-vertical navbar-expand-lg navbar-light bg-transparent show vh-lg-100 px-0 py-2" id="sidebar">
             <div class="container-fluid px-3 px-md-4 px-lg-6">
-               <button class="navbar-toggler ms-n2" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                   <span class="navbar-toggler-icon"></span>
-               </button> <a class="navbar-brand d-inline-block py-lg-1 mb-lg-5" href="#">
-                <img src="#" class="logo-dark h-rem-8 h-rem-md-10" alt="..."> <img src="#" class="logo-light h-rem-8 h-rem-md-10" alt="..."></a>
+               <div class="dropdown">
+                <button class="btn btn-link dropdown-toggle" type="button" id="dropdownThemeButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-sun-fill"></i>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownThemeButton">
+                        <li><button class="dropdown-item" type="button" data-bs-theme-value="light">Light</button></li>
+                        <li><button class="dropdown-item" type="button" data-bs-theme-value="dark">Dark</button></li>
+                        <li><button class="dropdown-item" type="button" data-bs-theme-value="auto">System</button></li>
+                    </ul>
+               </div>
+
                <div class="navbar-user d-lg-none">
                   <div class="dropdown">
-                     <a class="d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                     <a class="d-flex align-items-center" href={% url '#' %} role="button" data-bs-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
                         <div>
                            <div class="avatar avatar-sm text-bg-secondary rounded-circle">Name_abreviation</div>
                         </div>
@@ -38,11 +46,11 @@
                      <div class="dropdown-menu dropdown-menu-end">
                         <div class="dropdown-header"><span class="d-block text-sm text-muted mb-1">Signed in as</span> <span class="d-block text-heading fw-semibold">Username</span></div>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#"><i class="bi bi-house me-3"></i>Home </a><a class="dropdown-item" href="#"><i class="bi bi-pencil me-3"></i>Edit profile</a>
+                        <a class="dropdown-item" href={% url '#' %}><i class="bi bi-house me-3"></i>Home </a><a class="dropdown-item" href={% url '#' %}><i class="bi bi-pencil me-3"></i>Edit profile</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#"><i class="bi bi-gear me-3"></i>Settings </a><a class="dropdown-item" href="#"><i class="bi bi-image me-3"></i>Media </a><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-up me-3"></i>Share</a>
+                        <a class="dropdown-item" href={% url '#' %}><i class="bi bi-gear me-3"></i>Settings </a><a class="dropdown-item" href={% url '#' %}><i class="bi bi-image me-3"></i>Media </a><a class="dropdown-item" href={% url '#' %}><i class="bi bi-box-arrow-up me-3"></i>Share</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#"><i class="bi bi-person me-3"></i>Login/Logout</a>
+                        <a class="dropdown-item" href={% url '#' %}><i class="bi bi-person me-3"></i>Login/Logout</a>
                      </div>
                   </div>
                </div>
@@ -52,23 +60,23 @@
                         <a class="nav-link d-flex align-items-center rounded-pill active" href="#sidebar-dashboards" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="sidebar-dashboards"><i class="bi bi-house-fill"></i> <span>Dashboards</span> <span class="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto"></span></a>
                         <div class="collapse show" id="sidebar-dashboards">
                            <ul class="nav nav-sm flex-column mt-1">
-                              <li class="nav-item"><a href="#" class="nav-link fw-bold">Default</a></li>
-                              <li class="nav-item"><a href="#" class="nav-link">Analytics</a></li>
-                              <li class="nav-item"><a href="#" class="nav-link">Balance</a></li>
+                              <li class="nav-item"><a href="{% url 'home' %}" class="nav-link fw-bold">Default</a></li>
+                              <li class="nav-item"><a href="{% url 'analytics' %}" class="nav-link">Analytics</a></li>
+                              <li class="nav-item"><a href="{% url 'balance' %}" class="nav-link">Balance</a></li>
                            </ul>
                         </div>
                      </li>
                      <li class="nav-item my-1">
-                        <a class="nav-link d-flex align-items-center rounded-pill" href="#sidebar-pages" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebar-pages"><i class="bi bi-bar-chart-fill"></i> <span>Pages</span> <span class="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto"></span></a>
+                        <a class="nav-link d-flex align-items-center rounded-pill" href="#sidebar-pages" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebar-pages">
+                            <i class="bi bi-book-half"></i>
+                            <span>Books Pages</span>
+                            <span class="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto"></span></a>
                         <div class="collapse" id="sidebar-pages">
                            <ul class="nav nav-sm flex-column mt-1">
-                              <li class="nav-item"><a href="#" class="nav-link">Overview</a></li>
-                              <li class="nav-item"><a href="#" class="nav-link">Table Listing</a></li>
-                              <li class="nav-item"><a href="#" class="nav-link">Details</a></li>
-                              <li class="nav-item"><a href="#" class="nav-link">Create Form</a></li>
-                              <li class="nav-item"><a href="#" class="nav-link">Large List</a></li>
-                              <li class="nav-item"><a href="#" class="nav-link">Checklist</a></li>
-                              <li class="nav-item"><a href="#" class="nav-link">Shelf</a></li>
+                              <li class="nav-item"><a href="{% url 'authors-list' %}" class="nav-link">Authors</a></li>
+                              <li class="nav-item"><a href="{% url 'books_by_genre' %} " class="nav-link">Genres</a></li>
+                              <li class="nav-item"><a href="{% url 'book_shelf' %}" class="nav-link">Book Shelf</a></li>
+                              <li class="nav-item"><a href="{% url 'add_book' %}" class="nav-link">New Asset</a></li>
                            </ul>
                         </div>
                      </li>
@@ -76,25 +84,13 @@
                         <a class="nav-link d-flex align-items-center rounded-pill" href="#sidebar-account" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebar-account"><i class="bi bi-gear-fill"></i> <span>Account</span> <span class="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto"></span></a>
                         <div class="collapse" id="sidebar-account">
                            <ul class="nav nav-sm flex-column mt-1">
-                              <li class="nav-item"><a href="#" class="nav-link">Settings</a></li>
-                              <li class="nav-item"><a href="#" class="nav-link">Password</a></li>
-
-                              <li class="nav-item"><a href="#" class="nav-link">Notifications</a></li>
-                              <li class="nav-item"><a href="#" class="nav-link">Team</a></li>
-                              <li class="nav-item"><a href="#" class="nav-link">Login</a></li>
+                              <li class="nav-item"><a href="{% url 'login' %}" class="nav-link">Login</a></li>
+                              <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link">Logout</a></li>
 
                            </ul>
                         </div>
                      </li>
-                     <li class="nav-item my-1">
-                        <a class="nav-link d-flex align-items-center rounded-pill" href="#sidebar-other" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebar-other"><i class="bi bi-file-break-fill"></i> <span>Other</span> <span class="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto"></span></a>
-                        <div class="collapse" id="sidebar-other">
-                           <ul class="nav nav-sm flex-column mt-1">
-                              <li class="nav-item"><a href="#" class="nav-link">...</a></li>
 
-                           </ul>
-                        </div>
-                     </li>
                   </ul>
                   <hr class="navbar-divider my-5 opacity-70">
                   <ul class="navbar-nav">
@@ -107,12 +103,9 @@
                         </a>
                         <div class="collapse" id="sidebar-supplier">
                            <ul class="nav nav-sm flex-column mt-1">
-                              <li class="nav-item"><a href="" class="nav-link">Alerts</a></li>
-                              <li class="nav-item"><a href="" class="nav-link">Contact</a></li>
-                              <li class="nav-item"><a href="" class="nav-link">Forms</a></li>
-                              <li class="nav-item"><a href="" class="nav-link">List Groups</a></li>
-
-
+                              <li class="nav-item"><a href="{% url 'supplier-analytics' %}" class="nav-link">Dashboard</a></li>
+                              <li class="nav-item"><a href="{% url 'suppliers-list' %}" class="nav-link">Contact</a></li>
+                              <li class="nav-item"><a href="{% url 'add_supplier' %}" class="nav-link">Forms</a></li>
                            </ul>
                         </div>
                      </li>
@@ -124,12 +117,9 @@
                         </a>
                         <div class="collapse" id="sidebar-buyer">
                            <ul class="nav nav-sm flex-column mt-1">
-                              <li class="nav-item"><a href="" class="nav-link">Alerts</a></li>
-                              <li class="nav-item"><a href="" class="nav-link">Contact</a></li>
-                              <li class="nav-item"><a href="" class="nav-link">Forms</a></li>
-                              <li class="nav-item"><a href="" class="nav-link">List Groups</a></li>
-
-
+                              <li class="nav-item"><a href="{% url 'buyer-analytics' %}" class="nav-link">Dashboard</a></li>
+                              <li class="nav-item"><a href="{% url 'buyers-list' %}" class="nav-link">Contact</a></li>
+                              <li class="nav-item"><a href="{% url 'add_buyer' %}" class="nav-link">Forms</a></li>
                            </ul>
                         </div>
                      </li>
@@ -145,15 +135,15 @@
                <div class="hstack flex-fill justify-content-end flex-nowrap gap-6 ms-auto px-6 px-xxl-8">
 
                   <div class="dropdown d-none">
-                     <a href="#" class="nav-link" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-sun-fill"></i></a>
+                     <a href={% url '#' %} class="nav-link" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-sun-fill"></i></a>
                      <div class="dropdown-menu"><button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light">Light</button> <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark">Dark</button> <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto">System</button></div>
                   </div>
                   <div class="dropdown">
-                     <a href="#" class="nav-link" id="dropdown-notifications" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-bell"></i></a>
+                     <a href={% url '#' %} class="nav-link" id="dropdown-notifications" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-bell"></i></a>
                      <div class="dropdown-menu dropdown-menu-end px-2" aria-labelledby="dropdown-notifications">
                         <div class="dropdown-item d-flex align-items-center">
                            <h6 class="dropdown-header px-0">Notifications</h6>
-                           <a href="#" class="text-sm fw-semibold ms-auto">Clear all</a>
+                           <a href={% url '#' %} class="text-sm fw-semibold ms-auto">Clear all</a>
                         </div>
 
                          <!-- Notificação Cada uma -->
@@ -163,7 +153,7 @@
                            </div>
                            <div class="flex-fill ms-3">
                               <div class="text-sm lg-snug w-rem-64 text-wrap">
-                                  <a href="#" class="fw-semibold text-heading text-primary-hover">Someone</a> sent a message to <a href="#" class="fw-semibold text-heading text-primary-hover">Username</a></div>
+                                  <a href={% url '#' %} class="fw-semibold text-heading text-primary-hover">Someone</a> sent a message to <a href="" class="fw-semibold text-heading text-primary-hover">{{ request.user.username }}</a></div>
                               <span>time ago</span>
                            </div>
                         </div>
@@ -171,19 +161,30 @@
                          <!-- Fim Notificação Cada -->
 
                         <div class="dropdown-divider"></div>
-                        <div class="dropdown-item py-2 text-center"><a href="#" class="fw-semibold text-heading text-primary-hover">View all</a></div>
+                        <div class="dropdown-item py-2 text-center"><a href={% url '#' %} class="fw-semibold text-heading text-primary-hover">View all</a></div>
                      </div>
                   </div>
                   <div class="dropdown">
-                     <a class="avatar avatar-sm text-bg-dark rounded-circle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><img src="#"></a>
+                     <a class="avatar avatar-sm text-bg-dark rounded-circle" href={% url '#' %} role="button" data-bs-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><img src={% url '#' %}></a>
                      <div class="dropdown-menu dropdown-menu-end">
-                        <div class="dropdown-header"><span class="d-block text-sm text-muted mb-1">Signed in as</span> <span class="d-block text-heading fw-semibold">Username</span></div>
+                        <div class="dropdown-header"><span class="d-block text-sm text-muted mb-1">Signed in as</span> <span class="d-block text-heading fw-semibold">{{ request.user.username }}</span></div>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#"><i class="bi bi-house me-3"></i>Home </a><a class="dropdown-item" href="#"><i class="bi bi-pencil me-3"></i>Edit profile</a>
+                        <a class="dropdown-item" href="{% url 'home' %}">
+                            <i class="bi bi-house me-3"></i>Home</a>
+                        <a class="dropdown-item" href={% url '#' %}><i class="bi bi-pencil me-3"></i>Edit profile</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#"><i class="bi bi-gear me-3"></i>Settings </a><a class="dropdown-item" href="#"><i class="bi bi-image me-3"></i>Media </a><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-up me-3"></i>Share</a>
+                        <a class="dropdown-item" href={% url '#' %}>
+                            <i class="bi bi-gear me-3"></i>Settings </a>
+                        <a class="dropdown-item" href={% url '#' %}>
+                            <i class="bi bi-image me-3"></i>Media </a>
+                        <a class="dropdown-item" href={% url '#' %}>
+                            <i class="bi bi-box-arrow-up me-3"></i>Share</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#"><i class="bi bi-person me-3"></i>Login/Logout</a>
+                         {% if user.is_authenticated %}
+                             <a class="dropdown-item" href="{% url 'logout' %}"><i class="bi bi-person me-3"></i>Logout</a>
+                         {% else %}
+                             <a class="dropdown-item" href="{% url 'login' %}"><i class="bi bi-person me-3"></i>Login</a>
+                         {% endif %}
                      </div>
                   </div>
                </div>
@@ -191,6 +192,7 @@
             <div class="flex-fill overflow-y-lg-auto scrollbar bg-body rounded-top-4 rounded-top-start-lg-4 rounded-top-end-lg-0 border-top border-lg shadow-2">
 
                 <!-- Main content -->
+                {% include 'partials/__alerts.html' %}
                 {% block content %}{% endblock %}
 
 
@@ -202,11 +204,17 @@
 
 
 
-
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
-      <script src="{% static 'js/main.js' %}"></script>
-      <script src="{% static 'js/switcher.js' %}"></script>
+      <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@1.0.0"></script>
+      <script src="{% static 'js/main.bundle.js' %}"></script>
+      <script src="{% static 'js/switcher.bundle.js' %}"></script>
       <script src="{% static 'js/chart-bar.js' %}"></script>
+      <script src="{% static 'js/bar-chart-analysis.js' %}"></script>
+      <script src="{% static 'js/performance-chart.js' %}"></script>
+
+
 
 
    </body>
