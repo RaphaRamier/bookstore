@@ -5,6 +5,7 @@ from API.genres.models import Genre
 from API.authors.models import Authors
 from API.publication.models import Publication
 from API.assembly.models import BookAssembly
+from API.sales.models import Sale
 from API.suppliers.models import Supplier
 
 
@@ -99,4 +100,19 @@ class BuyerForm(forms.ModelForm):
             'contact_phone': forms.TextInput(attrs={'class': 'form-control'}),
             'address': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
             'document': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
+
+class SaleForm(forms.ModelForm):
+    class Meta:
+        model=Sale
+        fields='__all__'
+
+        widgets={
+            'buyer': forms.Select(attrs={'class': 'form-select'}),
+            'book': forms.Select(attrs={'class': 'form-select'}),
+            'quantity': forms.NumberInput(attrs={'class': 'form-control'}),
+            'status': forms.Select(attrs={'class': 'form-select'})
+
+
         }
