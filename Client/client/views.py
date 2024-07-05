@@ -17,13 +17,14 @@ from API.sales.models import Sale
 from API.sales.views import SaleMonthlyTrendView, SaleDailyTrendView
 from API.suppliers.models import Supplier
 
-from .forms import BookForm, AuthorForm, GenreForm, BookAssemblyForm, PublicationForm, SupplierForm, BuyerForm
+from .forms import BookForm, AuthorForm, GenreForm, BookAssemblyForm, PublicationForm, SupplierForm, BuyerForm, SaleForm
 
 
 @login_required
 def home(request):
     sale_trend_view=SaleMonthlyTrendView()
     response=sale_trend_view.get(request)
+
 
     sales=Sale.objects.all()
     sales_list=sales[:20]
@@ -62,7 +63,7 @@ def home(request):
             'cash_flow': 0
         }
 
-    print(percentage_difference)
+
 
     return render(request, 'cashflow/cashflow.html',
                   {'sales_list': sales_list,
@@ -70,7 +71,7 @@ def home(request):
                    'top_sales': top_sales,
                    'cashflow': cashflow,
                    'services_list': services_list,
-                   'percentage_difference': percentage_difference,
+                   'percentage_difference': percentage_difference
                    })
 
 
@@ -279,12 +280,12 @@ def books_by_genre(request):
 
 @login_required
 def supplier_analytics(request):
-    # Fetching the monthly trend data
+
     supplier_monthly_trend_view=SupplierMonthlyTrendView()
     supplier_monthly_trend_response=supplier_monthly_trend_view.get(request)
     supplier_monthly_trend_data=supplier_monthly_trend_response.data if supplier_monthly_trend_response.status_code == 200 else {}
 
-    # Aggregating data for top suppliers and spending details
+
     monthly_trends=supplier_monthly_trend_data.get('monthly_trends', [])
     supplier_spending={}
 
@@ -308,10 +309,10 @@ def supplier_analytics(request):
         'supplier__name': supplier_name,
         'total_spending': round(details['total_spending'], 2),
         'avg_spending': round(details['avg_spending'], 2),
-        'participation': 0  # Placeholder, will calculate next
+        'participation': 0
     } for supplier_name, details in sorted_suppliers]
 
-    total_cash_outflow=sum([supplier['total_spending'] for supplier in top_suppliers]) or 1  # Avoid division by zero
+    total_cash_outflow=sum([supplier['total_spending'] for supplier in top_suppliers]) or 1
     for supplier in top_suppliers:
         supplier['participation']=(supplier['total_spending'] / total_cash_outflow) * 100
 
@@ -358,43 +359,43 @@ def add_supplier(request):
 
 @login_required
 def buyer_analytics(request):
-    buyer_monthly_trend_view = BuyerMonthlyTrendView()
-    buyer_monthly_trend_response = buyer_monthly_trend_view.get(request)
-    buyer_monthly_trend_data = buyer_monthly_trend_response.data if buyer_monthly_trend_response.status_code == 200 else {}
-    sales_history_view = SaleDailyTrendView()
-    sales_history_response = sales_history_view.get(request)
-    sales_history_data = sales_history_response.data['daily_trends'] if sales_history_response.status_code == 200 else []
+    buyer_monthly_trend_view=BuyerMonthlyTrendView()
+    buyer_monthly_trend_response=buyer_monthly_trend_view.get(request)
+    buyer_monthly_trend_data=buyer_monthly_trend_response.data if buyer_monthly_trend_response.status_code == 200 else {}
+    sales_history_view=SaleDailyTrendView()
+    sales_history_response=sales_history_view.get(request)
+    sales_history_data=sales_history_response.data['daily_trends'] if sales_history_response.status_code == 200 else []
 
-    monthly_trends = buyer_monthly_trend_data.get('monthly_trends', [])
-    buyer_spending = {}
+    monthly_trends=buyer_monthly_trend_data.get('monthly_trends', [])
+    buyer_spending={}
 
     for entry in monthly_trends:
-        buyer_name = entry['buyer__name']
-        total_spending = entry['total_spending']
-        avg_spending = entry['avg_spending']
+        buyer_name=entry['buyer__name']
+        total_spending=entry['total_spending']
+        avg_spending=entry['avg_spending']
 
         if buyer_name not in buyer_spending:
-            buyer_spending[buyer_name] = {
+            buyer_spending[buyer_name]={
                 'total_spending': total_spending,
                 'avg_spending': avg_spending,
             }
         else:
-            buyer_spending[buyer_name]['total_spending'] += total_spending
-            buyer_spending[buyer_name]['avg_spending'] = (buyer_spending[buyer_name]['avg_spending'] + avg_spending) / 2
+            buyer_spending[buyer_name]['total_spending']+=total_spending
+            buyer_spending[buyer_name]['avg_spending']=(buyer_spending[buyer_name]['avg_spending'] + avg_spending) / 2
 
-    sorted_buyers = sorted(buyer_spending.items(), key=lambda x: x[1]['total_spending'], reverse=True)
-    top_buyers = [{
+    sorted_buyers=sorted(buyer_spending.items(), key=lambda x: x[1]['total_spending'], reverse=True)
+    top_buyers=[{
         'buyer__name': buyer_name,
         'total_spending': round(details['total_spending'], 2),
         'avg_spending': round(details['avg_spending'], 2),
         'participation': 0
     } for buyer_name, details in sorted_buyers]
 
-    total_cash_inflow = sum([buyer['total_spending'] for buyer in top_buyers]) or 1
+    total_cash_inflow=sum([buyer['total_spending'] for buyer in top_buyers]) or 1
     for buyer in top_buyers:
-        buyer['participation'] = (buyer['total_spending'] / total_cash_inflow) * 100
+        buyer['participation']=(buyer['total_spending'] / total_cash_inflow) * 100
 
-    context = {
+    context={
         'top_buyers': top_buyers[:4],
         'buyers': top_buyers,
         'total_spending': buyer_spending,
@@ -406,7 +407,6 @@ def buyer_analytics(request):
     return render(request, 'buyers/dashboard.html', context)
 
 
-
 @login_required
 def buyers_list(request):
     buyers=Buyer.objects.all()
@@ -415,8 +415,8 @@ def buyers_list(request):
 
 @login_required
 def buyer_detail(request, buyer_id):
-    buyer=get_object_or_404(Supplier, id=buyer_id)
-    sales=Sale.objects.all()
+    buyer=get_object_or_404(Buyer, id=buyer_id)
+    sales=Sale.objects.filter(buyer_id=buyer_id)
 
     context={
         'buyer': buyer,
@@ -436,3 +436,27 @@ def add_buyer(request):
     else:
         form=BuyerForm()
     return render(request, 'buyers/add_buyer.html', {'form': form})
+
+@login_required
+def sales_list(request):
+    sales=Sale.objects.all()
+    return render(request, 'sales/sale_list.html', {'sales': sales})
+
+
+def create_sale(request):
+    if request.method == 'POST':
+        form=SaleForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('sales_list')
+    else:
+        form=SaleForm()
+    return render(request, 'sales/new_sale.html', {'form': form})
+
+
+
+
+
+
+def coming_soon(request):
+    return render(request, 'shared/coming_soon.html')

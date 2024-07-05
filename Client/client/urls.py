@@ -1,9 +1,10 @@
 from django.urls import path
 from Client.client.views import home, analytics, balance, add_book, book_shelf, book_detail, edit_book, authors_list, \
     books_by_genre, author_detail, supplier_analytics, suppliers_list, supplier_detail, add_supplier, buyer_analytics, \
-    buyers_list, buyer_detail, add_buyer
+    buyers_list, buyer_detail, add_buyer, create_sale, sales_list, coming_soon
 
 urlpatterns=[
+    path('', home, name='home'),
     path('home/', home, name='home'),
     path('analytics/', analytics, name='analytics'),
     path('balance/', balance, name='balance'),
@@ -22,5 +23,10 @@ urlpatterns=[
     path('buyers/', buyers_list, name='buyers-list'),
     path('buyer/<int:buyer_id>/', buyer_detail, name='buyer_detail'),
     path('buyer/add/', add_buyer, name='add_buyer'),
+    path('sales/', sales_list, name='sales_list'),
+    path('sales/new/', create_sale, name='new_sale' ),
+
+    path('coming-soon/', coming_soon, name='#'),
+
 
 ]
