@@ -1,7 +1,7 @@
 from django.urls import path
 from Client.client.views import home, analytics, balance, add_book, book_shelf, book_detail, edit_book, authors_list, \
     books_by_genre, author_detail, supplier_analytics, suppliers_list, supplier_detail, add_supplier, buyer_analytics, \
-    buyers_list, buyer_detail, add_buyer, create_sale, sales_list, coming_soon
+    buyers_list, buyer_detail, add_buyer, create_sale, sales_list, coming_soon, author_edit, sale_edit, sale_detail
 
 urlpatterns=[
     path('', home, name='home'),
@@ -14,6 +14,7 @@ urlpatterns=[
     path('books/<int:book_id>/edit/', edit_book, name='edit_book'),
     path('authors/', authors_list, name='authors-list'),
     path('authors/<int:author_id>', author_detail, name='authors-detail'),
+    path('authors/<int:pk>/edit/', author_edit, name='author-edit'),
     path('books/by-genre/', books_by_genre, name='books_by_genre'),
     path('supplier/analytics/', supplier_analytics, name='supplier-analytics'),
     path('suppliers/', suppliers_list, name='suppliers-list'),
@@ -25,6 +26,8 @@ urlpatterns=[
     path('buyer/add/', add_buyer, name='add_buyer'),
     path('sales/', sales_list, name='sales_list'),
     path('sales/new/', create_sale, name='new_sale' ),
+    path('sales/<int:pk>/', sale_detail, name='sale-detail'),
+    path('sales/<int:pk>/edit/', sale_edit, name='sale-edit'),
 
     path('coming-soon/', coming_soon, name='#'),
 
