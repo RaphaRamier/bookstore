@@ -5,6 +5,8 @@ from django.core.paginator import Paginator
 from django.db.models import Sum, Avg
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
+
 from API.authors.models import Authors
 from API.books.models import Book
 from API.buyers.models import Buyer
@@ -254,6 +256,18 @@ def author_detail(request, author_id):
     }
     return render(request, 'authors/author_detail.html', context)
 
+@login_required
+def author_edit(request, pk):
+    author = get_object_or_404(Authors, pk=pk)
+    if request.method == 'POST':
+        form = AuthorForm(request.POST, instance=author)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('authors-detail', args=[pk]))
+    else:
+        form = AuthorForm(instance=author)
+    return render(request, 'authors/author_edit.html', {'form': form})
+
 
 @login_required
 def books_by_genre(request):
@@ -442,7 +456,7 @@ def sales_list(request):
     sales=Sale.objects.all()
     return render(request, 'sales/sale_list.html', {'sales': sales})
 
-
+@login_required
 def create_sale(request):
     if request.method == 'POST':
         form=SaleForm(request.POST)
@@ -453,8 +467,22 @@ def create_sale(request):
         form=SaleForm()
     return render(request, 'sales/new_sale.html', {'form': form})
 
+@login_required
+def sale_detail(request, pk):
+    sale = get_object_or_404(Sale, pk=pk)
+    return render(request, 'sales/sale_detail.html', {'sale': sale})
 
-
+@login_required
+def sale_edit(request, pk):
+    sale = get_object_or_404(Sale, pk=pk)
+    if request.method == 'POST':
+        form = SaleForm(request.POST, instance=sale)
+        if form.is_valid():
+            form.save()
+            return redirect('sale-detail', pk=sale.pk)
+    else:
+        form = SaleForm(instance=sale)
+    return render(request, 'sales/sale_edit.html', {'form': form, 'sale': sale})
 
 
 

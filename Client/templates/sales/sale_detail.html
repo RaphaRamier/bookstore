@@ -1,0 +1,35 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+<main class="container-fluid px-3 py-5 p-lg-6 p-xxl-8">
+  <div class="row g-3 align-items-center">
+    <div class="col">
+      <h1 class="ls-tight">Sale Details</h1>
+    </div>
+    <div class="col">
+      <div class="hstack gap-2 justify-content-end">
+        <a href="{% url 'sales_list' %}" class="btn btn-sm btn-neutral d-none d-sm-inline-flex">
+          <span class="pe-2">
+            <i class="bi bi-arrow-left-circle"></i>
+          </span>
+          <span>Back to Sales List</span>
+        </a>
+        <a href="{% url 'sale-edit' sale.pk %}" class="btn btn-sm btn-outline-primary ms-3">Edit Sale</a>
+      </div>
+    </div>
+  </div>
+  <div class="card mt-5">
+    <div class="card-body">
+      <h5 class="card-title">Sale Information</h5>
+      <p><strong>Buyer:</strong> {{ sale.buyer }}</p>
+      <p><strong>Book:</strong> {{ sale.book }}</p>
+      <p><strong>Quantity:</strong> {{ sale.quantity }}</p>
+      <p><strong>Sale Date:</strong> {{ sale.sale_date }}</p>
+      <p><strong>Total Value:</strong> ${{ sale.total_value }}</p>
+      <p><strong>Sale Number:</strong> {{ sale.sale_number }}</p>
+      <p><strong>Status:</strong> {{ sale.get_status_display }}</p>
+      <p><strong>Description:</strong> {{ sale.description }}</p>
+    </div>
+  </div>
+</main>
+{% endblock %}
