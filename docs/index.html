@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="color-scheme" content="dark-theme">
+    <title>DEV BOOKStore</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/utility.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body class="bg-body-tertiary">
+    <div class="d-flex flex-column flex-lg-row h-lg-100 gap-1">
+      <nav class="flex-none navbar navbar-vertical navbar-expand-lg navbar-light bg-transparent show vh-lg-100 px-0 py-2" id="sidebar">
+        <div class="container-fluid px-3 px-md-4 px-lg-6">
+          <div class="dropdown">
+            <button class="btn btn-link dropdown-toggle" type="button" id="dropdownThemeButton" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-sun-fill"></i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownThemeButton">
+              <li>
+                <button class="dropdown-item" type="button" data-bs-theme-value="light">Light</button>
+              </li>
+              <li>
+                <button class="dropdown-item" type="button" data-bs-theme-value="dark">Dark</button>
+              </li>
+              <li>
+                <button class="dropdown-item" type="button" data-bs-theme-value="auto">System</button>
+              </li>
+            </ul>
+          </div>
+          <div class="navbar-user d-lg-none">
+            <div class="dropdown">
+              <a class="d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                <div>
+                  <div class="avatar avatar-sm text-bg-secondary rounded-circle">NA</div>
+                </div>
+                <div class="d-none d-sm-block ms-3">
+                  <span class="h6">Username</span>
+                </div>
+                <div class="d-none d-md-block ms-md-2">
+                  <i class="bi bi-chevron-down text-muted text-xs"></i>
+                </div>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end">
+                <div class="dropdown-header">
+                  <span class="d-block text-sm text-muted mb-1">Signed in as</span>
+                  <span class="d-block text-heading fw-semibold">Username</span>
+                </div>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">
+                  <i class="bi bi-house me-3"></i>Home </a>
+                <a class="dropdown-item" href="#">
+                  <i class="bi bi-pencil me-3"></i>Edit profile </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">
+                  <i class="bi bi-gear me-3"></i>Settings </a>
+                <a class="dropdown-item" href="#">
+                  <i class="bi bi-image me-3"></i>Media </a>
+                <a class="dropdown-item" href="#">
+                  <i class="bi bi-box-arrow-up me-3"></i>Share </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">
+                  <i class="bi bi-person me-3"></i>Login/Logout </a>
+              </div>
+            </div>
+          </div>
+          <div class="collapse navbar-collapse overflow-x-hidden" id="sidebarCollapse">
+            <ul class="navbar-nav">
+              <li class="nav-item my-1">
+                <a class="nav-link d-flex align-items-center rounded-pill active" href="#sidebar-dashboards" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="sidebar-dashboards">
+                  <i class="bi bi-house-fill"></i>
+                  <span>Dashboards</span>
+                  <span class="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto"></span>
+                </a>
+                <div class="collapse show" id="sidebar-dashboards">
+                  <ul class="nav nav-sm flex-column mt-1">
+                    <li class="nav-item">
+                      <a href="index.html" class="nav-link fw-bold">Default</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="analytics.html" class="nav-link">Analytics</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="balance.html" class="nav-link">Balance</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="nav-item my-1">
+                <a class="nav-link d-flex align-items-center rounded-pill" href="#sidebar-pages" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebar-pages">
+                  <i class="bi bi-book-half"></i>
+                  <span>Books Pages</span>
+                  <span class="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto"></span>
+                </a>
+                <div class="collapse" id="sidebar-pages">
+                  <ul class="nav nav-sm flex-column mt-1">
+                    <li class="nav-item">
+                      <a href="test_page.html" class="nav-link">Authors</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="test_page.html" class="nav-link">Genres</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="test_page.html" class="nav-link">Book Shelf</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="test_page.html" class="nav-link">New Asset</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="nav-item my-1">
+                <a class="nav-link d-flex align-items-center rounded-pill" href="#sidebar-account" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebar-account">
+                  <i class="bi bi-gear-fill"></i>
+                  <span>Account</span>
+                  <span class="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto"></span>
+                </a>
+                <div class="collapse" id="sidebar-account">
+                  <ul class="nav nav-sm flex-column mt-1">
+                    <li class="nav-item">
+                      <a href="test_page.html" class="nav-link">Login</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="test_page.html" class="nav-link">Logout</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+            <hr class="navbar-divider my-5 opacity-70">
+            <ul class="navbar-nav">
+              <li>
+                <span class="nav-link text-xs fw-semibold text-uppercase text-muted ls-wide">Resources</span>
+              </li>
+              <li class="nav-item my-1">
+                <a class="nav-link d-flex align-items-center rounded-pill" href="#sidebar-supplier" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebar-components">
+                  <i class="bi bi-grid-1x2-fill"></i>
+                  <span>Supplier</span>
+                  <span class="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto"></span>
+                </a>
+                <div class="collapse" id="sidebar-supplier">
+                  <ul class="nav nav-sm flex-column mt-1">
+                    <li class="nav-item">
+                      <a href="test_page.html" class="nav-link">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="test_page.html" class="nav-link">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="test_page.html" class="nav-link">Forms</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="nav-item my-1">
+                <a class="nav-link d-flex align-items-center rounded-pill" href="#sidebar-buyer" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebar-components">
+                  <i class="bi bi-grid-1x2-fill"></i>
+                  <span>Buyers</span>
+                  <span class="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto"></span>
+                </a>
+                <div class="collapse" id="sidebar-buyer">
+                  <ul class="nav nav-sm flex-column mt-1">
+                    <li class="nav-item">
+                      <a href="test_page.html" class="nav-link">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="test_page.html" class="nav-link">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="test_page.html" class="nav-link">Forms</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="nav-item my-1">
+                <a class="nav-link d-flex align-items-center rounded-pill" href="#sidebar-sales" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebar-components">
+                  <i class="bi bi-grid-1x2-fill"></i>
+                  <span>Sales</span>
+                  <span class="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto"></span>
+                </a>
+                <div class="collapse" id="sidebar-sales">
+                  <ul class="nav nav-sm flex-column mt-1">
+                    <li class="nav-item">
+                      <a href="stest_page.html" class="nav-link">List</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="flex-lg-fill overflow-x-auto ps-lg-1 vstack vh-lg-100 position-relative">
+        <div class="d-none d-lg-flex py-3">
+          <div class="flex-none">
+            <div class="input-group input-group-sm input-group-inline w-rem-64 rounded-pill">
+              <span class="input-group-text rounded-start-pill">
+                <i class="bi bi-search me-2"></i>
+              </span>
+              <input type="search" class="form-control ps-0 rounded-end-pill" placeholder="Search" aria-label="Search">
+            </div>
+          </div>
+          <div class="hstack flex-fill justify-content-end flex-nowrap gap-6 ms-auto px-6 px-xxl-8">
+            <div class="dropdown d-none">
+              <a href="#" class="nav-link" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-sun-fill"></i>
+              </a>
+              <div class="dropdown-menu">
+                <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light">Light</button>
+                <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark">Dark</button>
+                <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto">System</button>
+              </div>
+            </div>
+            <div class="dropdown">
+              <a href="#" class="nav-link" id="dropdown-notifications" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-bell"></i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end px-2" aria-labelledby="dropdown-notifications">
+                <div class="dropdown-item d-flex align-items-center">
+                  <h6 class="dropdown-header px-0">Notifications</h6>
+                  <a href="#" class="text-sm fw-semibold ms-auto">Clear all</a>
+                </div>
+                <div class="dropdown-item py-3 d-flex">
+                  <div>
+                    <div class="avatar bg-primary text-white rounded-circle">#</div>
+                  </div>
+                  <div class="flex-fill ms-3">
+                    <div class="text-sm lg-snug w-rem-64 text-wrap">
+                      <a href="#" class="fw-semibold text-heading text-primary-hover">Someone</a> sent a message to <a href="#" class="fw-semibold text-heading text-primary-hover">Username</a>
+                    </div>
+                    <span>time ago</span>
+                  </div>
+                </div>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-item py-2 text-center">
+                  <a href="#" class="fw-semibold text-heading text-primary-hover">View all</a>
+                </div>
+              </div>
+            </div>
+            <div class="dropdown">
+              <a class="avatar avatar-sm text-bg-dark rounded-circle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                <img src="#" alt="User avatar">
+              </a>
+              <div class="dropdown-menu dropdown-menu-end">
+                <div class="dropdown-header">
+                  <span class="d-block text-sm text-muted mb-1">Signed in as</span>
+                  <span class="d-block text-heading fw-semibold">Username</span>
+                </div>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="test_page.html">
+                  <i class="bi bi-house me-3"></i>Home </a>
+                <a class="dropdown-item" href="#">
+                  <i class="bi bi-pencil me-3"></i>Edit profile </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">
+                  <i class="bi bi-gear me-3"></i>Settings </a>
+                <a class="dropdown-item" href="#">
+                  <i class="bi bi-image me-3"></i>Media </a>
+                <a class="dropdown-item" href="#">
+                  <i class="bi bi-box-arrow-up me-3"></i>Share </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="test_page.html">
+                  <i class="bi bi-person me-3"></i>Logout </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex-fill overflow-y-lg-auto scrollbar bg-body rounded-top-4 rounded-top-start-lg-4 rounded-top-end-lg-0 border-top border-lg shadow-2">
+          <div id="content-container">
+            <!-- Main content will be loaded here -->
+            <main class="container-fluid px-3 py-5 p-lg-6 p-xxl-8">
+              <div class="mb-6 mb-xl-10">
+                <div class="row g-3 align-items-center">
+                  <div class="col">
+                    <h1 class="ls-tight">Dashboard</h1>
+                  </div>
+                  <div class="col">
+                    <div class="hstack gap-2 justify-content-end">
+                      <button type="button" class="btn btn-sm btn-square btn-neutral rounded-circle d-xxl-none" data-bs-toggle="offcanvas" data-bs-target="#responsiveOffcanvas" aria-controls="responsiveOffcanvas">
+                        <i class="bi bi-three-dots"></i>
+                      </button>
+                      <button type="button" class="btn btn-sm btn-neutral d-none d-sm-inline-flex">
+                        <span class="pe-2">
+                          <i class="bi bi-plus-circle"></i>
+                        </span>
+                        <span>Sales</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal fade">
+                <div class="modal-dialog">
+                  <div class="modal-content"></div>
+                </div>
+              </div>
+              <div class="row g-3 g-xxl-6">
+                <div class="col-xxl-8">
+                  <div class="vstack gap-3 gap-md-6">
+                    <div class="row g-3">
+                      <!-- Lista de Fornecedores ou Livros ou etc -->
+                      <div class="col-md col-sm-6">
+                        <div class="card border-primary-hover">
+                          <div class="card-body p-4">
+                            <div class="d-flex align-items-center gap-2">
+                              <i class="bi bi-book"></i>
+                              <a href="#" class="h6 stretched-link">Book 1</a>
+                            </div>
+                            <div class="text-sm fw-semibold mt-3">10</div>
+                            <div class="d-flex align-items-center gap-2 mt-1 text-xs">
+                              <span class="badge badge-xs bg-success">
+                                <i class="bi bi-arrow-up-right"></i>
+                              </span>
+                              <span> $100.00 </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md col-sm-6">
+                        <div class="card border-primary-hover">
+                          <div class="card-body p-4">
+                            <div class="d-flex align-items-center gap-2">
+                              <i class="bi bi-book"></i>
+                              <a href="#" class="h6 stretched-link">Book 2</a>
+                            </div>
+                            <div class="text-sm fw-semibold mt-3">5</div>
+                            <div class="d-flex align-items-center gap-2 mt-1 text-xs">
+                              <span class="badge badge-xs bg-success">
+                                <i class="bi bi-arrow-up-right"></i>
+                              </span>
+                              <span> $50.00 </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md col-sm-6">
+                        <div class="card border-primary-hover">
+                          <div class="card-body p-4">
+                            <div class="d-flex align-items-center gap-2">
+                              <i class="bi bi-book"></i>
+                              <a href="#" class="h6 stretched-link">Book 3</a>
+                            </div>
+                            <div class="text-sm fw-semibold mt-3">8</div>
+                            <div class="d-flex align-items-center gap-2 mt-1 text-xs">
+                              <span class="badge badge-xs bg-success">
+                                <i class="bi bi-arrow-up-right"></i>
+                              </span>
+                              <span> $80.00 </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card">
+                      <div class="card-body pb-0">
+                        <div class="d-flex justify-content-between align-items-center">
+                          <div>
+                            <h5>Earnings</h5>
+                          </div>
+                          <div class="hstack align-items-center">
+                            <a href="#" class="text-muted" data-bs-toggle="dropdown">
+                              <i class="bi bi-funnel"></i>
+                            </a>
+                            <div class="dropdown-menu">
+                              <button type="button" class="dropdown-item d-flex align-items-center" data-filter="quantity">Filter by Quantity</button>
+                              <button type="button" class="dropdown-item d-flex align-items-center" data-filter="value">Filter by Total Value </button>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="mx-n4">
+                          <canvas id="EarningsChartBar"></canvas>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Lista de transações -->
+                    <div class="card">
+                      <div class="card-body pb-0">
+                        <div class="d-flex justify-content-between align-items-center">
+                          <div>
+                            <h5>Transaction History</h5>
+                            <span class="d-block text-muted text-xs">Last 20</span>
+                          </div>
+                          <div class="hstack align-items-center">
+                            <a href="#" class="text-muted">
+                              <i class="bi bi-arrow-repeat"></i>
+                            </a>
+                          </div>
+                        </div>
+                        <div class="list-group list-group-flush custom-scrollbar">
+                          <div class="list-group-item d-flex align-items-center justify-content-between gap-6">
+                            <div class="d-flex align-items-center gap-3">
+                              <div class="icon icon-shape rounded-circle icon-sm flex-none w-rem-10 h-rem-10 text-sm bg-primary bg-opacity-25 text-primary">
+                                <i class="bi bi-cash-coin"></i>
+                              </div>
+                              <div class="d-flex flex-column">
+                                <span class="d-block text-heading text-sm fw-semibold">Buyer 1</span>
+                                <span class="d-none d-sm-block text-muted text-xs">2023-01-01</span>
+                              </div>
+                            </div>
+                            <div class="d-none d-md-block text-sm text-center flex-shrink-0" style="width: 150px;">12345</div>
+                            <div class="d-none d-md-block flex-shrink-0" style="width: 100px;">
+                              <span class="badge bg-body-secondary text-success">SUCCESSFUL</span>
+                            </div>
+                            <div class="text-end flex-grow-1">
+                              <span class="d-block text-heading text-sm fw-bold">$100.00</span>
+                              <span class="d-block text-muted text-xs text-truncate" style="max-width: 150px;">Book 1</span>
+                            </div>
+                          </div>
+                          <div class="list-group-item d-flex align-items-center justify-content-between gap-6">
+                            <div class="d-flex align-items-center gap-3">
+                              <div class="icon icon-shape rounded-circle icon-sm flex-none w-rem-10 h-rem-10 text-sm bg-primary bg-opacity-25 text-primary">
+                                <i class="bi bi-cash-coin"></i>
+                              </div>
+                              <div class="d-flex flex-column">
+                                <span class="d-block text-heading text-sm fw-semibold">Buyer 2</span>
+                                <span class="d-none d-sm-block text-muted text-xs">2023-01-02</span>
+                              </div>
+                            </div>
+                            <div class="d-none d-md-block text-sm text-center flex-shrink-0" style="width: 150px;">12346</div>
+                            <div class="d-none d-md-block flex-shrink-0" style="width: 100px;">
+                              <span class="badge bg-body-secondary text-warning">PENDING</span>
+                            </div>
+                            <div class="text-end flex-grow-1">
+                              <span class="d-block text-heading text-sm fw-bold">$50.00</span>
+                              <span class="d-block text-muted text-xs text-truncate" style="max-width: 150px;">Book 2</span>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Fim da Lista de transações -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xxl-4">
+                  <div class="offcanvas-xxl m-xxl-0 rounded-sm-4 rounded-xxl-0 offcanvas-end overflow-hidden m-sm-4" tabindex="-1" id="responsiveOffcanvas" aria-labelledby="responsiveOffcanvasLabel">
+                    <div class="offcanvas-body d-flex flex-column p-3 p-sm-6 p-xxl-0 gap-3 gap-xxl-6">
+                      <div class="vstack gap-6 gap-xxl-6">
+                        <div class="card border-0 border-xxl">
+                          <div class="card-body d-flex flex-column p-0 p-xxl-6">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                              <div>
+                                <h5>Balance</h5>
+                              </div>
+                              <div>
+                                <span class="text-heading fw-bold">
+                                  <i class="bi bi-arrow-down me-2"></i> $1000 </span>
+                              </div>
+                            </div>
+                            <div class="text-2xl fw-bolder text-heading ls-tight">$1000</div>
+                            <div class="d-flex align-items-center justify-content-between mt-8">
+                              <div class="">
+                                <div class="d-flex gap-3 align-items-center">
+                                  <div class="icon icon-sm icon-shape text-sm rounded-circle bg-dark text-success">
+                                    <i class="bi bi-arrow-down"></i>
+                                  </div>
+                                  <span class="h6 fw-semibold text-muted">Income</span>
+                                </div>
+                                <div class="fw-bold text-heading mt-3">$1500</div>
+                              </div>
+                              <span class="vr bg-dark bg-opacity-10"></span>
+                              <div class="">
+                                <div class="d-flex gap-3 align-items-center">
+                                  <div class="icon icon-sm icon-shape text-sm rounded-circle bg-dark text-danger">
+                                    <i class="bi bi-arrow-up"></i>
+                                  </div>
+                                  <span class="h6 fw-semibold text-muted">Expenses</span>
+                                </div>
+                                <div class="fw-bold text-heading mt-3">$500</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <hr class="my-0 d-xxl-none">
+                        <div class="card border-0 border-xxl">
+                          <div class="card-body p-0 p-xxl-6">
+                            <div class="d-flex justify-content-between align-items-center mb-5">
+                              <div>
+                                <h5>Sales Done</h5>
+                                <div>
+                                  <span class="text-success fw-bold">
+                                    <i class="bi bi-arrow-up me-2"></i>10% </span>
+                                </div>
+                              </div>
+                              <div class="hstack align-items-center">
+                                <a href="#" class="text-muted">
+                                  <i class="bi bi-arrow-repeat"></i>
+                                </a>
+                              </div>
+                            </div>
+                            <div class="vstack gap-1 custom-scrollbar">
+                              <div class="d-flex bg-body-secondary gap-3 rounded-3 p-4">
+                                <div class="w-rem-8 h-rem-8 flex-none">
+                                  <i class="bi bi-book"></i>
+                                </div>
+                                <div class="vstack gap-2">
+                                  <div class="d-flex mb-1">
+                                    <div>
+                                      <span class="d-block text-heading text-sm fw-semibold">Book Title 1</span>
+                                      <span class="d-block text-muted text-xs">$10.00</span>
+                                    </div>
+                                    <div class="ms-auto d-block text-heading text-sm fw-semibold">50</div>
+                                  </div>
+                                  <div class="progress bg-body-tertiary">
+                                    <div class="progress-bar bg-primary" role="progressbar" style="width:100%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="d-flex bg-body-secondary gap-3 rounded-3 p-4">
+                                <div class="w-rem-8 h-rem-8 flex-none">
+                                  <i class="bi bi-book"></i>
+                                </div>
+                                <div class="vstack gap-2">
+                                  <div class="d-flex mb-1">
+                                    <div>
+                                      <span class="d-block text-heading text-sm fw-semibold">Book Title 2</span>
+                                      <span class="d-block text-muted text-xs">$15.00</span>
+                                    </div>
+                                    <div class="ms-auto d-block text-heading text-sm fw-semibold">30</div>
+                                  </div>
+                                  <div class="progress bg-body-tertiary">
+                                    <div class="progress-bar bg-primary" role="progressbar" style="width:100%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="d-flex bg-body-secondary gap-3 rounded-3 p-4">
+                                <div class="w-rem-8 h-rem-8 flex-none">
+                                  <i class="bi bi-book"></i>
+                                </div>
+                                <div class="vstack gap-2">
+                                  <div class="d-flex mb-1">
+                                    <div>
+                                      <span class="d-block text-heading text-sm fw-semibold">Book Title 3</span>
+                                      <span class="d-block text-muted text-xs">$20.00</span>
+                                    </div>
+                                    <div class="ms-auto d-block text-heading text-sm fw-semibold">20</div>
+                                  </div>
+                                  <div class="progress bg-body-tertiary">
+                                    <div class="progress-bar bg-primary" role="progressbar" style="width:100%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <hr class="my-0 d-xxl-none">
+                        <div class="card border-0 border-xxl">
+                          <div class="card-body p-0 p-xxl-6">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                              <div>
+                                <h5>Expenses</h5>
+                              </div>
+                              <div>
+                                <span class="text-success fw-bold">
+                                  <i class="bi bi-arrow-up me-2"></i>7.8% </span>
+                              </div>
+                            </div>
+                            <div class="d-flex flex-nowrap gap-3 scrollable-x">
+                              <div class="flex-none">
+                                <div class="rounded-3 p-3 p-sm-4 bg-body-secondary">
+                                  <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-cash-stack"></i>
+                                    <h6 class="text-sm fw-semibold">Service 1</h6>
+                                  </div>
+                                  <div class="mt-4 fw-bold text-heading">$100</div>
+                                </div>
+                              </div>
+                              <div class="flex-none">
+                                <div class="rounded-3 p-3 p-sm-4 bg-body-secondary">
+                                  <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-cash-stack"></i>
+                                    <h6 class="text-sm fw-semibold">Service 2</h6>
+                                  </div>
+                                  <div class="mt-4 fw-bold text-heading">$200</div>
+                                </div>
+                              </div>
+                              <div class="flex-none">
+                                <div class="rounded-3 p-3 p-sm-4 bg-body-secondary">
+                                  <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-cash-stack"></i>
+                                    <h6 class="text-sm fw-semibold">Service 3</h6>
+                                  </div>
+                                  <div class="mt-4 fw-bold text-heading">$300</div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="text-center mt-4">
+                              <a href="#" class="link-primary fw-semibold text-sm">Manage Services</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </main>
+            <script>
+              const ctx = document.getElementById('EarningsChartBar').getContext('2d');
+              const myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                  datasets: [{
+                    label: 'Earnings',
+                    data: [1200, 1900, 3000, 5000, 2000, 3000, 4500],
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                  }]
+                },
+                options: {
+                  scales: {
+                    y: {
+                      beginAtZero: true
+                    }
+                  }
+                }
+              });
+            </script>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      const ctx = document.getElementById('EarningsChartBar').getContext('2d');
+      const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+          datasets: [{
+            label: 'Earnings',
+            data: [1200, 1900, 3000, 5000, 2000, 3000, 4500],
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    </script>
+    <script>
+      (() => {
+        let theme = localStorage.getItem("theme"),
+          getPreferredTheme = () => theme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"),
+          setTheme = function(theme) {
+            document.documentElement.setAttribute("data-bs-theme", theme);
+          },
+          updateNavbarTheme = function(theme) {
+            let navbar = document.getElementById("navbar");
+            if (navbar) {
+              if (theme === "light" || theme === "auto") {
+                navbar.classList.remove("navbar-dark", "bg-transparent");
+                navbar.classList.add("navbar-light", "bg-transparent");
+              } else {
+                navbar.classList.remove("navbar-light", "bg-transparent");
+                navbar.classList.add("navbar-dark", "bg-transparent");
+              }
+            }
+          },
+          updateSidebarTheme = function(theme) {
+            let sidebar = document.getElementById("sidebar");
+            if (theme === "light" || theme === "auto") {
+              sidebar.classList.remove("navbar-dark", "bg-transparent");
+              sidebar.classList.add("navbar-light", "bg-transparent");
+            } else {
+              sidebar.classList.remove("navbar-light", "bg-transparent");
+              sidebar.classList.add("navbar-dark", "bg-transparent");
+            }
+          };
+        setTheme(getPreferredTheme());
+        let activateThemeButton = theme => {
+          let button = document.querySelector(`[data-bs-theme-value="${theme}"]`);
+          document.querySelectorAll("[data-bs-theme-value]").forEach(btn => {
+            btn.classList.remove("active");
+          });
+          button.classList.add("active");
+          updateNavbarTheme(theme);
+          updateSidebarTheme(theme);
+        };
+        window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+          if (!theme || theme === "auto") {
+            setTheme(getPreferredTheme());
+          }
+        });
+        window.addEventListener("DOMContentLoaded", () => {
+          activateThemeButton(getPreferredTheme());
+          document.querySelectorAll("[data-bs-theme-value]").forEach(button => {
+            button.addEventListener("click", () => {
+              let selectedTheme = button.getAttribute("data-bs-theme-value");
+              localStorage.setItem("theme", selectedTheme);
+              setTheme(selectedTheme);
+              activateThemeButton(selectedTheme);
+            });
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>
