@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="color-scheme" content="dark-theme">
+    <title>DEV BOOKStore</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/utility.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body class="bg-body-tertiary">
+    <div class="d-flex flex-column flex-lg-row h-lg-100 gap-1">
+      <nav class="flex-none navbar navbar-vertical navbar-expand-lg navbar-light bg-transparent show vh-lg-100 px-0 py-2" id="sidebar">
+        <div class="container-fluid px-3 px-md-4 px-lg-6">
+          <div class="dropdown">
+            <button class="btn btn-link dropdown-toggle" type="button" id="dropdownThemeButton" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-sun-fill"></i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownThemeButton">
+              <li>
+                <button class="dropdown-item" type="button" data-bs-theme-value="light">Light</button>
+              </li>
+              <li>
+                <button class="dropdown-item" type="button" data-bs-theme-value="dark">Dark</button>
+              </li>
+              <li>
+                <button class="dropdown-item" type="button" data-bs-theme-value="auto">System</button>
+              </li>
+            </ul>
+          </div>
+          <div class="navbar-user d-lg-none">
+            <div class="dropdown">
+              <a class="d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                <div>
+                  <div class="avatar avatar-sm text-bg-secondary rounded-circle">NA</div>
+                </div>
+                <div class="d-none d-sm-block ms-3">
+                  <span class="h6">Username</span>
+                </div>
+                <div class="d-none d-md-block ms-md-2">
+                  <i class="bi bi-chevron-down text-muted text-xs"></i>
+                </div>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end">
+                <div class="dropdown-header">
+                  <span class="d-block text-sm text-muted mb-1">Signed in as</span>
+                  <span class="d-block text-heading fw-semibold">Username</span>
+                </div>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">
+                  <i class="bi bi-house me-3"></i>Home </a>
+                <a class="dropdown-item" href="#">
+                  <i class="bi bi-pencil me-3"></i>Edit profile </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">
+                  <i class="bi bi-gear me-3"></i>Settings </a>
+                <a class="dropdown-item" href="#">
+                  <i class="bi bi-image me-3"></i>Media </a>
+                <a class="dropdown-item" href="#">
+                  <i class="bi bi-box-arrow-up me-3"></i>Share </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">
+                  <i class="bi bi-person me-3"></i>Login/Logout </a>
+              </div>
+            </div>
+          </div>
+          <div class="collapse navbar-collapse overflow-x-hidden" id="sidebarCollapse">
+            <ul class="navbar-nav">
+              <li class="nav-item my-1">
+                <a class="nav-link d-flex align-items-center rounded-pill active" href="#sidebar-dashboards" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="sidebar-dashboards">
+                  <i class="bi bi-house-fill"></i>
+                  <span>Dashboards</span>
+                  <span class="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto"></span>
+                </a>
+                <div class="collapse show" id="sidebar-dashboards">
+                  <ul class="nav nav-sm flex-column mt-1">
+                    <li class="nav-item">
+                      <a href="index.html" class="nav-link fw-bold">Default</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="analytics.html" class="nav-link">Analytics</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="balance.html" class="nav-link">Balance</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="nav-item my-1">
+                <a class="nav-link d-flex align-items-center rounded-pill" href="#sidebar-pages" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebar-pages">
+                  <i class="bi bi-book-half"></i>
+                  <span>Books Pages</span>
+                  <span class="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto"></span>
+                </a>
+                <div class="collapse" id="sidebar-pages">
+                  <ul class="nav nav-sm flex-column mt-1">
+                    <li class="nav-item">
+                      <a href="test_page.html" class="nav-link">Authors</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="test_page.html" class="nav-link">Genres</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="test_page.html" class="nav-link">Book Shelf</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="test_page.html" class="nav-link">New Asset</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="nav-item my-1">
+                <a class="nav-link d-flex align-items-center rounded-pill" href="#sidebar-account" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebar-account">
+                  <i class="bi bi-gear-fill"></i>
+                  <span>Account</span>
+                  <span class="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto"></span>
+                </a>
+                <div class="collapse" id="sidebar-account">
+                  <ul class="nav nav-sm flex-column mt-1">
+                    <li class="nav-item">
+                      <a href="test_page.html" class="nav-link">Login</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="test_page.html" class="nav-link">Logout</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+            <hr class="navbar-divider my-5 opacity-70">
+            <ul class="navbar-nav">
+              <li>
+                <span class="nav-link text-xs fw-semibold text-uppercase text-muted ls-wide">Resources</span>
+              </li>
+              <li class="nav-item my-1">
+                <a class="nav-link d-flex align-items-center rounded-pill" href="#sidebar-supplier" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebar-components">
+                  <i class="bi bi-grid-1x2-fill"></i>
+                  <span>Supplier</span>
+                  <span class="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto"></span>
+                </a>
+                <div class="collapse" id="sidebar-supplier">
+                  <ul class="nav nav-sm flex-column mt-1">
+                    <li class="nav-item">
+                      <a href="test_page.html" class="nav-link">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="test_page.html" class="nav-link">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="test_page.html" class="nav-link">Forms</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="nav-item my-1">
+                <a class="nav-link d-flex align-items-center rounded-pill" href="#sidebar-buyer" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebar-components">
+                  <i class="bi bi-grid-1x2-fill"></i>
+                  <span>Buyers</span>
+                  <span class="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto"></span>
+                </a>
+                <div class="collapse" id="sidebar-buyer">
+                  <ul class="nav nav-sm flex-column mt-1">
+                    <li class="nav-item">
+                      <a href="test_page.html" class="nav-link">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="test_page.html" class="nav-link">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="test_page.html" class="nav-link">Forms</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="nav-item my-1">
+                <a class="nav-link d-flex align-items-center rounded-pill" href="#sidebar-sales" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebar-components">
+                  <i class="bi bi-grid-1x2-fill"></i>
+                  <span>Sales</span>
+                  <span class="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto"></span>
+                </a>
+                <div class="collapse" id="sidebar-sales">
+                  <ul class="nav nav-sm flex-column mt-1">
+                    <li class="nav-item">
+                      <a href="test_page.html" class="nav-link">List</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="flex-lg-fill overflow-x-auto ps-lg-1 vstack vh-lg-100 position-relative">
+        <div class="d-none d-lg-flex py-3">
+          <div class="flex-none">
+            <div class="input-group input-group-sm input-group-inline w-rem-64 rounded-pill">
+              <span class="input-group-text rounded-start-pill">
+                <i class="bi bi-search me-2"></i>
+              </span>
+              <input type="search" class="form-control ps-0 rounded-end-pill" placeholder="Search" aria-label="Search">
+            </div>
+          </div>
+          <div class="hstack flex-fill justify-content-end flex-nowrap gap-6 ms-auto px-6 px-xxl-8">
+            <div class="dropdown d-none">
+              <a href="#" class="nav-link" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-sun-fill"></i>
+              </a>
+              <div class="dropdown-menu">
+                <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light">Light</button>
+                <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark">Dark</button>
+                <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto">System</button>
+              </div>
+            </div>
+            <div class="dropdown">
+              <a href="#" class="nav-link" id="dropdown-notifications" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-bell"></i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end px-2" aria-labelledby="dropdown-notifications">
+                <div class="dropdown-item d-flex align-items-center">
+                  <h6 class="dropdown-header px-0">Notifications</h6>
+                  <a href="#" class="text-sm fw-semibold ms-auto">Clear all</a>
+                </div>
+                <div class="dropdown-item py-3 d-flex">
+                  <div>
+                    <div class="avatar bg-primary text-white rounded-circle">#</div>
+                  </div>
+                  <div class="flex-fill ms-3">
+                    <div class="text-sm lg-snug w-rem-64 text-wrap">
+                      <a href="#" class="fw-semibold text-heading text-primary-hover">Someone</a> sent a message to <a href="#" class="fw-semibold text-heading text-primary-hover">Username</a>
+                    </div>
+                    <span>time ago</span>
+                  </div>
+                </div>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-item py-2 text-center">
+                  <a href="#" class="fw-semibold text-heading text-primary-hover">View all</a>
+                </div>
+              </div>
+            </div>
+            <div class="dropdown">
+              <a class="avatar avatar-sm text-bg-dark rounded-circle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                <img src="#" alt="User avatar">
+              </a>
+              <div class="dropdown-menu dropdown-menu-end">
+                <div class="dropdown-header">
+                  <span class="d-block text-sm text-muted mb-1">Signed in as</span>
+                  <span class="d-block text-heading fw-semibold">Username</span>
+                </div>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="test_page.html">
+                  <i class="bi bi-house me-3"></i>Home </a>
+                <a class="dropdown-item" href="#">
+                  <i class="bi bi-pencil me-3"></i>Edit profile </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">
+                  <i class="bi bi-gear me-3"></i>Settings </a>
+                <a class="dropdown-item" href="#">
+                  <i class="bi bi-image me-3"></i>Media </a>
+                <a class="dropdown-item" href="#">
+                  <i class="bi bi-box-arrow-up me-3"></i>Share </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="test_page.html">
+                  <i class="bi bi-person me-3"></i>Logout </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex-fill overflow-y-lg-auto scrollbar bg-body rounded-top-4 rounded-top-start-lg-4 rounded-top-end-lg-0 border-top border-lg shadow-2">
+          <div id="content-container">
+            <!-- Main content will be loaded here -->
+            <main class="container-fluid px-3 py-5 p-lg-6 p-xxl-8">
+              <div class="mb-6 mb-xl-10">
+                <div class="row g-3 align-items-center">
+                  <div class="col">
+                    <h1 class="ls-tight">Analytics</h1>
+                  </div>
+                  <div class="col">
+                    <div class="hstack gap-2 justify-content-end">
+                      <button type="button" class="btn btn-sm btn-neutral d-none d-sm-inline-flex" data-bs-target="#depositLiquidityModal" data-bs-toggle="modal">
+                        <span class="pe-2">
+                          <i class="bi bi-plus-circle"></i>
+                        </span>
+                        <span></span>
+                      </button>
+                      <a href="#" class="btn d-inline-flex btn-sm btn-dark">
+                        <span>#</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="vstack gap-3 gap-xl-6">
+                <div class="row row-cols-xl-4 g-3 g-xl-6">
+                  <div class="col">
+                    <div class="card">
+                      <div class="p-4">
+                        <h6 class="text-limit text-muted mb-3">Fantasy</h6>
+                        <span class="text-muted text-xs text-opacity-75">June</span>
+                        <span class="d-block h3 ls-tight fw-bold">$5,000</span>
+                        <p class="mt-1">
+                          <span class="text-success text-xs">
+                            <i class="fas fa-arrow-up me-1"></i>20% </span>
+                          <span class="text-muted text-xs text-opacity-75">of month Revenue</span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Repeat for other genres -->
+                </div>
+                <div class="row g-3 g-xl-6">
+                  <div class="col-xxl-12">
+                    <div class="card">
+                      <div class="card-body pb-0">
+                        <div class="row g-3 justify-content-between align-items-center">
+                          <div class="col-12 col-sm">
+                            <h5>Crescimentos das Vendas (%)</h5>
+                          </div>
+                          <div class="col-12 col-sm-auto">
+                            <div class="hstack align-items-center">
+                              <a href="#" class="text-muted" data-bs-toggle="dropdown">
+                                <i class="bi bi-funnel"></i>
+                              </a>
+                              <div class="dropdown-menu">
+                                <button type="button" class="dropdown-item d-flex align-items-center genre-filter" data-filter="All">All</button>
+                                <button type="button" class="dropdown-item d-flex align-items-center genre-filter" data-filter="Fantasy">Fantasy</button>
+                                <button type="button" class="dropdown-item d-flex align-items-center genre-filter" data-filter="Science Fiction">Science Fiction</button>
+                                <!-- Repeat for other genres -->
+                              </div>
+                            </div>
+                          </div>
+                          <div class="mx-n4">
+                            <canvas id="barChart"></canvas>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Lista de Generos -->
+                <div class="row g-3 g-xl-6">
+                  <div class="col-xl-5">
+                    <!-- Lista de Generos -->
+                    <div class="card">
+                      <div class="card-body pb-3">
+                        <h5 class="mb-3">Genre Stash</h5>
+                        <div class="list-group list-group-flush">
+                          <div class="list-group-item d-flex align-items-center border-0 py-3">
+                            <div class="flex-none w-rem-10 h-rem-10">
+                              <i class="bi bi-book-half"></i>
+                            </div>
+                            <div class="flex-fill ms-4 text-limit">
+                              <div class="d-flex align-items-center justify-content-between">
+                                <a href="#" class="d-block text-sm text-heading fw-bold">Fantasy</a>
+                                <span class="text-muted text-xs fw-semibold">150</span>
+                              </div>
+                              <div class="progress progress-sm my-1">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width:47%" aria-valuenow="200" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                              <div class="d-flex justify-content-between text-xs text-muted text-end mt-1">
+                                <div>
+                                  <span class="font-weight-bold text-muted">Preço Médio: $10 </span>
+                                </div>
+                                <div>
+                                  <p class="card-text text-muted">
+                                    <time datetime="2020-06-23">Valor:$1,500</time>
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="text-end ms-7">
+                              <div class="dropdown">
+                                <a class="text-muted" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  <i class="bi bi-three-dots-vertical"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                  <a href="#!" class="dropdown-item">Action </a>
+                                  <a href="#!" class="dropdown-item">Another action </a>
+                                  <a href="#!" class="dropdown-item">Something else here</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- Repeat for other genres -->
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Lista de Generos -->
+                  </div>
+                  <div class="col-xl-7">
+                    <div class="card">
+                      <div class="card-body pb-0">
+                        <div class="d-flex justify-content-between align-items-center">
+                          <div>
+                            <h5>Genre Transaction History</h5>
+                          </div>
+                          <div class="hstack align-items-center">
+                            <a href="#" class="text-muted">
+                              <i class="bi bi-arrow-repeat"></i>
+                            </a>
+                          </div>
+                        </div>
+                        <div class="list-group list-group-flush">
+                          <div class="list-group-item d-flex align-items-center justify-content-between gap-6">
+                            <div class="d-flex align-items-center gap-3">
+                              <div class="icon icon-shape rounded-circle icon-sm flex-none w-rem-10 h-rem-10 text-sm bg-primary bg-opacity-25 text-primary">
+                                <i class="bi bi-send-fill"></i>
+                              </div>
+                              <div class="">
+                                <span class="d-block text-heading text-sm fw-semibold">Fantasy </span>
+                                <span class="d-none d-sm-block text-muted text-xs">3 days ago</span>
+                              </div>
+                            </div>
+                            <div class="d-none d-md-block text-sm">June</div>
+                            <div class="d-none d-md-block">
+                              <span class="badge bg-body-secondary text-warning">10%</span>
+                            </div>
+                            <div class="text-end">
+                              <span class="d-block text-heading text-sm fw-bold">$5,000</span>
+                              <span class="d-block text-muted text-xs">Total</span>
+                            </div>
+                          </div>
+                          <!-- Repeat for other genres -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </main>
+            <script>
+              document.addEventListener('DOMContentLoaded', function() {
+                let chart;
+
+                function fetchDataAndRenderChart(genreFilter = 'All') {
+                  const data = {
+                    genres_trend: [{
+                      month: '2023-01',
+                      genre: 'Fantasy',
+                      total_quantity: 120
+                    }, {
+                      month: '2023-02',
+                      genre: 'Fantasy',
+                      total_quantity: 90
+                    }, {
+                      month: '2023-03',
+                      genre: 'Fantasy',
+                      total_quantity: 110
+                    }, {
+                      month: '2023-04',
+                      genre: 'Fantasy',
+                      total_quantity: 150
+                    }, {
+                      month: '2023-05',
+                      genre: 'Fantasy',
+                      total_quantity: 80
+                    }, {
+                      month: '2023-06',
+                      genre: 'Fantasy',
+                      total_quantity: 130
+                    }, {
+                      month: '2023-07',
+                      genre: 'Fantasy',
+                      total_quantity: 140
+                    }, {
+                      month: '2023-08',
+                      genre: 'Fantasy',
+                      total_quantity: 170
+                    }, {
+                      month: '2023-09',
+                      genre: 'Fantasy',
+                      total_quantity: 160
+                    }, {
+                      month: '2023-10',
+                      genre: 'Fantasy',
+                      total_quantity: 190
+                    }, {
+                      month: '2023-11',
+                      genre: 'Fantasy',
+                      total_quantity: 200
+                    }, {
+                      month: '2023-12',
+                      genre: 'Fantasy',
+                      total_quantity: 220
+                    }, {
+                      month: '2023-01',
+                      genre: 'Science Fiction',
+                      total_quantity: 80
+                    }, {
+                      month: '2023-02',
+                      genre: 'Science Fiction',
+                      total_quantity: 60
+                    }, {
+                      month: '2023-03',
+                      genre: 'Science Fiction',
+                      total_quantity: 70
+                    }, {
+                      month: '2023-04',
+                      genre: 'Science Fiction',
+                      total_quantity: 100
+                    }, {
+                      month: '2023-05',
+                      genre: 'Science Fiction',
+                      total_quantity: 50
+                    }, {
+                      month: '2023-06',
+                      genre: 'Science Fiction',
+                      total_quantity: 90
+                    }, {
+                      month: '2023-07',
+                      genre: 'Science Fiction',
+                      total_quantity: 100
+                    }, {
+                      month: '2023-08',
+                      genre: 'Science Fiction',
+                      total_quantity: 110
+                    }, {
+                      month: '2023-09',
+                      genre: 'Science Fiction',
+                      total_quantity: 130
+                    }, {
+                      month: '2023-10',
+                      genre: 'Science Fiction',
+                      total_quantity: 140
+                    }, {
+                      month: '2023-11',
+                      genre: 'Science Fiction',
+                      total_quantity: 150
+                    }, {
+                      month: '2023-12',
+                      genre: 'Science Fiction',
+                      total_quantity: 160
+                    }, {
+                      month: '2023-01',
+                      genre: 'Romance',
+                      total_quantity: 150
+                    }, {
+                      month: '2023-02',
+                      genre: 'Romance',
+                      total_quantity: 130
+                    }, {
+                      month: '2023-03',
+                      genre: 'Romance',
+                      total_quantity: 140
+                    }, {
+                      month: '2023-04',
+                      genre: 'Romance',
+                      total_quantity: 160
+                    }, {
+                      month: '2023-05',
+                      genre: 'Romance',
+                      total_quantity: 110
+                    }, {
+                      month: '2023-06',
+                      genre: 'Romance',
+                      total_quantity: 120
+                    }, {
+                      month: '2023-07',
+                      genre: 'Romance',
+                      total_quantity: 130
+                    }, {
+                      month: '2023-08',
+                      genre: 'Romance',
+                      total_quantity: 140
+                    }, {
+                      month: '2023-09',
+                      genre: 'Romance',
+                      total_quantity: 150
+                    }, {
+                      month: '2023-10',
+                      genre: 'Romance',
+                      total_quantity: 160
+                    }, {
+                      month: '2023-11',
+                      genre: 'Romance',
+                      total_quantity: 170
+                    }, {
+                      month: '2023-12',
+                      genre: 'Romance',
+                      total_quantity: 180
+                    }, {
+                      month: '2023-01',
+                      genre: 'Thriller',
+                      total_quantity: 70
+                    }, {
+                      month: '2023-02',
+                      genre: 'Thriller',
+                      total_quantity: 50
+                    }, {
+                      month: '2023-03',
+                      genre: 'Thriller',
+                      total_quantity: 60
+                    }, {
+                      month: '2023-04',
+                      genre: 'Thriller',
+                      total_quantity: 90
+                    }, {
+                      month: '2023-05',
+                      genre: 'Thriller',
+                      total_quantity: 40
+                    }, {
+                      month: '2023-06',
+                      genre: 'Thriller',
+                      total_quantity: 80
+                    }, {
+                      month: '2023-07',
+                      genre: 'Thriller',
+                      total_quantity: 90
+                    }, {
+                      month: '2023-08',
+                      genre: 'Thriller',
+                      total_quantity: 100
+                    }, {
+                      month: '2023-09',
+                      genre: 'Thriller',
+                      total_quantity: 110
+                    }, {
+                      month: '2023-10',
+                      genre: 'Thriller',
+                      total_quantity: 120
+                    }, {
+                      month: '2023-11',
+                      genre: 'Thriller',
+                      total_quantity: 130
+                    }, {
+                      month: '2023-12',
+                      genre: 'Thriller',
+                      total_quantity: 140
+                    }, ]
+                  };
+                  let filteredData = data.genres_trend;
+                  if (genreFilter !== 'All') {
+                    filteredData = data.genres_trend.filter(entry => entry.genre === genreFilter);
+                  }
+                  const groupedData = {};
+                  filteredData.forEach(entry => {
+                    const month = entry.month;
+                    const genre = entry.genre;
+                    if (!groupedData[genre]) {
+                      groupedData[genre] = {};
+                    }
+                    if (!groupedData[genre][month]) {
+                      groupedData[genre][month] = 0;
+                    }
+                    groupedData[genre][month] += entry.total_quantity;
+                  });
+                  const months = Array.from(new Set(filteredData.map(entry => entry.month))).sort();
+                  const datasets = Object.keys(groupedData).map(genre => {
+                    return {
+                      label: genre,
+                      backgroundColor: getRandomColor(),
+                      borderColor: getRandomColor(),
+                      borderWidth: 1,
+                      data: months.map(month => groupedData[genre][month] || 0),
+                      fill: false
+                    };
+                  });
+                  const chartData = {
+                    labels: months,
+                    datasets: datasets
+                  };
+                  const ctx = document.getElementById('barChart').getContext('2d');
+                  if (chart) {
+                    chart.destroy();
+                  }
+                  chart = new Chart(ctx, {
+                    type: 'line',
+                    data: chartData,
+                    options: {
+                      scales: {
+                        x: {
+                          type: 'category',
+                          title: {
+                            display: true,
+                            text: 'Month'
+                          }
+                        },
+                        y: {
+                          beginAtZero: true,
+                          title: {
+                            display: true,
+                            text: 'Total Quantity'
+                          }
+                        },
+                      },
+                      plugins: {
+                        legend: {
+                          display: true,
+                          position: 'top',
+                          labels: {
+                            font: {
+                              size: 14
+                            }
+                          }
+                        }
+                      }
+                    }
+                  });
+                }
+
+                function getRandomColor() {
+                  const letters = '0123456789ABCDEF';
+                  let color = '#';
+                  for (let i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                  }
+                  return color + '80';
+                }
+                fetchDataAndRenderChart();
+                document.querySelectorAll('.genre-filter').forEach(button => {
+                  button.addEventListener('click', function() {
+                    const genreFilter = this.getAttribute('data-filter');
+                    fetchDataAndRenderChart(genreFilter);
+                  });
+                });
+              });
+            </script>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      (() => {
+        let theme = localStorage.getItem("theme"),
+          getPreferredTheme = () => theme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"),
+          setTheme = function(theme) {
+            document.documentElement.setAttribute("data-bs-theme", theme);
+          },
+          updateNavbarTheme = function(theme) {
+            let navbar = document.getElementById("navbar");
+            if (navbar) {
+              if (theme === "light" || theme === "auto") {
+                navbar.classList.remove("navbar-dark", "bg-transparent");
+                navbar.classList.add("navbar-light", "bg-transparent");
+              } else {
+                navbar.classList.remove("navbar-light", "bg-transparent");
+                navbar.classList.add("navbar-dark", "bg-transparent");
+              }
+            }
+          },
+          updateSidebarTheme = function(theme) {
+            let sidebar = document.getElementById("sidebar");
+            if (theme === "light" || theme === "auto") {
+              sidebar.classList.remove("navbar-dark", "bg-transparent");
+              sidebar.classList.add("navbar-light", "bg-transparent");
+            } else {
+              sidebar.classList.remove("navbar-light", "bg-transparent");
+              sidebar.classList.add("navbar-dark", "bg-transparent");
+            }
+          };
+        setTheme(getPreferredTheme());
+        let activateThemeButton = theme => {
+          let button = document.querySelector(`[data-bs-theme-value="${theme}"]`);
+          document.querySelectorAll("[data-bs-theme-value]").forEach(btn => {
+            btn.classList.remove("active");
+          });
+          button.classList.add("active");
+          updateNavbarTheme(theme);
+          updateSidebarTheme(theme);
+        };
+        window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+          if (!theme || theme === "auto") {
+            setTheme(getPreferredTheme());
+          }
+        });
+        window.addEventListener("DOMContentLoaded", () => {
+          activateThemeButton(getPreferredTheme());
+          document.querySelectorAll("[data-bs-theme-value]").forEach(button => {
+            button.addEventListener("click", () => {
+              let selectedTheme = button.getAttribute("data-bs-theme-value");
+              localStorage.setItem("theme", selectedTheme);
+              setTheme(selectedTheme);
+              activateThemeButton(selectedTheme);
+            });
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>
