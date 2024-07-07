@@ -1,3 +1,5 @@
+Link para interface do projeto: https://rapharamier.github.io/bookstore/
+
 # Sistema de Gerenciamento de Livraria API
 
 A API do Sistema de Gerenciamento de Livraria fornece um conjunto abrangente de endpoints para gerenciar vários aspectos das operações de uma livraria. Isso inclui o gerenciamento de livros, autores, publicações, compradores, fornecedores, vendas e fluxo de caixa. Abaixo está uma visão geral dos principais recursos e componentes da API.
