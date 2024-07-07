@@ -1,4 +1,4 @@
-Link para interface do projeto: https://rapharamier.github.io/bookstore/
+Link para interface do projeto(Apenas para PC): https://rapharamier.github.io/bookstore/
 
 # Sistema de Gerenciamento de Livraria API
 
