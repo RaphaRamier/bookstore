@@ -168,40 +168,59 @@ def balance(request):
     }
     return render(request, 'balance/balance.html', context)
 
-
 @login_required
 def add_book(request):
-    book_form=BookForm()
-    author_form=AuthorForm()
-    genre_form=GenreForm()
-    assembly_form=BookAssemblyForm()
-    publication_form=PublicationForm()
-
     if request.method == 'POST':
-        item_type=request.POST.get('item-type')
-        if item_type == 'book':
-            form=BookForm(request.POST)
-        elif item_type == 'author':
-            form=AuthorForm(request.POST)
-        elif item_type == 'genre':
-            form=GenreForm(request.POST)
-        elif item_type == 'assembly':
-            form=BookAssemblyForm(request.POST)
-        elif item_type == 'publication':
-            form=PublicationForm(request.POST)
+        form = BookForm(request.POST)
+        if form.is_valid():
+            book = form.save()
+            return redirect(reverse('book_detail', kwargs={'id': book.id}))
+    else:
+        form = BookForm()
+    return render(request, 'forms/add_book.html', {'form': form})
+@login_required
+def add_author(request):
+    if request.method == 'POST':
+        form = AuthorForm(request.POST)
+        if form.is_valid():
+            author = form.save()
+            return redirect(reverse('authors-detail', kwargs={'author_id': author.id}))
+    else:
+        form = AuthorForm()
+    return render(request, 'forms/add_author.html', {'form': form})
 
+@login_required
+def add_genre(request):
+    if request.method == 'POST':
+        form = GenreForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('home')
+            return redirect('books_by_genre')
+    else:
+        form = GenreForm()
+    return render(request, 'forms/add_genre.html', {'form': form})
 
-    context={
-        'book_form': book_form,
-        'author_form': author_form,
-        'genre_form': genre_form,
-        'assembly_form': assembly_form,
-        'publication_form': publication_form
-    }
-    return render(request, 'forms/book_forms.html', context)
+@login_required
+def add_assembly(request):
+    if request.method == 'POST':
+        form = BookAssemblyForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('book_shelf')
+    else:
+        form = BookAssemblyForm()
+    return render(request, 'forms/add_assembly.html', {'form': form})
+
+@login_required
+def add_publication(request):
+    if request.method == 'POST':
+        form = PublicationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('book_shelf')
+    else:
+        form = PublicationForm()
+    return render(request, 'forms/add_publication.html', {'form': form})
 
 
 @login_required
