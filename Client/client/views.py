@@ -24,57 +24,54 @@ from .forms import BookForm, AuthorForm, GenreForm, BookAssemblyForm, Publicatio
 
 @login_required
 def home(request):
-    sale_trend_view=SaleMonthlyTrendView()
-    response=sale_trend_view.get(request)
+    sale_trend_view = SaleMonthlyTrendView()
+    response = sale_trend_view.get(request)
 
+    sales = Sale.objects.all()
+    sales_list = sales[:20]
+    sales_done = sales[:10]
+    total_inflow = round(CashInFlow.objects.filter(source__status='SUCCESSFUL').aggregate(total=Sum('amount'))['total'], 2) or 0
+    total_outflow = round(CashOutFlow.objects.aggregate(total=Sum('amount'))['total'], 2) or 0
 
-    sales=Sale.objects.all()
-    sales_list=sales[:20]
-    sales_done=sales[:10]
-    total_inflow=round(CashInFlow.objects.filter(source__status='SUCCESSFUL').aggregate(total=Sum('amount'))['total'],
-                       2) or 0
-    total_outflow=round(CashOutFlow.objects.aggregate(total=Sum('amount'))['total'], 2)
-
-    percentage_difference=None
+    percentage_difference = None
     if 'monthly_trends' in response.data:
-        monthly_trends=response.data['monthly_trends']
+        monthly_trends = response.data['monthly_trends']
         if monthly_trends:
-            last_month_data=monthly_trends[0]
-            percentage_difference=round(last_month_data.get('percentage_difference'), 2)
+            last_month_data = monthly_trends[0]
+            percentage_difference = last_month_data.get('percentage_difference')
+            if percentage_difference is not None:
+                percentage_difference = round(percentage_difference, 2)
 
     try:
-        cash_flow=total_inflow - total_outflow
+        cash_flow = total_inflow - total_outflow
     except:
-        cash_flow=0
+        cash_flow = 0
 
-    services=CashOutFlow.objects.all()
-    services_list=services
-    top_sales=sales.order_by('-quantity')[:3]
+    services = CashOutFlow.objects.all()
+    services_list = services
+    top_sales = sales.order_by('-quantity')[:3]
 
     try:
-        cashflow={
+        cashflow = {
             'total_inflow': total_inflow,
             'total_outflow': total_outflow,
             'cash_flow': cash_flow
-
         }
     except:
-        cashflow={
+        cashflow = {
             'total_inflow': 0,
             'total_outflow': 0,
             'cash_flow': 0
         }
 
-
-
-    return render(request, 'cashflow/cashflow.html',
-                  {'sales_list': sales_list,
-                   'sales_done': sales_done,
-                   'top_sales': top_sales,
-                   'cashflow': cashflow,
-                   'services_list': services_list,
-                   'percentage_difference': percentage_difference
-                   })
+    return render(request, 'cashflow/cashflow.html', {
+        'sales_list': sales_list,
+        'sales_done': sales_done,
+        'top_sales': top_sales,
+        'cashflow': cashflow,
+        'services_list': services_list,
+        'percentage_difference': percentage_difference
+    })
 
 
 @login_required
@@ -195,7 +192,7 @@ def add_book(request):
 
         if form.is_valid():
             form.save()
-            return redirect('success_url')
+            return redirect('home')
 
     context={
         'book_form': book_form,
