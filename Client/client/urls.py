@@ -1,14 +1,19 @@
 from django.urls import path
 from Client.client.views import home, analytics, balance, add_book, book_shelf, book_detail, edit_book, authors_list, \
     books_by_genre, author_detail, supplier_analytics, suppliers_list, supplier_detail, add_supplier, buyer_analytics, \
-    buyers_list, buyer_detail, add_buyer, create_sale, sales_list, coming_soon, author_edit, sale_edit, sale_detail
+    buyers_list, buyer_detail, add_buyer, create_sale, sales_list, coming_soon, author_edit, sale_edit, sale_detail, \
+    add_author, add_genre, add_assembly, add_publication
 
 urlpatterns=[
     path('', home, name='home'),
     path('home/', home, name='home'),
     path('analytics/', analytics, name='analytics'),
     path('balance/', balance, name='balance'),
-    path('book-form/', add_book, name='add_book'),
+    path('add-book/', add_book, name='add_book'),
+    path('add-author/', add_author, name='add_author'),
+    path('add-genre/', add_genre, name='add_genre'),
+    path('add-assembly/', add_assembly, name='add_assembly'),
+    path('add-publication/', add_publication, name='add_publication'),
     path('shelf/', book_shelf, name='book_shelf'),
     path('book/<int:id>/', book_detail, name='book_detail'),
     path('books/<int:book_id>/edit/', edit_book, name='edit_book'),
