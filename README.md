@@ -213,6 +213,8 @@ A aplicação cliente é responsável por fornecer uma interface intuitiva e ami
 
 Para configurar e executar o projeto, siga as etapas abaixo:
 
+- Caso não use o Docker:
+
 1. Clone o repositório:
     ```sh
     git clone <URL-do-repositório>
@@ -250,6 +252,37 @@ Para configurar e executar o projeto, siga as etapas abaixo:
     ```
 
 8. Acesse a aplicação no navegador em `http://127.0.0.1:8000/`.
+
+- Caso use o Docker:
+
+1. Clone o repositório:
+    ```sh
+    git clone <URL-do-repositório>
+    ```
+
+2. Navegue até o diretório do projeto:
+    ```sh
+    cd bookstore
+    ```
+
+3. Use o comando no terminal:
+   ```sh
+    docker-compose up db --build
+    docker-compose up
+    ```
+   
+4. Acesse o Bash do Container :
+   ```sh
+   docker exec -it bookstore-bookstore-1 /bin/bash
+   ```
+
+6. Crie um superusuário para acessar o admin do Django:
+    ```sh
+    python manage.py createsuperuser
+    ```
+
+7. Acesse a aplicação no navegador em `localhost:8000/`.
+
 
 ## Contribuição
 
